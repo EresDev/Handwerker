@@ -2,8 +2,11 @@
 
 namespace App\Domain\Entity;
 
-class User implements \JsonSerializable
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User implements \JsonSerializable, UserInterface
 {
+    private $id;
     private $email;
     private $password;
     private $activated;
@@ -12,17 +15,29 @@ class User implements \JsonSerializable
     private $roles;
 
     public function __construct(
+        int $id,
         string $email,
         string $password,
         bool $activated,
         bool $deleted,
         \DateTime $memberSince
     ){
+        $this->setId($id);
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setActivated($activated);
         $this->setDeleted($deleted);
         $this->setMemberSince($memberSince);
+    }
+
+    public function getId() : int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getEmail() : string

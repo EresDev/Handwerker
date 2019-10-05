@@ -15,9 +15,13 @@ class JWTTokenGenerationTest extends TestCase
         parent::setUp();
 
         $this->request = Request::create(
-            '/login',
+            '/login_check',
             'POST',
-            ['email' => 'auth_user@eresdev.com', 'password' => 'somePassword1145236']
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode(['email' => 'auth_user@eresdev.com', 'password' => 'somePassword1145236'])
         );
     }
 
