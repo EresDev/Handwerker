@@ -9,6 +9,7 @@ class User implements \JsonSerializable
     private $activated;
     private $deleted;
     private $memberSince;
+    private $roles;
 
     public function __construct(
         string $email,
@@ -74,6 +75,16 @@ class User implements \JsonSerializable
         $this->memberSince = $memberSince;
     }
 
+    public function getRoles() : UserRole
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(UserRole $roles) : void
+    {
+        $this->roles = $roles;
+    }
+
     public function equals(self $user): bool
     {
         return
@@ -87,11 +98,6 @@ class User implements \JsonSerializable
     public function getUsername() : string
     {
         return $this->getEmail();
-    }
-
-    public function getRoles() : array
-    {
-        return ['ROLE_USER'];
     }
 
     public function getSalt() : ?string

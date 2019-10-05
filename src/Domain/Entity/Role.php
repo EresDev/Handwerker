@@ -1,12 +1,11 @@
 <?php
 
-namespace Domain\Entity;
+namespace App\Domain\Entity;
 
 class Role implements \JsonSerializable
 {
     private $id;
     private $title;
-
 
     public function getId() : int
     {

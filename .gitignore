@@ -19,3 +19,4 @@
 ###< lexik/jwt-authentication-bundle ###
 
 /.idea/
+htdocs
