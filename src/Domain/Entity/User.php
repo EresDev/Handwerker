@@ -2,10 +2,7 @@
 
 namespace App\Domain\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\PersistentCollection;
-use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements \JsonSerializable, UserInterface
@@ -17,23 +14,6 @@ class User implements \JsonSerializable, UserInterface
     private $deleted;
     private $memberSince;
     private $roles;
-
-    public function __construct(
-        int $id,
-        string $email,
-        string $password,
-        bool $activated,
-        bool $deleted,
-        \DateTime $memberSince
-    ){
-        $this->setId($id);
-        $this->setEmail($email);
-        $this->setPassword($password);
-        $this->setActivated($activated);
-        $this->setDeleted($deleted);
-        $this->setMemberSince($memberSince);
-        $this->roles = new ArrayCollection();
-    }
 
     public function getId() : int
     {
