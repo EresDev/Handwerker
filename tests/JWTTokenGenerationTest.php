@@ -29,6 +29,10 @@ class JWTTokenGenerationTest extends TestCase
     {
         $kernel = new Kernel('test', true);
         $response = $kernel->handle($this->request);
-        $this->assertContains('token', $response->getContent());
+
+        $this->assertArrayHasKey(
+            'token',
+            json_decode($response->getContent(), true)
+        );
     }
 }

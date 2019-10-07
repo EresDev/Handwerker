@@ -2,6 +2,10 @@
 
 namespace App\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements \JsonSerializable, UserInterface
@@ -28,6 +32,7 @@ class User implements \JsonSerializable, UserInterface
         $this->setActivated($activated);
         $this->setDeleted($deleted);
         $this->setMemberSince($memberSince);
+        $this->roles = new ArrayCollection();
     }
 
     public function getId() : int
@@ -90,12 +95,15 @@ class User implements \JsonSerializable, UserInterface
         $this->memberSince = $memberSince;
     }
 
-    public function getRoles() : UserRole
+    public function getRoles()
     {
-        return $this->roles;
+        foreach ($this->roles->getIterator() as $role) {
+            $_roles[] = $role->getTitle();
+        }
+        return $_roles;
     }
 
-    public function setRoles(UserRole $roles) : void
+    public function setRoles(Collection $roles) : void
     {
         $this->roles = $roles;
     }
