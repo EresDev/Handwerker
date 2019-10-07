@@ -2,7 +2,6 @@
 
 namespace App\Domain\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements \JsonSerializable, UserInterface
@@ -75,9 +74,9 @@ class User implements \JsonSerializable, UserInterface
         $this->memberSince = $memberSince;
     }
 
-    public function getRoles()
+    public function getRoles() : array
     {
-        foreach ($this->roles->getIterator() as $role) {
+        foreach ($this->roles as $role) {
             $_roles[] = $role->getTitle();
         }
         return $_roles;
