@@ -7,9 +7,6 @@ class Role implements \JsonSerializable
     private $id;
     private $title;
 
-    public function getRole(){
-        return $this->title;
-    }
     public function getId() : int
     {
         return $this->id;
