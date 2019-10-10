@@ -2,13 +2,11 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
         App\ThirdParty\Security\Symfony\SecurityUser:
-            #id: App\ThirdParty\Security\Symfony\PasswordEncoder
-            algorithm: bcrypt
-            cost: 12
+            algorithm: auto
+
         App\Domain\Entity\User:
-            #id: App\ThirdParty\Security\Symfony\PasswordEncoder
-            algorithm: bcrypt
-            cost: 12
+            algorithm: auto
+
     providers:
         custom_provider:
             id: App\ThirdParty\Security\Symfony\UserLoader
