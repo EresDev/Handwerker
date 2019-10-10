@@ -38,41 +38,41 @@ class JWTTokenGenerationTest extends WebTestCase
 
     public function testTokenGeneration() : void
     {
-        $this->addUser();
+        //$this->addUser();
         $kernel = new Kernel('test', true);
         $response = $kernel->handle($this->request);
         //$this->addUser();
-        echo json_decode($response->getContent(), true)['message'];
-//        $this->assertArrayHasKey(
-//            'token',
-//            json_decode($response->getContent(), true)
-//        );
+        //echo json_decode($response->getContent(), true)['message'];
+        $this->assertArrayHasKey(
+            'token',
+            json_decode($response->getContent(), true)
+        );
     }
 
-    private function addUser(): void
-    {
-        self::bootKernel();
-        /**
-         * @var $encoder NativePasswordEncoder
-         */
-        $encoder = self::$container->get(NativePasswordEncoder::class);
-        $plainPassword = 'somePassword1145236';
-
-        $user = new User();
-        $user->setEmail('user_from_addUser_test_willBeDeleted@eresdev.com');
-        $encoded = $encoder->encodePassword($plainPassword, '');
-
-        $user->setPassword($encoded);
-        /**
-         * @var $em EntityManagerInterface
-         */
-        $em = self::$container->get(EntityManagerInterface::class);
-
-        $role = $em->getRepository(Role::class)->find(1);
-        $user->setRoles([$role]);
-
-        $em->persist($user);
-        $em->flush();
-
-    }
+//    private function addUser(): void
+//    {
+//        self::bootKernel();
+//        /**
+//         * @var $encoder NativePasswordEncoder
+//         */
+//        $encoder = self::$container->get(NativePasswordEncoder::class);
+//        $plainPassword = 'somePassword1145236';
+//
+//        $user = new User();
+//        $user->setEmail('user_from_addUser_test_willBeDeleted@eresdev.com');
+//        $encoded = $encoder->encodePassword($plainPassword, '');
+//
+//        $user->setPassword($encoded);
+//        /**
+//         * @var $em EntityManagerInterface
+//         */
+//        $em = self::$container->get(EntityManagerInterface::class);
+//
+//        $role = $em->getRepository(Role::class)->find(1);
+//        $user->setRoles([$role]);
+//
+//        $em->persist($user);
+//        $em->flush();
+//
+//    }
 }
