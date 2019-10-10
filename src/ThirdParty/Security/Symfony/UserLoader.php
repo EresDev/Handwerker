@@ -22,14 +22,6 @@ class UserLoader extends EntityUserProvider implements UserLoaderInterface
             throw new BadCredentialsException(sprintf('No user found for "%s"', $username));
         }
 
-        $securityUser = new SecurityUser(
-            $user->getId(),
-            $user->getEmail(),
-            $user->getRoles()
-        );
-
-        $securityUser->setPassword($user->getPassword());
-
-        return $securityUser;
+        return new SecurityUser($user);
     }
 }

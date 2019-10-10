@@ -11,23 +11,12 @@ class User extends Entity implements \JsonSerializable
     protected $memberSince;
     protected $roles;
 
-    public function __construct(
-        ?int $id,
-        string $email,
-        array $roles
-    ){
-        $this->setId($id);
-        $this->email = $email;
-        $this->roles = $roles;
-        $this->memberSince = new \DateTime();
-    }
-
     public function getEmail() : string
     {
         return $this->email;
     }
 
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -37,7 +26,7 @@ class User extends Entity implements \JsonSerializable
         return $this->password;
     }
 
-    public function setPassword($password): void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -47,7 +36,7 @@ class User extends Entity implements \JsonSerializable
         return $this->activated;
     }
 
-    public function setActivated($active): void
+    public function setActivated(bool $active): void
     {
         $this->activated = $active;
     }
@@ -57,7 +46,7 @@ class User extends Entity implements \JsonSerializable
         return $this->deleted;
     }
 
-    public function setDeleted($deleted): void
+    public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
     }
@@ -67,7 +56,7 @@ class User extends Entity implements \JsonSerializable
         return $this->memberSince;
     }
 
-    public function setMemberSince($memberSince): void
+    public function setMemberSince(\DateTime $memberSince): void
     {
         $this->memberSince = $memberSince;
     }
@@ -98,11 +87,6 @@ class User extends Entity implements \JsonSerializable
             $this->getActivated() === $user->getActivated() &&
             $this->getDeleted() === $user->getDeleted() &&
             $this->getMemberSince() === $user->getMemberSince();
-    }
-
-    public function getUsername() : string
-    {
-        return $this->getEmail();
     }
 
     public function jsonSerialize() : array
