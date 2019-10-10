@@ -11,6 +11,11 @@ class User extends Entity implements \JsonSerializable
     protected $memberSince;
     protected $roles;
 
+    public function __construct()
+    {
+        $this->memberSince = new \DateTime();
+    }
+
     public function getEmail() : string
     {
         return $this->email;

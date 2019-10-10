@@ -14,6 +14,8 @@
         </service>
         <service id="App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl" autowire="true">
         </service>
+        <service id="Symfony\Component\Security\Core\Encoder\NativePasswordEncoder" autowire="true" public="true">
+        </service>
     </services>
 
 
