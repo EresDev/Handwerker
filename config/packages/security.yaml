@@ -1,14 +1,18 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
+        App\ThirdParty\Security\Symfony\SecurityUser:
+            #id: App\ThirdParty\Security\Symfony\PasswordEncoder
+            algorithm: bcrypt
+            cost: 12
         App\Domain\Entity\User:
+            #id: App\ThirdParty\Security\Symfony\PasswordEncoder
             algorithm: bcrypt
             cost: 12
     providers:
-        entity_provider:
-            entity:
-                class: App\Domain\Entity\User
-                property: email
+        custom_provider:
+            id: App\ThirdParty\Security\Symfony\UserLoader
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,6 +22,7 @@ security:
             pattern:  ^/login
             stateless: true
             anonymous: true
+            provider: custom_provider
             json_login:
                 check_path:  /login_check
                 username_path: email

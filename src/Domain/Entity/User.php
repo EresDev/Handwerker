@@ -2,26 +2,24 @@
 
 namespace App\Domain\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
-class User implements \JsonSerializable, UserInterface
+class User extends Entity implements \JsonSerializable
 {
-    private $id;
-    private $email;
-    private $password;
-    private $activated;
-    private $deleted;
-    private $memberSince;
-    private $roles;
+    protected $email;
+    protected $password;
+    protected $activated = false;
+    protected $deleted = false;
+    protected $memberSince;
+    protected $roles;
 
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+    public function __construct(
+        ?int $id,
+        string $email,
+        array $roles
+    ){
+        $this->setId($id);
+        $this->email = $email;
+        $this->roles = $roles;
+        $this->memberSince = new \DateTime();
     }
 
     public function getEmail() : string
@@ -77,12 +75,17 @@ class User implements \JsonSerializable, UserInterface
     public function getRoles() : array
     {
         foreach ($this->roles as $role) {
-            $_roles[] = $role->getTitle();
+            if (is_object($role)) {
+                $_roles[] = $role->getTitle();
+            }
+            else{
+                $_roles[] = $role;
+            }
         }
         return $_roles;
     }
 
-    public function setRoles(Collection $roles) : void
+    public function setRoles($roles) : void
     {
         $this->roles = $roles;
     }
@@ -100,16 +103,6 @@ class User implements \JsonSerializable, UserInterface
     public function getUsername() : string
     {
         return $this->getEmail();
-    }
-
-    public function getSalt() : ?string
-    {
-        return '';
-    }
-
-    public function eraseCredentials() : void
-    {
-        $this->setPassword('');
     }
 
     public function jsonSerialize() : array

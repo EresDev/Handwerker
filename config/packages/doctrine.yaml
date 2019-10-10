@@ -20,3 +20,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/ThirdParty/Persistence/Doctrine/Mapping'
                 prefix: 'App\Domain\Entity'
                 alias: App
+#            Security:
+#                is_bundle: false
+#                type: xml
+#                dir: '%kernel.project_dir%/src/ThirdParty/Persistence/Doctrine/Mapping/Auth'
+#                prefix: 'App\ThirdParty\Security\Symfony'
+#                alias: Security

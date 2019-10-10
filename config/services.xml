@@ -10,6 +10,12 @@
 
         <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
 
+        <service id="App\ThirdParty\Security\Symfony\UserLoader" autowire="true">
+        </service>
+        <service id="App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl" autowire="true">
+        </service>
+        <service id="App\ThirdParty\Security\Symfony\PasswordEncoder" autowire="true">
+        </service>
     </services>
 
 

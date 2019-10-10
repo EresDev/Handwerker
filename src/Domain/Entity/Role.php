@@ -34,4 +34,9 @@ class Role implements \JsonSerializable
             'title' => $this->getTitle()
         ];
     }
+
+    public function __toString() : string
+    {
+        return $this->title;
+    }
 }
