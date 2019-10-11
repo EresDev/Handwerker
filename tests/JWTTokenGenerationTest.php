@@ -4,10 +4,10 @@ namespace App\Tests;
 
 use App\Kernel;
 use App\ThirdParty\Security\Symfony\PasswordEncoder;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class JWTTokenGenerationTest extends WebTestCase
+class JWTTokenGenerationTest extends TestCase
 {
     private $request;
 
