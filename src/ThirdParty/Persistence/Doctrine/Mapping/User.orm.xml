@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="App\Domain\Entity\User" table="user" >
-    <!--<discriminator-map>-->
-      <!--<discriminator-mapping value="User" class="App\Domain\Entity\User" />-->
-      <!--<discriminator-mapping value="AuthUser" class="App\ThirdParty\Security\Symfony\AuthUser" />-->
-    <!--</discriminator-map>-->
-
     <unique-constraints>
       <unique-constraint name="UNIQ_8D93D649E7927C74" columns="email"/>
     </unique-constraints>
@@ -25,8 +20,6 @@
     <field name="deleted" type="boolean" column="deleted" nullable="false"/>
     <field name="activated" type="boolean" column="activated" nullable="false"/>
     <field name="memberSince" type="datetime" column="memberSince" nullable="false"/>
-
-
     <many-to-many field="roles" target-entity="Role">
       <cascade>
         <cascade-all/>
