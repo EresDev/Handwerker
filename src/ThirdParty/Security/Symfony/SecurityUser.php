@@ -14,6 +14,16 @@ class SecurityUser implements UserInterface
         $this->user = $user;
     }
 
+    public function getId() : ?int
+    {
+        return $this->user->getId();
+    }
+
+    public function setId(int $id): void
+    {
+        $this->user->setId($id);
+    }
+
     public function getEmail() : string
     {
         return $this->user->getEmail();
