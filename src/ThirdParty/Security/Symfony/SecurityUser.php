@@ -79,7 +79,7 @@ class SecurityUser implements UserInterface
         return $this->user->getEmail();
     }
 
-    public function getSalt()
+    public function getSalt() : string
     {
         return $this->user->getSalt();
     }
