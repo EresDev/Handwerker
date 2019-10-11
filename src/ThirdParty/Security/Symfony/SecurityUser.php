@@ -81,7 +81,7 @@ class SecurityUser implements UserInterface
 
     public function getSalt()
     {
-        return '';
+        return $this->getSalt();
     }
 
     public function eraseCredentials()

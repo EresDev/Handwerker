@@ -84,6 +84,11 @@ class User extends Entity implements \JsonSerializable
         $this->roles = $roles;
     }
 
+    public function getSalt() : string
+    {
+        return '9h2hr98Q9834hr208S23rhe9823hWr2938E';
+    }
+
     public function equals(self $user): bool
     {
         return
