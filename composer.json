@@ -15,7 +15,6 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
-        "liip/test-fixtures-bundle": "^1.0.0",
         "symfony/phpunit-bridge": "^4.3",
         "symfony/profiler-pack": "^1.0"
     },
