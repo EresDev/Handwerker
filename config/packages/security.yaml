@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        App\ThirdParty\Security\Symfony\SecurityUser:
+        App\ThirdParty\Security\Symfony\UserAdapter:
             algorithm: auto
 
         App\Domain\Entity\User:

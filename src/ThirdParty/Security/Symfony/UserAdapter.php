@@ -5,7 +5,7 @@ namespace App\ThirdParty\Security\Symfony;
 use App\Domain\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class SecurityUser implements UserInterface
+class UserAdapter implements UserInterface
 {
     private $user;
 
