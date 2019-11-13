@@ -9,5 +9,6 @@
         <option name="fixed"/>
       </options>
     </field>
+
   </entity>
 </doctrine-mapping>
