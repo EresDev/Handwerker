@@ -1,12 +1,18 @@
 App\Domain\Entity\User:
   user_{1}:
-    id: 11
-    email: <email()>
-    password: 'fooBar'
+    id: 1
+    email: 'auth_user2@eresdev.com'
+    plainPassword: 'somePassword1145236'
+    password: <encodePassword(@user_1, @user_1->plainPassword)>
     activated: true
     deleted: false
     memberSince: <dateTime('2018-04-25 08:37:17')>
     roles:
       - '@role_1'
+
+App\Domain\Entity\Role:
+  role_1:
+    id: 1
+    title: 'USER'
 
 

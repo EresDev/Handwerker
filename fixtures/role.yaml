@@ -1,4 +1,0 @@
-App\Domain\Entity\Role:
-  role_1:
-    id: 1
-    title: 'USER'

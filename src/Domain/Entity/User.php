@@ -5,6 +5,7 @@ namespace App\Domain\Entity;
 class User extends Entity implements \JsonSerializable
 {
     protected $email;
+    protected $plainPassword;
     protected $password;
     protected $activated = false;
     protected $deleted = false;
@@ -24,6 +25,16 @@ class User extends Entity implements \JsonSerializable
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
     }
 
     public function getPassword() : ?string
