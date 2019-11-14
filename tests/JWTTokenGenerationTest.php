@@ -4,18 +4,20 @@ namespace App\Tests;
 
 use App\Kernel;
 use App\ThirdParty\Security\Symfony\PasswordEncoder;
-use PHPUnit\Framework\TestCase;
+use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class JWTTokenGenerationTest extends TestCase
+class JWTTokenGenerationTest extends KernelTestCase
 {
     private $request;
+
+    use RefreshDatabaseTrait;
 
     protected function setUp() : void
     {
         parent::setUp();
-
-
+        self::bootKernel();
     }
 
     public function testTokenGeneration() : void
@@ -30,7 +32,7 @@ class JWTTokenGenerationTest extends TestCase
             json_encode(['email' => 'auth_user2@eresdev.com', 'password' => 'somePassword1145236'])
         );
 
-        $kernel = new Kernel('test', true);
+        $kernel = self::$kernel;
         $response = $kernel->handle($this->request);
         $this->assertArrayHasKey(
             'token',
