@@ -14,7 +14,7 @@ class User extends Entity implements \JsonSerializable
 
     public function __construct()
     {
-        $this->memberSince = new \DateTime();
+        $this->memberSince = new \DateTime('now');
     }
 
     public function getEmail() : string
@@ -103,11 +103,12 @@ class User extends Entity implements \JsonSerializable
     public function equals(self $user): bool
     {
         return
-            $this->getId() === $user->getId() &&
-            $this->getEmail() === $user->getEmail() &&
-            $this->getActivated() === $user->getActivated() &&
-            $this->getDeleted() === $user->getDeleted() &&
-            $this->getMemberSince() === $user->getMemberSince();
+            $this->getId() === $user->getId()
+            && $this->getEmail() === $user->getEmail()
+            && $this->getActivated() === $user->getActivated()
+            && $this->getDeleted() === $user->getDeleted()
+            && $this->getMemberSince()->format('U') === $user->getMemberSince()->format('U')
+        ;
     }
 
     public function jsonSerialize() : array

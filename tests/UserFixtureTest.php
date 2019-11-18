@@ -2,27 +2,49 @@
 
 namespace App\Tests;
 
+use App\Domain\Entity\User;
+use App\ThirdParty\Security\Symfony\PasswordEncoderAdapter;
+use Doctrine\ORM\EntityManagerInterface;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserFixtureTest extends WebTestCase
+class UserFixtureTest extends KernelTestCase
 {
-    protected $fixture;
-
     use RefreshDatabaseTrait;
+
+    protected $fixture;
 
     protected function setUp(): void
     {
-//        $loader = new NativeLoader();
-//        $this->fixture = $loader->loadFile(__DIR__ . '/../fixtures/user.yaml');
+        self::bootKernel();
+        $loader = new NativeLoader();
+        $loader->getFakerGenerator()->addProvider(
+            self::$container->get(PasswordEncoderAdapter::class)
+        );
+        $this->fixture = $loader->loadFile(__DIR__ . '/../fixtures/user.yaml');
     }
 
     public function testUserFixture() : void
     {
-        $client = static::createClient(); // The transaction starts just after the boot of the Symfony kernel
+        /**
+         * @var EntityManagerInterface $entityManager
+         */
+        $entityManager = self::$container->get(EntityManagerInterface::class);
 
-        return;
+        /**
+         * @var User $user
+         */
+        $user = $this->fixture->getObjects()['user_1'];
+
+        /**
+         * @var User $user
+         */
+        $userFromDb = $entityManager
+            ->getRepository(User::class)
+            ->find($user->getId());
+
+        $this->assertTrue($user->equals($userFromDb));
     }
 }

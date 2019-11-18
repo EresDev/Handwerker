@@ -6,7 +6,7 @@ App\Domain\Entity\User:
     password: <encodePassword(@user_1, @user_1->plainPassword)>
     activated: true
     deleted: false
-    memberSince: <dateTime('2018-04-25 08:37:17')>
+    memberSince: <dateTimeBetween('2019-10-10', '2019-10-10')>
     roles:
       - '@role_1'
 
