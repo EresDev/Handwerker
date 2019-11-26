@@ -43,7 +43,6 @@ class AddUserTest extends KernelTestCase
 
     public function testAddUser(): void
     {
-        $this->markTestSkipped("This test needs to be rewritten with new repositories");
         $user = new User();
 
         $user->setEmail(self::EMAIL);
@@ -55,6 +54,13 @@ class AddUserTest extends KernelTestCase
          * TODO: The test needs a role existing in database. Setup Fixtures
          */
         $role = $this->entityManager->getRepository(Role::class)->findOneBy(['title' => 'USER']);
+        if (is_null($role)) {
+            $role = new Role();
+            $role->setTitle('USER');
+            $this->entityManager->persist(
+                $role
+            );
+        }
         $user->setRoles([$role]);
 
         $this->assertNull($user->getId(), 'User ID is must be null before persist because' .
