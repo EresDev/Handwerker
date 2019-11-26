@@ -60,11 +60,11 @@ class AddUserTest extends KernelTestCase
             ' ID is assigned by DB. But here ID is '. $user->getId() . ' for User ' .
             json_encode($user));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        $this->assertNotNull($user->getId(), 'User was probably not persisted in database.' .
-            json_encode($user));
+//        $this->entityManager->persist($user);
+//        $this->entityManager->flush();
+//
+//        $this->assertNotNull($user->getId(), 'User was probably not persisted in database.' .
+//            json_encode($user));
     }
 
 }
