@@ -24,6 +24,7 @@ class AddUserTest extends KernelTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         self::bootKernel();
 
         $this->encoder = self::$container->get(NativePasswordEncoder::class);
