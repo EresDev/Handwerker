@@ -14,12 +14,13 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-  App\ThirdParty\Security\Symfony\UserLoader:
-    autowire: true
-
-  App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl:
-    autowire: true
+#  App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl:
+#    autowire: true
 
   Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:
     autowire: true
     public: true
+
+  App\ThirdParty\Security\Symfony\UserLoader:
+    arguments:
+      - '@App\ThirdParty\Persistence\Doctrine\Repository\UserRepository'

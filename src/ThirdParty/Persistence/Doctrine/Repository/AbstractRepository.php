@@ -2,19 +2,17 @@
 
 namespace App\ThirdParty\Persistence\Doctrine\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Domain\Entity\Entity;
+use App\Domain\Repository\Repository;
+use Doctrine\ORM\EntityManagerInterface;
 
-abstract class AbstractRepository
+
+abstract class AbstractRepository implements Repository
 {
     protected $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct(
-            $entityManager,
-            $entityManager->getClassMetadata($this->getEntityClass())
-        );
         $this->entityManager = $entityManager;
     }
 
@@ -22,7 +20,14 @@ abstract class AbstractRepository
 
     public function get(int $entityId) : ?Entity
     {
-        return $this->entityManager->find($this->getEntityClass(), $entityId);
+        return $this->getBy('id', $entityId);
+    }
+
+    public function getBy(string $key, $value) : ?Entity
+    {
+        return $this->entityManager
+            ->getRepository($this->getEntityClass())
+            ->findOneBy([$key => $value]);
     }
 
 //    public function getAll() : array

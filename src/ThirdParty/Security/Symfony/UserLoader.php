@@ -2,23 +2,24 @@
 
 namespace App\ThirdParty\Security\Symfony;
 
+use App\Domain\Repository\UnitReadRepository;
 use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl;
+
 
 class UserLoader extends EntityUserProvider implements UserLoaderInterface
 {
-    private $singleEntityFinder;
+    private $unitReadRepository;
 
-    public function __construct(UserRepositoryImpl $userRepositoryImpl)
+    public function __construct(UnitReadRepository $unitReadRepository)
     {
-        $this->singleEntityFinder = $userRepositoryImpl;
+        $this->unitReadRepository = $unitReadRepository;
     }
 
     public function loadUserByUsername($username)
     {
-        if (null === ($user = $this->singleEntityFinder->findBy('email', $username))) {
+        if (null === ($user = $this->unitReadRepository->getBy('email', $username))) {
             throw new BadCredentialsException(sprintf('No user found for "%s"', $username));
         }
 
