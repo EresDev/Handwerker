@@ -7,7 +7,7 @@ use App\Domain\Repository\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-abstract class AbstractRepository implements Repository
+class RepositoryImpl implements Repository
 {
     protected $entityManager;
 
@@ -16,17 +16,15 @@ abstract class AbstractRepository implements Repository
         $this->entityManager = $entityManager;
     }
 
-    abstract public function getEntityClass() : string;
-
-    public function get(int $entityId) : ?Entity
+    public function get(int $entityId, string $entityCLass) : ?Entity
     {
-        return $this->getBy('id', $entityId);
+        return $this->getBy('id', $entityId, $entityCLass);
     }
 
-    public function getBy(string $key, $value) : ?Entity
+    public function getBy(string $key, $value, string $entityCLass) : ?Entity
     {
         return $this->entityManager
-            ->getRepository($this->getEntityClass())
+            ->getRepository($entityCLass)
             ->findOneBy([$key => $value]);
     }
 
@@ -37,21 +35,18 @@ abstract class AbstractRepository implements Repository
 //            ->findAll();
 //    }
 
-    public function save(Entity $entity) : void
+    public function save(Entity $entity): void
     {
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }
 
-//    public function delete(int $entityId) : ?Entity
-//    {
-//        $entity = $this->getById($entityId);
-//        if($entity != null){
-//            $this->entityManager->remove($entity);
-//            $this->entityManager->flush();
-//        }
-//        return $entity;
-//    }
+    public function delete(Entity $entity): void
+    {
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
+    }
+
 //    public function update(Entity $entity): void
 //    {
 //        $this->entityManager->merge($entity);

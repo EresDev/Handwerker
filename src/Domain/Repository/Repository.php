@@ -2,6 +2,6 @@
 
 namespace App\Domain\Repository;
 
-interface Repository extends UnitReadRepository, SaveRepository
+interface Repository extends UnitReadRepository, SaveRepository, DeleteRepository
 {
 }

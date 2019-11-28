@@ -2,20 +2,9 @@
 
 namespace App\Domain\Entity;
 
-class Role implements \JsonSerializable
+class Role extends Entity implements \JsonSerializable
 {
-    private $id;
     private $title;
-
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 
     public function getTitle() : string
     {

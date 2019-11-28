@@ -4,11 +4,14 @@ namespace App\Tests;
 
 use App\Domain\Entity\Role;
 use App\Domain\Entity\User;
+use App\Domain\Repository\DeleteRepository;
+use App\Domain\Repository\SaveRepository;
+use App\Domain\Repository\UnitReadRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
-class AddUserTest extends KernelTestCase
+class AddUserToDatabaseTest extends KernelTestCase
 {
     private const EMAIL = 'user_from_addUser_test_willBeDeleted@eresdev.com';
     private const PASSWORD = 'foo_bar_password';
@@ -22,6 +25,20 @@ class AddUserTest extends KernelTestCase
      */
     private $entityManager;
 
+    /**
+     * @var SaveRepository
+     */
+    private $saveRepository;
+
+    /**
+     * @var UnitReadRepository
+     */
+    private $unitReadRepository;
+    /**
+     * @var DeleteRepository
+     */
+    private $deleteRespository;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,14 +46,18 @@ class AddUserTest extends KernelTestCase
 
         $this->encoder = self::$container->get(NativePasswordEncoder::class);
         $this->entityManager = self::$container->get(EntityManagerInterface::class);
+        $this->saveRepository = self::$container->get(SaveRepository::class);
+        $this->unitReadRepository = self::$container->get(UnitReadRepository::class);
+        $this->deleteRespository = self::$container->get(DeleteRepository::class);
 
-        $oldUser = $this->entityManager
-            ->getRepository(User::class)
-            ->findOneBy(['email' => self::EMAIL]);
+        $oldUser = $this->unitReadRepository->getBy(
+            'email',
+            self::EMAIL,
+            User::class
+        );
 
         if ($oldUser) {
-            $this->entityManager->remove($oldUser);
-            $this->entityManager->flush();
+            $this->deleteRespository->delete($oldUser);
         }
 
     }
@@ -53,13 +74,16 @@ class AddUserTest extends KernelTestCase
         /**
          * TODO: The test needs a role existing in database. Setup Fixtures
          */
-        $role = $this->entityManager->getRepository(Role::class)->findOneBy(['title' => 'USER']);
+        $role = $this->unitReadRepository->getBy(
+            'title',
+            'USER',
+            Role::class
+        );
+
         if (is_null($role)) {
             $role = new Role();
             $role->setTitle('USER');
-            $this->entityManager->persist(
-                $role
-            );
+            $this->saveRepository->save($role);
         }
         $user->setRoles([$role]);
 
@@ -67,9 +91,7 @@ class AddUserTest extends KernelTestCase
             ' ID is assigned by DB. But here ID is '. $user->getId() . ' for User ' .
             json_encode($user));
 
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->saveRepository->save($user);
 
         $this->assertNotNull($user->getId(), 'User was probably not persisted in database.' .
             json_encode($user));

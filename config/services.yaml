@@ -23,4 +23,4 @@ services:
 
   App\ThirdParty\Security\Symfony\UserLoader:
     arguments:
-      - '@App\ThirdParty\Persistence\Doctrine\Repository\UserRepository'
+      - '@App\ThirdParty\Persistence\Doctrine\Repository\RepositoryImpl'

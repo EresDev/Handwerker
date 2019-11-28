@@ -6,7 +6,7 @@ use App\Domain\Entity\Entity;
 
 interface UnitReadRepository
 {
-    public function get(int $entityId): ?Entity;
+    public function get(int $entityId, string $entityClass): ?Entity;
 
-    public function getBy(string $key, $value): ?Entity;
+    public function getBy(string $key, $value, string $entityClass): ?Entity;
 }
