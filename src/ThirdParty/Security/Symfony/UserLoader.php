@@ -2,6 +2,7 @@
 
 namespace App\ThirdParty\Security\Symfony;
 
+use App\Domain\Entity\User;
 use App\Domain\Repository\UnitReadRepository;
 use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -19,7 +20,7 @@ class UserLoader extends EntityUserProvider implements UserLoaderInterface
 
     public function loadUserByUsername($username)
     {
-        if (null === ($user = $this->unitReadRepository->getBy('email', $username))) {
+        if (null === ($user = $this->unitReadRepository->getBy('email', $username, User::class))) {
             throw new BadCredentialsException(sprintf('No user found for "%s"', $username));
         }
 
