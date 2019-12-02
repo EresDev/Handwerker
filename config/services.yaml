@@ -24,3 +24,10 @@ services:
   App\ThirdParty\Security\Symfony\UserLoader:
     arguments:
       - '@App\ThirdParty\Persistence\Doctrine\Repository\RepositoryImpl'
+
+  App\Controller\CreateUserController:
+    arguments:
+      - '@App\ThirdParty\Http\PostParameterImpl'
+      - '@App\ThirdParty\Persistence\Doctrine\Repository\RepositoryImpl'
+
+
