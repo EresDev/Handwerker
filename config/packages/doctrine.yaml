@@ -17,6 +17,6 @@ doctrine:
             App:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/ThirdParty/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Domain\Entity'
                 alias: App

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ThirdParty\Security\Symfony;
+namespace App\Infrastructure\Security\Symfony;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\UnitReadRepository;

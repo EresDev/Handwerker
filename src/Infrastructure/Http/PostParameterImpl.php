@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ThirdParty\Http;
+namespace App\Infrastructure\Http;
 
 use App\Domain\Service\Http\PostParameter;
 use Symfony\Component\HttpFoundation\RequestStack;

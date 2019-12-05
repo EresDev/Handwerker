@@ -16,6 +16,6 @@ services:
 
   Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:
 
-  App\ThirdParty\Security\Symfony\PasswordEncoderAdapter:
+  App\Infrastructure\Security\Symfony\PasswordEncoderAdapter:
     tags: [ { name: nelmio_alice.faker.provider } ]
 

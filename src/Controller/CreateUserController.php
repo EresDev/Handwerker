@@ -7,7 +7,7 @@ use App\Domain\Entity\User;
 use App\Domain\Repository\RelationalSaverRepository;
 use App\Domain\Repository\SaveRepository;
 use App\Domain\Service\Http\PostParameter;
-use App\ThirdParty\Security\Symfony\UserAdapter;
+use App\Infrastructure\Security\Symfony\UserAdapter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 

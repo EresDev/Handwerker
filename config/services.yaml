@@ -14,20 +14,20 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-#  App\ThirdParty\Persistence\Doctrine\Repository\UserRepositoryImpl:
+#  App\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl:
 #    autowire: true
 
   Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:
     autowire: true
     public: true
 
-  App\ThirdParty\Security\Symfony\UserLoader:
+  App\Infrastructure\Security\Symfony\UserLoader:
     arguments:
-      - '@App\ThirdParty\Persistence\Doctrine\Repository\RepositoryImpl'
+      - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
 
   App\Controller\CreateUserController:
     arguments:
-      - '@App\ThirdParty\Http\PostParameterImpl'
-      - '@App\ThirdParty\Persistence\Doctrine\Repository\RepositoryImpl'
+      - '@App\Infrastructure\Http\PostParameterImpl'
+      - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
 
 

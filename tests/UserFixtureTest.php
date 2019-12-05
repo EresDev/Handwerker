@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Domain\Entity\User;
-use App\ThirdParty\Security\Symfony\PasswordEncoderAdapter;
+use App\Infrastructure\Security\Symfony\PasswordEncoderAdapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Nelmio\Alice\Loader\NativeLoader;

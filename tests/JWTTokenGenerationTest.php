@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Kernel;
-use App\ThirdParty\Security\Symfony\PasswordEncoder;
+use App\Infrastructure\Security\Symfony\PasswordEncoder;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ThirdParty\Persistence\Doctrine\Repository;
+namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Entity\Entity;
 use App\Domain\Repository\Repository;
