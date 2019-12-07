@@ -12,9 +12,10 @@ services:
   # this creates a service per class whose id is the fully-qualified class name
   App\:
     resource: '../src/*'
-    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject}'
+    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject,Domain/Exception}'
 
-#  App\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl:
+
+  #  App\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl:
 #    autowire: true
 
   Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:

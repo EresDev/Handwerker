@@ -4,11 +4,9 @@ namespace App\Usecase;
 
 use App\Domain\Entity\Role;
 use App\Domain\Entity\User;
-use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\RelationalSaverRepository;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Validator;
-use App\Domain\ValueObject\ValidatorResponse;
 use App\Usecase\Command\RegisterUserCommand;
 
 class RegisterUserHandler
@@ -29,20 +27,7 @@ class RegisterUserHandler
 
     public function handle(RegisterUserCommand $command): void
     {
-        $validatorResponse = $this->validator->validate($command);
-        if (!$validatorResponse->isValid()) {
-            $errors = $validatorResponse->getErrors();
-
-            throw new ValidationException(
-                $errors,
-                sprintf(
-                    "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",
-                    RegisterUserCommand::class,
-                    $command,
-                    json_encode($validatorResponse->getErrors())
-                )
-            );
-        }
+        $this->validator->validate($command);
 
         $user = new User();
         $user->setUuid($command->getUuid());

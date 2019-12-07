@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Validator\Symfony;
 
+use App\Domain\Exception\ValidationException;
 use App\Domain\Service\Validator;
-use App\Domain\ValueObject\ValidatorResponse;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -16,15 +16,22 @@ class ValidatorAdapter implements Validator
         $this->validator = $validator;
     }
 
-    public function validate(object $object): ValidatorResponse
+    public function validate(object $object): void
     {
         $constraintViolations = $this->validator->validate($object);
 
         if (count($constraintViolations) > 0) {
-            return new ValidatorResponse(false, $this->extractErrors($constraintViolations));
+            $errors = $this->extractErrors($constraintViolations);
+            throw new ValidationException(
+                $errors,
+                sprintf(
+                    "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",
+                    get_class($object),
+                    $object,
+                    json_encode($errors)
+                )
+            );
         }
-
-        return new ValidatorResponse(true, []);
     }
 
     private function extractErrors(

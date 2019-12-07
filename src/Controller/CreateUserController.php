@@ -40,7 +40,11 @@ class CreateUserController
 
         $user->setPassword($encodedPassword);
 
-        $role = $this->relationalSaverRepository->getBy(
+        $role =
+//            new Role();
+//        $role->setTitle('USER');
+
+            $this->relationalSaverRepository->getBy(
             'title',
             'USER',
             Role::class
