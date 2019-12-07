@@ -1,4 +1,7 @@
 {
+    "beberlei/assert": {
+        "version": "v3.2.6"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -150,6 +153,9 @@
     "psr/log": {
         "version": "1.1.0"
     },
+    "ramsey/uuid": {
+        "version": "3.9.1"
+    },
     "sebastian/comparator": {
         "version": "3.0.2"
     },
@@ -161,6 +167,12 @@
     },
     "sebastian/recursion-context": {
         "version": "3.0.0"
+    },
+    "simple-bus/message-bus": {
+        "version": "v3.0.3"
+    },
+    "simple-bus/symfony-bridge": {
+        "version": "v5.3.1"
     },
     "symfony/browser-kit": {
         "version": "v4.3.8"
@@ -357,6 +369,19 @@
             "config/packages/twig.yaml",
             "config/routes/dev/twig.yaml",
             "templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "d902da3e4952f18d3bf05aab29512eb61cabd869"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {

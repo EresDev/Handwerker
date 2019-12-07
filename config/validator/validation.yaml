@@ -1,0 +1,31 @@
+#App\Domain\Entity\Note:
+#  properties:
+#    title:
+#      - NotBlank:
+#          message: 'note.invalid.title.notBlank'
+#      - Length:
+#          max: 50
+#          maxMessage: 'note.invalid.title.maxLength'
+
+App\Usecase\Command\RegisterUserCommand:
+#  constraints:
+#    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+#        fields: [email]
+#        message: 'user.email.already.exists'
+  properties:
+    email:
+      - NotBlank:
+          message: 'user.invalid.email.notBlank'
+      - Email:
+          message: 'user.invalid.email'
+      - Length:
+          max: 72
+          maxMessage: 'user.invalid.email.maxlength'
+    password:
+      - NotBlank:
+          message: 'user.invalid.password.notBlank'
+      - Length:
+          min: 6
+          minMessage: 'user.invalid.password.minLength'
+          max: 4096
+          maxMessage: 'user.invalid.password.maxLength'

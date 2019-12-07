@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 class CreateUserController
 {
-    private $postParameter;
+    private PostParameter $postParameter;
     private $relationalSaverRepository;
     private $passworEncoder;
 

@@ -12,7 +12,7 @@ services:
   # this creates a service per class whose id is the fully-qualified class name
   App\:
     resource: '../src/*'
-    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject}'
 
 #  App\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl:
 #    autowire: true
@@ -30,4 +30,20 @@ services:
       - '@App\Infrastructure\Http\PostParameterImpl'
       - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
 
+#  #Use Case Handlers
+#  App\Usecase\RegisterUserHandler:
+#    arguments:
+#    - '@App\Infrastructure\Security\Symfony\PasswordEncoderAdapter2'
+#    - '@App\Infrastructure\Validator\Symfony\ValidatorAdapter'
+#    - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
+#
+#  #Adapters
+#  App\Infrastructure\Security\Symfony\PasswordEncoderAdapter2:
+#    arguments:
+#      - '@Symfony\Component\Security\Core\Encoder\NativePasswordEncoder'
+#
+#  App\Infrastructure\Validator\Symfony\ValidatorAdapter:
+#    arguments:
+#      - '@Symfony\Component\Validator\Validator\RecursiveValidator'
+#
 
