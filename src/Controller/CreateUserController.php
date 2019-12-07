@@ -4,25 +4,26 @@ namespace App\Controller;
 
 
 use App\Domain\Entity\User;
-use App\Domain\Repository\RelationalSaverRepository;
+use App\Domain\Repository\SaveRepository;
 use App\Domain\Security\Role;
 use App\Domain\Service\Http\PostParameter;
+use App\Domain\Service\PasswordEncoder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 class CreateUserController
 {
     private PostParameter $postParameter;
-    private $relationalSaverRepository;
-    private $passworEncoder;
+    private SaveRepository $saverRepository;
+    private NativePasswordEncoder $passworEncoder;
 
     public function __construct(
         PostParameter $postParameter,
-        RelationalSaverRepository $relationalSaverRepository,
+        SaveRepository $saverRepository,
         NativePasswordEncoder $passwordEncoder
     ) {
         $this->postParameter = $postParameter;
-        $this->relationalSaverRepository = $relationalSaverRepository;
+        $this->saverRepository = $saverRepository;
         $this->passworEncoder = $passwordEncoder;
     }
 
@@ -41,7 +42,7 @@ class CreateUserController
         $user->setRoles([Role::USER]);
         //TODO: VALIDATE USER
 
-        $this->relationalSaverRepository->save($user);
+        $this->saverRepository->save($user);
 
         return new JsonResponse($user, 200);
     }

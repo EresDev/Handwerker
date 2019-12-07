@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Entity\Entity;
 
-interface UnitReadRepository
+interface ReadRepository
 {
     public function get(int $entityId, string $entityClass): ?Entity;
 

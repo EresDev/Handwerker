@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Security\Symfony;
 
 use App\Domain\Entity\User;
-use App\Domain\Repository\UnitReadRepository;
+use App\Domain\Repository\ReadRepository;
 use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -13,7 +13,7 @@ class UserLoader extends EntityUserProvider implements UserLoaderInterface
 {
     private $unitReadRepository;
 
-    public function __construct(UnitReadRepository $unitReadRepository)
+    public function __construct(ReadRepository $unitReadRepository)
     {
         $this->unitReadRepository = $unitReadRepository;
     }

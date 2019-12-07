@@ -4,6 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\RelationalSaverRepository;
+use App\Domain\Repository\SaveRepository;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Validator;
 use App\Usecase\Command\RegisterUserCommand;
@@ -13,20 +14,19 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RegisterUserHandlerTest extends KernelTestCase
 {
-    private $passwordEncoder;
-    private $validator;
-    private $relationalSaverRepository;
+    private PasswordEncoder $passwordEncoder;
+    private Validator $validator;
+    private SaveRepository $saveRepository;
 
     protected function setUp()
     {
-
         static::bootKernel();
         parent::setUp();
 
         $this->passwordEncoder = $this->getService(PasswordEncoder::class);
         $this->validator = $this->getService(Validator::class);
-        $this->relationalSaverRepository =
-            $this->createMock(RelationalSaverRepository::class);
+        $this->saveRepository =
+            $this->createMock(SaveRepository::class);
     }
 
     private function getService(string $className)
@@ -36,7 +36,7 @@ class RegisterUserHandlerTest extends KernelTestCase
 
     public function testHandleWithValidData() : void
     {
-        $this->relationalSaverRepository
+        $this->saveRepository
             ->expects($this->once())
             ->method('save');
 
@@ -49,7 +49,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler = new RegisterUserHandler(
             $this->passwordEncoder,
             $this->validator,
-            $this->relationalSaverRepository
+            $this->saveRepository
         );
 
         $handler->handle($command);
@@ -68,7 +68,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler = new RegisterUserHandler(
             $this->passwordEncoder,
             $this->validator,
-            $this->relationalSaverRepository
+            $this->saveRepository
         );
 
         $handler->handle($command);

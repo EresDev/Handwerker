@@ -6,7 +6,7 @@ namespace App\Tests;
 use App\Domain\Entity\User;
 use App\Domain\Repository\DeleteRepository;
 use App\Domain\Repository\SaveRepository;
-use App\Domain\Repository\UnitReadRepository;
+use App\Domain\Repository\ReadRepository;
 use App\Domain\Security\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -32,9 +32,9 @@ class AddUserToDatabaseTest extends KernelTestCase
     private $saveRepository;
 
     /**
-     * @var UnitReadRepository
+     * @var ReadRepository
      */
-    private $unitReadRepository;
+    private $readRepository;
     /**
      * @var DeleteRepository
      */
@@ -48,10 +48,10 @@ class AddUserToDatabaseTest extends KernelTestCase
         $this->encoder = self::$container->get(NativePasswordEncoder::class);
         $this->entityManager = self::$container->get(EntityManagerInterface::class);
         $this->saveRepository = self::$container->get(SaveRepository::class);
-        $this->unitReadRepository = self::$container->get(UnitReadRepository::class);
+        $this->readRepository = self::$container->get(ReadRepository::class);
         $this->deleteRespository = self::$container->get(DeleteRepository::class);
 
-        $oldUser = $this->unitReadRepository->getBy(
+        $oldUser = $this->readRepository->getBy(
             'email',
             self::EMAIL,
             User::class

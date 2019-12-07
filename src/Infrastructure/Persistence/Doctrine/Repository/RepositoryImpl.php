@@ -6,7 +6,6 @@ use App\Domain\Entity\Entity;
 use App\Domain\Repository\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 
-
 class RepositoryImpl implements Repository
 {
     protected $entityManager;

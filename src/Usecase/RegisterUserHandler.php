@@ -2,9 +2,9 @@
 
 namespace App\Usecase;
 
-use App\Domain\Entity\Role;
 use App\Domain\Entity\User;
-use App\Domain\Repository\RelationalSaverRepository;
+use App\Domain\Repository\SaveRepository;
+use App\Domain\Security\Role;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Validator;
 use App\Usecase\Command\RegisterUserCommand;
@@ -13,16 +13,16 @@ class RegisterUserHandler
 {
     private PasswordEncoder $passwordEncoder;
     private Validator $validator;
-    private RelationalSaverRepository $relationalSaverRepository;
+    private SaveRepository $saveRepository;
 
     public function __construct(
         PasswordEncoder $passwordEncoder,
         Validator $validator,
-        RelationalSaverRepository $relationalSaverRepository
+        SaveRepository $saveRepository
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->validator = $validator;
-        $this->relationalSaverRepository = $relationalSaverRepository;
+        $this->saveRepository = $saveRepository;
     }
 
     public function handle(RegisterUserCommand $command): void
@@ -40,13 +40,8 @@ class RegisterUserHandler
 
         $user->setPassword($encodedPassword);
 
-        $role = $this->relationalSaverRepository->getBy(
-            'title',
-            'USER',
-            Role::class
-        );
-        $user->setRoles([$role]);
+        $user->setRoles([Role::USER]);
 
-        $this->relationalSaverRepository->save($user);
+        $this->saveRepository->save($user);
     }
 }
