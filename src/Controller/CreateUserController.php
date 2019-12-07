@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Domain\Entity\Role;
+
 use App\Domain\Entity\User;
 use App\Domain\Repository\RelationalSaverRepository;
-use App\Domain\Repository\SaveRepository;
+use App\Domain\Security\Role;
 use App\Domain\Service\Http\PostParameter;
-use App\Infrastructure\Security\Symfony\UserAdapter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
@@ -39,17 +38,7 @@ class CreateUserController
         );
 
         $user->setPassword($encodedPassword);
-
-        $role =
-//            new Role();
-//        $role->setTitle('USER');
-
-            $this->relationalSaverRepository->getBy(
-            'title',
-            'USER',
-            Role::class
-        );
-        $user->setRoles([$role]);
+        $user->setRoles([Role::USER]);
         //TODO: VALIDATE USER
 
         $this->relationalSaverRepository->save($user);

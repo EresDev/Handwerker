@@ -79,15 +79,9 @@ class User extends Entity implements \JsonSerializable
 
     public function getRoles() : array
     {
-        foreach ($this->roles as $role) {
-            if (is_object($role)) {
-                $_roles[] = $role->getTitle();
-            }
-            else{
-                $_roles[] = $role;
-            }
-        }
-        return $_roles;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 
     public function setRoles($roles) : void

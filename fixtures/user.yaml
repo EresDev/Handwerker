@@ -8,11 +8,7 @@ App\Domain\Entity\User:
     deleted: false
     memberSince: <dateTimeBetween('2019-10-10', '2019-10-10')>
     roles:
-      - '@role_1'
+      - 'ROLE_USER'
 
-App\Domain\Entity\Role:
-  role_1:
-    id: 1
-    title: 'USER'
 
 

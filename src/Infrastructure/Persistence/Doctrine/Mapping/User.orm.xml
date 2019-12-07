@@ -20,19 +20,7 @@
     <field name="deleted" type="boolean" column="deleted" nullable="false"/>
     <field name="activated" type="boolean" column="activated" nullable="false"/>
     <field name="memberSince" type="datetime" column="memberSince" nullable="false"/>
-    <many-to-many field="roles" target-entity="Role">
-      <cascade>
-        <cascade-persist/>
-      </cascade>
-      <join-table name="user_role">
-        <join-columns>
-          <join-column name="user_id" referenced-column-name="id" nullable="false" unique="false" on-delete="RESTRICT"/>
-        </join-columns>
-        <inverse-join-columns>
-          <join-column name="role_id" referenced-column-name="id" nullable="false" unique="false"/>
-        </inverse-join-columns>
-      </join-table>
-    </many-to-many>
+    <field name="roles" type="json_array" column="roles" nullable="false"/>
 
   </entity>
 </doctrine-mapping>

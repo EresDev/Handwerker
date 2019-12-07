@@ -2,11 +2,12 @@
 
 namespace App\Tests;
 
-use App\Domain\Entity\Role;
+
 use App\Domain\Entity\User;
 use App\Domain\Repository\DeleteRepository;
 use App\Domain\Repository\SaveRepository;
 use App\Domain\Repository\UnitReadRepository;
+use App\Domain\Security\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
@@ -71,21 +72,7 @@ class AddUserToDatabaseTest extends KernelTestCase
 
         $user->setPassword($encoded);
 
-        /**
-         * TODO: The test needs a role existing in database. Setup Fixtures
-         */
-        $role = $this->unitReadRepository->getBy(
-            'title',
-            'USER',
-            Role::class
-        );
-
-        if (is_null($role)) {
-            $role = new Role();
-            $role->setTitle('USER');
-            $this->saveRepository->save($role);
-        }
-        $user->setRoles([$role]);
+        $user->setRoles([Role::USER]);
 
         $this->assertNull($user->getId(), 'User ID is must be null before persist because' .
             ' ID is assigned by DB. But here ID is '. $user->getId() . ' for User ' .
