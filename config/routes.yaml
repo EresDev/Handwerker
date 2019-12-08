@@ -7,4 +7,4 @@ api_login_check:
 
 createUser:
     path: /user
-    controller: App\Controller\CreateUserController:handleRequest
+    controller: App\Controller\RegisterUserController:handleRequest

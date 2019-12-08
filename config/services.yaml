@@ -26,10 +26,12 @@ services:
     arguments:
       - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
 
-  App\Controller\CreateUserController:
-    arguments:
-      - '@App\Infrastructure\Http\PostParameterImpl'
-      - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
+
+  #Command Handlers
+  App\Usecase\RegisterUserHandler:
+    tags:
+      - { name: command_handler, handles: App\Usecase\Command\RegisterUserCommand, method: registerUser }
+
 
 #  #Use Case Handlers
 #  App\Usecase\RegisterUserHandler:

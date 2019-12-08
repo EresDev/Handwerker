@@ -7,6 +7,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    <field name="uuid" type="binary" column="uuid" nullable="false"/>
     <field name="email" type="string" column="email" length="72" nullable="false">
       <options>
         <option name="fixed"/>
@@ -21,6 +22,5 @@
     <field name="activated" type="boolean" column="activated" nullable="false"/>
     <field name="memberSince" type="datetime" column="memberSince" nullable="false"/>
     <field name="roles" type="json_array" column="roles" nullable="false"/>
-
   </entity>
 </doctrine-mapping>

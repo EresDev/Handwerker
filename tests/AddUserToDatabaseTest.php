@@ -9,6 +9,7 @@ use App\Domain\Repository\SaveRepository;
 use App\Domain\Repository\ReadRepository;
 use App\Domain\Security\Role;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
@@ -66,7 +67,7 @@ class AddUserToDatabaseTest extends KernelTestCase
     public function testAddUser(): void
     {
         $user = new User();
-
+        $user->setUuid(Uuid::uuid1());
         $user->setEmail(self::EMAIL);
         $encoded = $this->encoder->encodePassword(self::PASSWORD, $user->getSalt());
 
