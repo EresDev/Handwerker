@@ -2,22 +2,20 @@
 
 namespace App\Usecase\Command;
 
-use Ramsey\Uuid\Uuid;
-
 class RegisterUserCommand extends Command
 {
-    private $uuid;
-    private $email;
-    private $password;
+    private string $uuid;
+    private string $email;
+    private string $password;
 
-    public function __construct(Uuid $uuid, string $email, string $password)
+    public function __construct(string $uuid, string $email, string $password)
     {
         $this->uuid = $uuid;
         $this->email = $email;
         $this->password = $password;
     }
 
-    public function getUuid(): Uuid
+    public function getUuid(): string
     {
         return $this->uuid;
     }

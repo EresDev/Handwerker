@@ -12,7 +12,6 @@ class RegisterUserControllerTest extends WebTestCase
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
 
-
     protected $client;
     private $request;
 

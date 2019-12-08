@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Domain\Service\Uuid;
 use App\Usecase\Command\RegisterUserCommand;
-use Ramsey\Uuid\Uuid;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +14,6 @@ class RegisterUserController
     private CommandBus $commandBus;
     private Request $request;
 
-    /**
-     * RegisterUserController constructor.
-     * @param CommandBus $commandBus
-     * @param Request $request
-     */
     public function __construct(CommandBus $commandBus, RequestStack $requestStack)
     {
         $this->commandBus = $commandBus;
@@ -26,7 +21,7 @@ class RegisterUserController
     }
 
     public function handleRequest(): JsonResponse {
-        $uuid = Uuid::uuid1();
+        $uuid = Uuid::get();
         $command = new RegisterUserCommand(
             $uuid,
             $this->request->get('email', ''),
@@ -38,7 +33,7 @@ class RegisterUserController
 
         }
         return new JsonResponse(
-            ['userUuid' => $uuid->toString()]
+            ['userUuid' => $uuid]
         );
     }
 

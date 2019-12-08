@@ -7,7 +7,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="uuid" type="binary" column="uuid" nullable="false"/>
+    <field name="uuid" column="uuid" type="string" length="36" nullable="false"/>
     <field name="email" type="string" column="email" length="72" nullable="false">
       <options>
         <option name="fixed"/>
