@@ -4,7 +4,7 @@ namespace App\Domain\Entity;
 
 abstract class Entity
 {
-    protected $id;
+    public $id;
     protected $uuid;
 
     public function getId() : ?int

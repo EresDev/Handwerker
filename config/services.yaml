@@ -18,7 +18,7 @@ services:
   #Command Handlers
   App\Application\UseCaseHandler\RegisterUserHandler:
     tags:
-      - { name: command_handler, handles: App\Application\UseCase\RegisterUser, method: registerUser }
+      - { name: command_handler, handles: App\Application\UseCase\RegisterUser, method: handle }
 
 
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:

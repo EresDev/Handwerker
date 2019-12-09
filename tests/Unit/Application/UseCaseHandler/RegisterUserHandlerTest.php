@@ -17,6 +17,7 @@ class RegisterUserHandlerTest extends KernelTestCase
     private PasswordEncoder $passwordEncoder;
     private Validator $validator;
     private UserSaver $userSaver;
+    private Uuid $uuidGenerator;
 
     protected function setUp()
     {
@@ -27,6 +28,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->validator = $this->getService(Validator::class);
         $this->userSaver =
             $this->createMock(UserSaver::class);
+        $this->uuidGenerator = $this->getService(Uuid::class);
     }
 
     private function getService(string $className)
@@ -41,7 +43,7 @@ class RegisterUserHandlerTest extends KernelTestCase
             ->method('save');
 
         $command = new RegisterUser(
-          Uuid::get(),
+            $this->uuidGenerator->generate(),
           'registerUserHanlderTest@eresdev.com',
             'somePassword@sdf453'
         );
@@ -60,7 +62,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->expectException(ValidationException::class);
 
         $command = new RegisterUser(
-            Uuid::get(),
+            $this->uuidGenerator->generate(),
             'invalidEmail',
             'somePassword@sdf453'
         );

@@ -1,6 +1,5 @@
 App\Domain\Entity\User:
   user_{1}:
-    id: 1
     uuid: 'cc22a28c-19fa-11ea-978f-2e728ce88125'
     email: 'auth_user2@eresdev.com'
     plainPassword: 'somePassword1145236'

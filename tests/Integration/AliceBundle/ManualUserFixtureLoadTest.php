@@ -39,8 +39,9 @@ class ManualUserFixtureLoadTest extends KernelTestCase
          */
         $userFromDb = $entityManager
             ->getRepository(User::class)
-            ->find($user->getId());
+            ->findOneBy(['uuid' => $user->getUuid()]);
 
-        $this->assertTrue($user->equals($userFromDb));
+        $this->assertNotNull($userFromDb);
+        $this->assertEquals($user->getUuid(), $userFromDb->getUuid());
     }
 }

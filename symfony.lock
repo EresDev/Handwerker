@@ -153,6 +153,9 @@
     "psr/log": {
         "version": "1.1.0"
     },
+    "ramsey/uuid": {
+        "version": "3.9.1"
+    },
     "sebastian/comparator": {
         "version": "3.0.2"
     },
