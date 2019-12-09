@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Tests\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterUserControllerTest extends WebTestCase
 {
@@ -12,14 +12,9 @@ class RegisterUserControllerTest extends WebTestCase
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
 
-    protected $client;
-    private $request;
-
     protected function setUp() : void
     {
         parent::setUp();
-        self::bootKernel();
-        $this->client = static::createClient();
     }
 
     public function testHandleRequestWithValidData() : void
@@ -27,7 +22,7 @@ class RegisterUserControllerTest extends WebTestCase
         $this->sendRequest(
             ['email' => self::EMAIL, 'password' => self::PASSWORD]
         );
-        $response = $this->client->getResponse();
+        $response = $this->response();
         $this->assertEquals(200, $response->getStatusCode());
 
         $responseObj = json_decode($response->getContent());
@@ -35,35 +30,33 @@ class RegisterUserControllerTest extends WebTestCase
         $this->assertNotNull($responseObj->uuid);
     }
 
-    private function sendRequest(array $parameters) : void
+
+    public function testHandleRequestWithEmptyPassword() : void
     {
-        $this->client->request(
-            'post',
-            '/user',
-            $parameters,
-            [],
-            []
+        $this->sendRequest(
+            ['email' => self::EMAIL, 'password' => '']
         );
+        $response = $this->response();
+        $this->assertEquals(422, $response->getStatusCode());
+
+        $content = $this->response()->getContent();
+        $contentObjects = json_decode($content);
+
+        $this->assertObjectHasAttribute('password', $contentObjects[0]);
     }
 
-    protected function request(
-        string $method,
-        string $uri,
-        array $parameters=[],
-        array $files=[],
-        array $server=[],
-        string $content=null,
-        bool $changeHistory=true
-    ) : void {
-        $this->client->request(
-            $method,
-            $uri,
-            $parameters,
-            $files,
-            $server,
-            $content,
-            $changeHistory
+    public function testHandleRequestWithInvalidEmail() : void
+    {
+        $this->sendRequest(
+            ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
         );
+        $response = $this->response();
+        $this->assertEquals(422, $response->getStatusCode());
+
+        $content = $this->response()->getContent();
+        $contentObjects = json_decode($content);
+
+        $this->assertObjectHasAttribute('email', $contentObjects[0]);
     }
 
 }

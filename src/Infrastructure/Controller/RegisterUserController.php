@@ -32,12 +32,10 @@ class RegisterUserController
         try {
             $this->commandBus->handle($command);
         } catch (ValidationException $exception) {
-
+            return new JsonResponse($exception->getMessagesForEndUser(), 422);
         }
 
-        return new JsonResponse(
-            ['uuid' => $uuid]
-        );
+        return new JsonResponse(['uuid' => $uuid], 200);
     }
 
 }

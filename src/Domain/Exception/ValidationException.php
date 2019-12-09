@@ -4,7 +4,7 @@ namespace App\Domain\Exception;
 
 use Throwable;
 
-class ValidationException extends BaseException
+class ValidationException extends MultiResponseException
 {
     private $validationErrors;
 
@@ -15,16 +15,11 @@ class ValidationException extends BaseException
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
+        $this->validationErrors = $validationErrors;
     }
 
-    public function getMessageForEndUser(): string
-    {
-        return 'The submitted data was not valid.';
-    }
-
-    public function getValidationErrors() : array
+    public function getMessagesForEndUser(): array
     {
         return $this->validationErrors;
     }
-
 }
