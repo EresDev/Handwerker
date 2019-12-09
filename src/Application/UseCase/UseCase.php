@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Usecase\Command;
+namespace App\Application\UseCase;
 
-abstract class Command
+abstract class UseCase
 {
     abstract public function getContent(): array;
 

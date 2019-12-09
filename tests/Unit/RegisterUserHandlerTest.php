@@ -2,14 +2,14 @@
 
 namespace App\Tests\Unit;
 
+use App\Application\UseCaseHandler\RegisterUserHandler;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\RelationalSaverRepository;
 use App\Domain\Repository\User\UserSaver;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Uuid;
 use App\Domain\Service\Validator;
-use App\Usecase\Command\RegisterUserCommand;
-use App\Usecase\RegisterUserHandler;
+use App\Application\UseCase\RegisterUser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RegisterUserHandlerTest extends KernelTestCase
@@ -40,7 +40,7 @@ class RegisterUserHandlerTest extends KernelTestCase
             ->expects($this->once())
             ->method('save');
 
-        $command = new RegisterUserCommand(
+        $command = new RegisterUser(
           Uuid::get(),
           'registerUserHanlderTest@eresdev.com',
             'somePassword@sdf453'
@@ -59,7 +59,7 @@ class RegisterUserHandlerTest extends KernelTestCase
     {
         $this->expectException(ValidationException::class);
 
-        $command = new RegisterUserCommand(
+        $command = new RegisterUser(
             Uuid::get(),
             'invalidEmail',
             'somePassword@sdf453'

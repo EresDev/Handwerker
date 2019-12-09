@@ -12,15 +12,15 @@ services:
   # this creates a service per class whose id is the fully-qualified class name
   App\:
     resource: '../src/*'
-    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject,Domain/Exception}'
+    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Application/UseCase,Domain/ValueObject,Domain/Exception}'
 
 
   #Command Handlers
-  App\Usecase\RegisterUserHandler:
+  App\Application\UseCaseHandler\RegisterUserHandler:
     tags:
-      - { name: command_handler, handles: App\Usecase\Command\RegisterUserCommand, method: registerUser }
+      - { name: command_handler, handles: App\Application\UseCase\RegisterUser, method: registerUser }
 
 
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
     class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
-    public: true
+

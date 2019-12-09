@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Usecase\Command;
+namespace App\Application\UseCase;
 
-class RegisterUserCommand extends Command
+class RegisterUser extends UseCase
 {
     private string $uuid;
     private string $email;

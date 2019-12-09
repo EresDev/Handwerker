@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Usecase;
+namespace App\Application\UseCaseHandler;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\User\UserSaver;
 use App\Domain\Security\Role;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Validator;
-use App\Usecase\Command\RegisterUserCommand;
+use App\Application\UseCase\RegisterUser;
 
 class RegisterUserHandler
 {
@@ -25,7 +25,7 @@ class RegisterUserHandler
         $this->userSaver = $userSaver;
     }
 
-    public function handle(RegisterUserCommand $command): void
+    public function handle(RegisterUser $command): void
     {
         $this->validator->validate($command);
 

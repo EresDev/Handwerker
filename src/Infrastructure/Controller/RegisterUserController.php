@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Domain\Service\Uuid;
-use App\Usecase\Command\RegisterUserCommand;
+use App\Application\UseCase\RegisterUser;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class RegisterUserController
 
     public function handleRequest(): JsonResponse {
         $uuid = Uuid::get();
-        $command = new RegisterUserCommand(
+        $command = new RegisterUser(
             $uuid,
             $this->request->get('email', ''),
             $this->request->get('password', '')
