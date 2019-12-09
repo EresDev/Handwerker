@@ -6,9 +6,9 @@ use App\Application\UseCaseHandler\RegisterUserHandler;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\RelationalSaverRepository;
 use App\Domain\Repository\User\UserSaver;
-use App\Domain\Service\PasswordEncoder;
-use App\Domain\Service\Uuid;
-use App\Domain\Service\Validator;
+use App\Service\PasswordEncoder;
+use App\Service\Uuid;
+use App\Service\Validator;
 use App\Application\UseCase\RegisterUser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

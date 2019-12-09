@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Service;
+namespace App\Service;
 
 interface PasswordEncoder
 {

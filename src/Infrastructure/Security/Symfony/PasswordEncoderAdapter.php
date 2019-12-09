@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Security\Symfony;
 
-use App\Domain\Service\PasswordEncoder;
+use App\Service\PasswordEncoder;
 use Faker\Provider\Base as BaseProvider;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 

@@ -4,9 +4,9 @@ namespace App\Application\UseCaseHandler;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\User\UserSaver;
-use App\Domain\Security\Role;
-use App\Domain\Service\PasswordEncoder;
-use App\Domain\Service\Validator;
+use App\Service\Security\Role;
+use App\Service\PasswordEncoder;
+use App\Service\Validator;
 use App\Application\UseCase\RegisterUser;
 
 class RegisterUserHandler

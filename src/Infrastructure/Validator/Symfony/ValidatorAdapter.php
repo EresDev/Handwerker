@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Validator\Symfony;
 
 use App\Domain\Exception\ValidationException;
-use App\Domain\Service\Validator;
+use App\Service\Validator;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

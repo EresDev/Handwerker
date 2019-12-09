@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Domain\Service\Uuid;
+use App\Service\Uuid;
 use App\Application\UseCase\RegisterUser;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
