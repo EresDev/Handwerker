@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Functional\Infrastructure\Controller;
 
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

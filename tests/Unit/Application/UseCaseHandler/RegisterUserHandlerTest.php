@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit;
+namespace App\Tests\Unit\Application\UseCaseHandler;
 
 use App\Application\UseCaseHandler\RegisterUserHandler;
 use App\Domain\Exception\ValidationException;

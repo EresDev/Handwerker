@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Integration\AliceBundle;
 
 use App\Domain\Entity\User;
 use App\Infrastructure\Security\Symfony\PasswordEncoderAdapter;
@@ -19,7 +19,7 @@ class ManualUserFixtureLoadTest extends KernelTestCase
         $loader->getFakerGenerator()->addProvider(
             self::$container->get(PasswordEncoderAdapter::class)
         );
-        $this->fixture = $loader->loadFile(__DIR__ . '/../fixtures/user.yaml');
+        $this->fixture = $loader->loadFile(self::$kernel->getProjectDir().'/fixtures/user.yaml');
     }
 
     public function testUserFixture() : void
