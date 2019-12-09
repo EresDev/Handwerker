@@ -6,5 +6,6 @@ use App\Domain\Entity\User;
 
 interface UserFinder
 {
-    public function find(int $id) : User;
+    public function find(int $id): ?User;
+    public function findOneBy(string $key, string $value): ?User;
 }

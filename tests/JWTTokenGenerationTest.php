@@ -20,7 +20,7 @@ class JWTTokenGenerationTest extends KernelTestCase
         self::bootKernel();
     }
 
-    public function testTokenGeneration() : void
+    public function testTokenGenerationForExistingUser() : void
     {
         $this->request = Request::create(
             '/login_check',
@@ -44,7 +44,6 @@ class JWTTokenGenerationTest extends KernelTestCase
 
     public function testTokenGenerationErrorNonExistingUser() : void
     {
-
         $this->request = Request::create(
             '/login_check',
             'POST',

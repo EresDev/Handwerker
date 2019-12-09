@@ -15,38 +15,9 @@ services:
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject,Domain/Exception}'
 
 
-  #  App\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl:
-#    autowire: true
-
-  Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:
-    autowire: true
-    public: true
-
-  App\Infrastructure\Security\Symfony\UserLoader:
-    arguments:
-      - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
-
-
   #Command Handlers
   App\Usecase\RegisterUserHandler:
     tags:
       - { name: command_handler, handles: App\Usecase\Command\RegisterUserCommand, method: registerUser }
 
-
-#  #Use Case Handlers
-#  App\Usecase\RegisterUserHandler:
-#    arguments:
-#    - '@App\Infrastructure\Security\Symfony\PasswordEncoderAdapter2'
-#    - '@App\Infrastructure\Validator\Symfony\ValidatorAdapter'
-#    - '@App\Infrastructure\Persistence\Doctrine\Repository\RepositoryImpl'
-#
-#  #Adapters
-#  App\Infrastructure\Security\Symfony\PasswordEncoderAdapter2:
-#    arguments:
-#      - '@Symfony\Component\Security\Core\Encoder\NativePasswordEncoder'
-#
-#  App\Infrastructure\Validator\Symfony\ValidatorAdapter:
-#    arguments:
-#      - '@Symfony\Component\Validator\Validator\RecursiveValidator'
-#
 
