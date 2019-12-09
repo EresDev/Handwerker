@@ -4,7 +4,7 @@ namespace App\Domain\Repository\User;
 
 use App\Domain\Entity\User;
 
-interface UserUpdater
+interface UserSaver
 {
-    public function update(User $user): void;
+    public function save(User $user): void;
 }

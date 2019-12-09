@@ -3,7 +3,7 @@
 namespace App\Usecase;
 
 use App\Domain\Entity\User;
-use App\Domain\Repository\SaveRepository;
+use App\Domain\Repository\User\UserSaver;
 use App\Domain\Security\Role;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Validator;
@@ -13,16 +13,16 @@ class RegisterUserHandler
 {
     private PasswordEncoder $passwordEncoder;
     private Validator $validator;
-    private SaveRepository $saveRepository;
+    private UserSaver $userSaver;
 
     public function __construct(
         PasswordEncoder $passwordEncoder,
         Validator $validator,
-        SaveRepository $saveRepository
+        UserSaver $userSaver
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->validator = $validator;
-        $this->saveRepository = $saveRepository;
+        $this->userSaver = $userSaver;
     }
 
     public function handle(RegisterUserCommand $command): void
@@ -42,6 +42,6 @@ class RegisterUserHandler
 
         $user->setRoles([Role::USER]);
 
-        $this->saveRepository->save($user);
+        $this->userSaver->save($user);
     }
 }

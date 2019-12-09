@@ -6,7 +6,7 @@ namespace App\Tests;
 use App\Domain\Entity\User;
 use App\Domain\Repository\DeleteRepository;
 use App\Domain\Repository\ReadRepository;
-use App\Domain\Repository\SaveRepository;
+use App\Domain\Repository\User\UserSaver;
 use App\Domain\Security\Role;
 use App\Domain\Service\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +28,7 @@ class AddUserToDatabaseTest extends KernelTestCase
     private $entityManager;
 
     /**
-     * @var SaveRepository
+     * @var UserSaver
      */
     private $saveRepository;
 
@@ -48,7 +48,7 @@ class AddUserToDatabaseTest extends KernelTestCase
 
         $this->encoder = self::$container->get(NativePasswordEncoder::class);
         $this->entityManager = self::$container->get(EntityManagerInterface::class);
-        $this->saveRepository = self::$container->get(SaveRepository::class);
+        $this->saveRepository = self::$container->get(UserSaver::class);
         $this->readRepository = self::$container->get(ReadRepository::class);
         $this->deleteRespository = self::$container->get(DeleteRepository::class);
 

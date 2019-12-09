@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\RelationalSaverRepository;
-use App\Domain\Repository\SaveRepository;
+use App\Domain\Repository\User\UserSaver;
 use App\Domain\Service\PasswordEncoder;
 use App\Domain\Service\Uuid;
 use App\Domain\Service\Validator;
@@ -16,7 +16,7 @@ class RegisterUserHandlerTest extends KernelTestCase
 {
     private PasswordEncoder $passwordEncoder;
     private Validator $validator;
-    private SaveRepository $saveRepository;
+    private UserSaver $userSaver;
 
     protected function setUp()
     {
@@ -25,8 +25,8 @@ class RegisterUserHandlerTest extends KernelTestCase
 
         $this->passwordEncoder = $this->getService(PasswordEncoder::class);
         $this->validator = $this->getService(Validator::class);
-        $this->saveRepository =
-            $this->createMock(SaveRepository::class);
+        $this->userSaver =
+            $this->createMock(UserSaver::class);
     }
 
     private function getService(string $className)
@@ -36,7 +36,7 @@ class RegisterUserHandlerTest extends KernelTestCase
 
     public function testHandleWithValidData() : void
     {
-        $this->saveRepository
+        $this->userSaver
             ->expects($this->once())
             ->method('save');
 
@@ -49,7 +49,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler = new RegisterUserHandler(
             $this->passwordEncoder,
             $this->validator,
-            $this->saveRepository
+            $this->userSaver
         );
 
         $handler->handle($command);
@@ -68,7 +68,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler = new RegisterUserHandler(
             $this->passwordEncoder,
             $this->validator,
-            $this->saveRepository
+            $this->userSaver
         );
 
         $handler->handle($command);
