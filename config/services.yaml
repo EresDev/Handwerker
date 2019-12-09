@@ -21,3 +21,6 @@ services:
       - { name: command_handler, handles: App\Usecase\Command\RegisterUserCommand, method: registerUser }
 
 
+  Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
+    class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
+    public: true

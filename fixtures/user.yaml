@@ -4,7 +4,7 @@ App\Domain\Entity\User:
     uuid: 'cc22a28c-19fa-11ea-978f-2e728ce88125'
     email: 'auth_user2@eresdev.com'
     plainPassword: 'somePassword1145236'
-    password: <encodePassword(@user_1, @user_1->plainPassword)>
+    password: <encode(@user_1->plainPassword, @user_1->getSalt)>
     activated: true
     deleted: false
     memberSince: <dateTimeBetween('2019-10-10', '2019-10-10')>

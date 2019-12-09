@@ -2,25 +2,24 @@
 
 namespace App\Infrastructure\Security\Symfony;
 
-use App\Domain\Entity\User;
+use App\Domain\Service\PasswordEncoder;
 use Faker\Provider\Base as BaseProvider;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
-class PasswordEncoderAdapter extends BaseProvider
+class PasswordEncoderAdapter extends BaseProvider implements PasswordEncoder
 {
-    private $encoder;
+    private $passwordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(PasswordEncoderInterface $passwordEncoder)
     {
-        $this->encoder = $encoder;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
-    //TODO: one method needed, not two
-    public function encodePassword(User $user, string $plainPassword)
+    public function encode(string $password, string $salt): string
     {
-        return $this->encoder->encodePassword(
-            new UserAdapter($user),
-            $plainPassword
+        return $this->passwordEncoder->encodePassword(
+            $password,
+            $salt
         );
     }
 }

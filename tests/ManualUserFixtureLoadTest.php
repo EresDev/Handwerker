@@ -5,14 +5,11 @@ namespace App\Tests;
 use App\Domain\Entity\User;
 use App\Infrastructure\Security\Symfony\PasswordEncoderAdapter;
 use Doctrine\ORM\EntityManagerInterface;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserFixtureTest extends KernelTestCase
+class ManualUserFixtureLoadTest extends KernelTestCase
 {
-    use RefreshDatabaseTrait;
-
     protected $fixture;
 
     protected function setUp(): void

@@ -14,22 +14,3 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Usecase,Domain/ValueObject,Domain/Exception}'
 
-  Symfony\Component\Security\Core\Encoder\NativePasswordEncoder:
-
-  App\Infrastructure\Security\Symfony\PasswordEncoderAdapter:
-    tags: [ { name: nelmio_alice.faker.provider } ]
-
-
-  #Adapters
-  App\Infrastructure\Security\Symfony\PasswordEncoderAdapter2:
-    arguments:
-      - '@Symfony\Component\Security\Core\Encoder\NativePasswordEncoder'
-
-  App\Infrastructure\Validator\Symfony\ValidatorAdapter:
-    autowire: true
-
-#  Symfony\Component\Validator\Validator\RecursiveValidator:
-#    autowire: true
-#    autoconfigure: true
-#
-
