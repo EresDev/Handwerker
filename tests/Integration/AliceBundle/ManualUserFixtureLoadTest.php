@@ -3,8 +3,8 @@
 namespace App\Tests\Integration\AliceBundle;
 
 use App\Domain\Entity\User;
+use App\Domain\Repository\User\UserFinder;
 use App\Infrastructure\Security\Symfony\PasswordEncoderAdapter;
-use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -25,9 +25,9 @@ class ManualUserFixtureLoadTest extends KernelTestCase
     public function testUserFixture() : void
     {
         /**
-         * @var EntityManagerInterface $entityManager
+         * @var UserFinder $userFinder
          */
-        $entityManager = self::$container->get(EntityManagerInterface::class);
+        $userFinder = self::$container->get(UserFinder::class);
 
         /**
          * @var User $user
@@ -37,9 +37,7 @@ class ManualUserFixtureLoadTest extends KernelTestCase
         /**
          * @var User $user
          */
-        $userFromDb = $entityManager
-            ->getRepository(User::class)
-            ->findOneBy(['uuid' => $user->getUuid()]);
+        $userFromDb = $userFinder->findOneBy('uuid', $user->getUuid());
 
         $this->assertNotNull($userFromDb);
         $this->assertEquals($user->getUuid(), $userFromDb->getUuid());
