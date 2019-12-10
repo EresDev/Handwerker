@@ -2,22 +2,21 @@
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
-use App\Tests\WebTestCase;
+use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class RegisterUserControllerTest extends WebTestCase
 {
     use ReloadDatabaseTrait;
-
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
     }
 
-    public function testHandleRequestWithValidData() : void
+    public function testHandleRequestWithValidData(): void
     {
         $this->sendRequest(
             ['email' => self::EMAIL, 'password' => self::PASSWORD]
@@ -30,8 +29,7 @@ class RegisterUserControllerTest extends WebTestCase
         $this->assertNotNull($responseObj->uuid);
     }
 
-
-    public function testHandleRequestWithEmptyPassword() : void
+    public function testHandleRequestWithEmptyPassword(): void
     {
         $this->sendRequest(
             ['email' => self::EMAIL, 'password' => '']
@@ -51,7 +49,7 @@ class RegisterUserControllerTest extends WebTestCase
         $this->assertObjectHasAttribute($invalidField, $contentObjects[0]);
     }
 
-    public function testHandleRequestWithInvalidEmail() : void
+    public function testHandleRequestWithInvalidEmail(): void
     {
         $this->sendRequest(
             ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
