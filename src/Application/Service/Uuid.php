@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Application\Service;
 
 interface Uuid
 {

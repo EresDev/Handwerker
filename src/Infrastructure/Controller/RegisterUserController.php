@@ -2,9 +2,9 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Application\UseCase\RegisterUser;
+use App\Application\Command\RegisterUserCommand;
 use App\Domain\Exception\ValidationException;
-use App\Service\Uuid;
+use App\Application\Service\Uuid;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class RegisterUserController
 
     public function handleRequest(): JsonResponse {
         $uuid = $this->uuidGenerator->generate();
-        $command = new RegisterUser(
+        $command = new RegisterUserCommand(
             $uuid,
             $this->request->get('email', ''),
             $this->request->get('password', '')

@@ -2,10 +2,10 @@
 
 namespace App\Infrastructure\Service;
 
-use App\Service\Uuid;
+use App\Application\Service\Uuid;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 
-class UuidImpl implements Uuid
+class UuidAdapter implements Uuid
 {
     public function generate(): string
     {

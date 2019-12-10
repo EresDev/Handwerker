@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Security;
+namespace App\Application\Service\Security;
 
 class Role
 {
