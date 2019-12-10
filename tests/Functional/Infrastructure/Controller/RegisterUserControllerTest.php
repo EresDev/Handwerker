@@ -36,13 +36,19 @@ class RegisterUserControllerTest extends WebTestCase
         $this->sendRequest(
             ['email' => self::EMAIL, 'password' => '']
         );
+
+        $this->assertForInvalidRequestData('password');
+    }
+
+    private function assertForInvalidRequestData(string $invalidField): void
+    {
         $response = $this->response();
         $this->assertEquals(422, $response->getStatusCode());
 
         $content = $this->response()->getContent();
         $contentObjects = json_decode($content);
 
-        $this->assertObjectHasAttribute('password', $contentObjects[0]);
+        $this->assertObjectHasAttribute($invalidField, $contentObjects[0]);
     }
 
     public function testHandleRequestWithInvalidEmail() : void
@@ -50,13 +56,7 @@ class RegisterUserControllerTest extends WebTestCase
         $this->sendRequest(
             ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
         );
-        $response = $this->response();
-        $this->assertEquals(422, $response->getStatusCode());
 
-        $content = $this->response()->getContent();
-        $contentObjects = json_decode($content);
-
-        $this->assertObjectHasAttribute('email', $contentObjects[0]);
+        $this->assertForInvalidRequestData('email');
     }
-
 }
