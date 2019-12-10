@@ -9,10 +9,13 @@ use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\User\UserSaver;
+use App\Tests\Shared\TestData;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RegisterUserHandlerTest extends KernelTestCase
 {
+    public const EMAIL = 'registerUserHanlderTest@eresdev.com';
+    public const PASSWORD = 'SomeRandomPassword2348';
     private PasswordEncoder $passwordEncoder;
     private Validator $validator;
     private UserSaver $userSaver;
@@ -35,7 +38,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         return static::$container->get($className);
     }
 
-    public function testHandleWithValidData() : void
+    public function testHandleWithValidData(): void
     {
         $this->userSaver
             ->expects($this->once())
@@ -43,8 +46,8 @@ class RegisterUserHandlerTest extends KernelTestCase
 
         $command = new RegisterUserCommand(
             $this->uuidGenerator->generate(),
-          'registerUserHanlderTest@eresdev.com',
-            'somePassword@sdf453'
+            self::EMAIL,
+            self::PASSWORD
         );
 
         $handler = new RegisterUserHandler(
@@ -56,14 +59,17 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler->handle($command);
     }
 
-    public function testHandleWithInValidEmail(): void
+    /**
+     * @dataProvider getInvalidValues
+     */
+    public function testHandleWithInValidEmail(TestData $testData): void
     {
         $this->expectException(ValidationException::class);
 
         $command = new RegisterUserCommand(
             $this->uuidGenerator->generate(),
-            'invalidEmail',
-            'somePassword@sdf453'
+            $testData->getInput()['email'],
+            $testData->getInput()['password']
         );
 
         $handler = new RegisterUserHandler(
@@ -72,6 +78,59 @@ class RegisterUserHandlerTest extends KernelTestCase
             $this->userSaver
         );
 
-        $handler->handle($command);
+        try {
+            $handler->handle($command);
+        } catch (ValidationException $exception) {
+            $this->assertArrayHasKey($testData->getExpectedValue(), $exception->getMessagesForEndUser()[0]);
+            throw $exception; // so that $this->expectException passes
+        }
+    }
+
+    public function getInvalidValues() : array
+    {
+        return [
+            [
+                new TestData(
+                    ['email' => '', 'password' => self::PASSWORD],
+                    'email',
+                    'Validation problem: Given empty email but did not get back email validation error'
+                )
+            ],
+            [
+                new TestData(
+                    ['email' => 'invalidEmail', 'password' => self::PASSWORD],
+                    'email',
+                    'Validation problem: Given invalid email but did not get back email validation error'
+                )
+            ],
+            [
+                new TestData(
+                    ['email' => str_repeat("a", 61) . '.eresdev.com', 'password' => self::PASSWORD],
+                    'email',
+                    'Validation problem: Given too long email but did not get back email validation error'
+                )
+            ],
+            [
+                new TestData(
+                    ['email' => self::EMAIL, 'password' => '', 'expectedInvalidField' => 'password'],
+                    'password',
+                    'Validation problem: Given empty password but did not get back password validation error'
+                )
+            ],
+            [
+                new TestData(
+                    ['email' => self::EMAIL, 'password' => 'foo'],
+                    'password',
+                    'Validation problem: Given too short password but did not get back password validation error'
+                )
+            ],
+            [
+                new TestData(
+                    ['email' => self::EMAIL, 'password' => str_repeat("a", 4099)],
+                    'password',
+                    'Validation problem: Given too long but did not get back password validation error'
+                )
+            ]
+        ];
     }
 }

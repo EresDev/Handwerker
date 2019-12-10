@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Controller;
 
 use App\Application\Command\RegisterUserCommand;
+use App\Domain\Exception\DuplicateUuidException;
 use App\Domain\Exception\ValidationException;
 use App\Application\Service\Uuid;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
