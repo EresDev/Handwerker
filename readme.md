@@ -12,7 +12,7 @@ Services included: Repository, Validator, Translator and Doctrine
 - PHP 7.4+
 - MySQL 
 
-## How to install
+## How to deploy
 
 - Clone the repository.
 
