@@ -35,9 +35,6 @@ class UniqueEntityConstraintValidator extends ConstraintValidator
             throw new ConstraintDefinitionException(sprintf('Unable to find the repository associated with an entity of class "%s".', $constraint->entityClass));
         }
 
-        $class = $this->entityManager->getClassMetadata($constraint->entityClass);
-        /* @var $class \Doctrine\Common\Persistence\Mapping\ClassMetadata */
-
         $fields = (array) $constraint->fields;
 
         foreach ($fields as $fieldName) {
