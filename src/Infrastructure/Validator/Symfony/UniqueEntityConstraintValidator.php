@@ -38,7 +38,17 @@ class UniqueEntityConstraintValidator extends ConstraintValidator
         $fields = (array) $constraint->fields;
 
         foreach ($fields as $fieldName) {
+
             $method = 'get'.ucwords($fieldName);
+
+            if(! method_exists($constraint->entityClass, $method) ) {
+                throw new ConstraintDefinitionException(sprintf('The entity "%s" does not have method %s.', $constraint->entityClass, $fieldName));
+            }
+
+            if(! method_exists(get_class($value),$method) ) {
+                throw new ConstraintDefinitionException(sprintf('"%s" does not have method %s.', get_class($value), $method));
+            }
+
             $result = $repository->findOneBy([$fieldName => $value->$method()]);
             if($result){
                 $this->context->buildViolation($constraint->message)
