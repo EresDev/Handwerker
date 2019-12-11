@@ -8,11 +8,11 @@ The folder structure is based on Hexagonal Architecture. Not only it helps you t
 
 Services included: Repository, Validator, Translator and Doctrine
 
-##Prerequisites
+## Prerequisites
 - PHP 7.4+
 - MySQL 
 
-##How to install
+## How to install
 
 - Clone the repository.
 
