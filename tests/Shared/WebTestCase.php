@@ -23,17 +23,6 @@ class WebTestCase extends SymfonyWebTestCase
         return self::$container->get($className);
     }
 
-    protected function sendRequest(array $parameters): void
-    {
-        $this->client->request(
-            'post',
-            '/user',
-            $parameters,
-            [],
-            []
-        );
-    }
-
     protected function response(): Response
     {
         return $this->client->getResponse();

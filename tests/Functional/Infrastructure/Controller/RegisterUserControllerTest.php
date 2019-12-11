@@ -31,6 +31,17 @@ class RegisterUserControllerTest extends WebTestCase
         $this->assertNotNull($responseObj->uuid);
     }
 
+    private function sendRequest(array $parameters): void
+    {
+        $this->client->request(
+            'post',
+            '/user',
+            $parameters,
+            [],
+            []
+        );
+    }
+
     public function testHandleRequestWithEmptyPassword(): void
     {
         $this->sendRequest(
