@@ -18,6 +18,11 @@ class WebTestCase extends SymfonyWebTestCase
         $this->client = static::createClient();
     }
 
+    protected function getService(string $className): object
+    {
+        return self::$container->get($className);
+    }
+
     protected function sendRequest(array $parameters): void
     {
         $this->client->request(
