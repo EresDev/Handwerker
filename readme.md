@@ -4,7 +4,7 @@
 
 This is a ready to use Skeleton Application based on Symfony. It contains code and tests to setup User authentication with lexik JWT bundle, and Alice Fixture Bundle.
 
-The folder structure is based on Hexagonal Architecture. Not only it helps you to get started quickly, but it promotes loose-coupling and helps you learn the best programming practices. Just clone the repository and start working.
+It is based on Hexagonal Architecture. Not only it helps you to get started quickly, but it promotes loose-coupling and helps you learn the best programming practices. Just clone the repository and start working.
 
 Services included: Repository, Validator, Translator and Doctrine
 
@@ -26,7 +26,7 @@ composer install
 ```
 php bin/console doctrine:database:create
 ```
-- Add the MySQL connection details to .env file
+- Add the MySQL connection details to .env or .env.local file
 
 - Generate SSH keys
 ```
@@ -34,7 +34,10 @@ mkdir -p config/jwt
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:879329hr8uhgf7834rhgiuw834hr
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -passin pass:879329hr8uhgf7834rhgiuw834hr -pubout 
 ```
-Here `879329hr8uhgf7834rhgiuw834hr` is the passphrase that you to replace with one of your choice. If you are just performing a quick test, keep the value, it will help you get it working quickly but it must be taken care of in before going to production.
+Here `879329hr8uhgf7834rhgiuw834hr` is the passphrase that you have to replace with one of your choice. If you are just performing a quick test, keep the value, it will help you get it working quickly but it must be taken care of in before going to production.
+
+- Update the JWT_PASSPHRASE in .env or .env.local
+
 - Run the tests
 ```
 composer test
