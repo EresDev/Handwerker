@@ -15,21 +15,27 @@ Services included: Repository, Validator, Translator and Doctrine
 ## How to deploy
 
 - Clone the repository.
-
-`git clone https://github.com/EresDev/SymfonySkeletonAdvanced`
-
+```
+git clone https://github.com/EresDev/SymfonySkeletonAdvanced
+```
 - Install it.
-
-`composer install`
-
+```
+composer install
+```
 - Create MySQL database if you have not already created.
-
-`php bin/console doctrine:database:create`
-
+```
+php bin/console doctrine:database:create
+```
 - Add the MySQL connection details to .env file
 
+- Generate SSH keys
+```
+openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:879329hr8uhgf7834rhgiuw834hr
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -passin pass:879329hr8uhgf7834rhgiuw834hr -pubout 
+```
+Here `879329hr8uhgf7834rhgiuw834hr` is the passphrase that you to replace with one of your choice. If you are just performing a quick test, keep the value, it will help you get it working quickly but it must be taken care of in before going to production.
 - Run the tests
-
-`composer test`
-
+```
+composer test
+```
 Happy coding! 
