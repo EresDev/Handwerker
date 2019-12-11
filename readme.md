@@ -1,6 +1,6 @@
 # Symfony Skeleton Advanced With JWT Security
 
-[![Build Status](https://travis-ci.org/EresDev/SymfonySkeletonAdvanced.svg?branch=master)](https://travis-ci.org/EresDev/AuthenticationService)
+[![Build Status](https://travis-ci.org/EresDev/SymfonySkeletonAdvanced.svg?branch=master)](https://travis-ci.org/EresDev/SymfonySkeletonAdvanced)
 
 This is a ready to use Skeleton Application based on Symfony. It contains code and tests to setup User authentication with lexik JWT bundle, and Alice Fixture Bundle.
 
