@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="user_email_already_exists">
+                <source>user.email.already.exists</source>
+                <target>Die angegebene E-Mail ist bereits registriert.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_email_empty">
+                <source>user.invalid.email.notBlank</source>
+                <target>E-mail darf nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_email">
+                <source>user.invalid.email</source>
+                <target>E-Mail ist ungültig.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_email_maxLength">
+                <source>user.invalid.email.maxlength</source>
+                <target>E-Mail darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_password_notBlank">
+                <source>user.invalid.password.notBlank</source>
+                <target>Das Passwort darf nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_password_minLength">
+                <source>user.invalid.password.minLength</source>
+                <target>Das Passwort darf nicht weniger als {{ limit }} Zeichen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="user_invalid_password_maxLength">
+                <source>user.invalid.password.maxLength</source>
+                <target>Das Passwort darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

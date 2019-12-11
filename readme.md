@@ -6,4 +6,4 @@ This is a ready to use Skeleton Application based on Symfony. It contains code a
 
 The folder structure is based on Hexagonal Architecture. Not only it helps you to get started quickly, but it promotes loose-coupling and helps you learn the best programming practices. Just clone the repository and start working.
 
-Services included: Repository, Validator and Doctrine
+Services included: Repository, Validator, Translator and Doctrine

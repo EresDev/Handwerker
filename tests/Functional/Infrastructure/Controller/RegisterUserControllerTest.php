@@ -2,8 +2,12 @@
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Infrastructure\Security\Symfony\PasswordEncoderAdapter;
 use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+use Nelmio\Alice\Loader\NativeLoader;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 
 class RegisterUserControllerTest extends WebTestCase
 {
@@ -56,5 +60,23 @@ class RegisterUserControllerTest extends WebTestCase
         );
 
         $this->assertForInvalidRequestData('email');
+    }
+
+    public function testHandleRequestWithExistingEmail(): void
+    {
+        $this->sendRequest(
+            ['email' => 'auth_user2@eresdev.com', 'password' => self::PASSWORD]
+        );
+
+        $this->assertForInvalidRequestData('email');
+    }
+
+    private function loadFixture(): void
+    {
+        $loader = new NativeLoader();
+        $loader->getFakerGenerator()->addProvider(
+            self::$container->get(PasswordEncoderAdapter::class)
+        );
+        $this->fixture = $loader->loadFile(self::$kernel->getProjectDir().'/fixtures/user.yaml');
     }
 }

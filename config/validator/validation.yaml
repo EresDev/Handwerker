@@ -1,17 +1,9 @@
-#App\Domain\Entity\Note:
-#  properties:
-#    title:
-#      - NotBlank:
-#          message: 'note.invalid.title.notBlank'
-#      - Length:
-#          max: 50
-#          maxMessage: 'note.invalid.title.maxLength'
-
 App\Application\Command\RegisterUserCommand:
-#  constraints:
-#    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-#        fields: [email]
-#        message: 'user.email.already.exists'
+  constraints:
+    - App\Infrastructure\Validator\Symfony\UniqueEntityConstraint:
+        entityClass: 'App\Domain\Entity\User'
+        fields: [email]
+        message: 'user.email.already.exists'
   properties:
     email:
       - NotBlank:
