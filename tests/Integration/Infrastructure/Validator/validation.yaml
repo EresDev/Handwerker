@@ -1,0 +1,7 @@
+App\Tests\Integration\Infrastructure\Validator\TestCommand:
+  constraints:
+    - App\Infrastructure\Validator\Symfony\UniqueEntityConstraint:
+        entityClass: 'App\Domain\Entity\User'
+        fields: [email]
+        message: 'user.email.already.exists'
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Integration\LexikJWTAuthenticationBundle;
+namespace App\Tests\Integration\Bundle\LexikJWTAuthenticationBundle;
 
 use App\Kernel;
 use App\Infrastructure\Security\Symfony\PasswordEncoder;

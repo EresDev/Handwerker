@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Integration\AliceBundle;
+namespace App\Tests\Integration\Bundle\AliceBundle;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\User\UserFinder;
