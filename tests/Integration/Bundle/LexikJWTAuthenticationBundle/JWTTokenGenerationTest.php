@@ -58,15 +58,5 @@ class JWTTokenGenerationTest extends KernelTestCase
         $response = $kernel->handle($this->request);
 
         $this->assertEquals(401, $response->getStatusCode());
-
-        $responseArray = json_decode($response->getContent(), true);
-
-
-        $this->assertStringContainsString(
-            'No user found',
-            $responseArray['message'],
-            'Unable to find specified string for error. Content received: \n'.
-            $response->getContent()
-        );
     }
 }
