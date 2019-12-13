@@ -29,18 +29,14 @@ class RegisterUserHandler
     {
         $this->validator->validate($command);
 
-        $user = new User();
-        $user->setUuid($command->getUuid());
-        $user->setEmail($command->getEmail());
+        $encodedPassword = $this->passwordEncoder->encode($command->getPassword());
 
-        $encodedPassword = $this->passwordEncoder->encode(
-            $command->getPassword(),
-            $user->getSalt()
+        $user = new User(
+            $command->getUuid(),
+            $command->getEmail(),
+            $encodedPassword,
+            [Role::USER]
         );
-
-        $user->setPassword($encodedPassword);
-
-        $user->setRoles([Role::USER]);
 
         $this->userSaver->save($user);
     }
