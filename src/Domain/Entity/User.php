@@ -5,7 +5,6 @@ namespace App\Domain\Entity;
 class User extends Entity
 {
     protected string $email;
-    protected string $plainPassword;
     protected string $password;
     protected bool $activated = false;
     protected bool $deleted = false;
@@ -33,16 +32,6 @@ class User extends Entity
     public function setEmail(string $email): void
     {
         $this->email = $email;
-    }
-
-    public function setPlainPassword(string $plainPassword): void
-    {
-        $this->plainPassword = $plainPassword;
-    }
-
-    public function getPlainPassword(): string
-    {
-        return $this->plainPassword;
     }
 
     public function getPassword() : ?string
