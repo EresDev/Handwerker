@@ -1,7 +1,7 @@
 App\Domain\Entity\User:
   user_{1}:
     __construct:
-      - 'cc22a28c-19fa-11ea-978f-2e728ce88125' #uuid
+      - '3e279073-ca26-41d8-94e8-002e9dc36f9b' #uuid
       - 'auth_user2@eresdev.com' #email
       - <encode('somePassword1145236')> #password
       - ['ROLE_USER']
