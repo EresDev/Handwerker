@@ -14,6 +14,6 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Application/Command,Domain/ValueObject,Domain/Exception}'
 
-  App\Application\CommandHandler\RegisterUserHandler:
-    tags:
-      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
+#  App\Application\CommandHandler\RegisterUserHandler:
+#    tags:
+#      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
