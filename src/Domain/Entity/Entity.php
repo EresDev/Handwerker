@@ -4,20 +4,20 @@ namespace App\Domain\Entity;
 
 abstract class Entity
 {
-    public $id;
-    protected $uuid;
+    protected $id;
+    protected string $uuid;
 
     public function getId() : ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
 
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->uuid;
     }

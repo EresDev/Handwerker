@@ -2,15 +2,15 @@
 
 namespace App\Domain\Entity;
 
-class User extends Entity implements \JsonSerializable
+class User extends Entity implements \Serializable
 {
-    protected $email;
-    protected $plainPassword;
-    protected $password;
-    protected $activated = false;
-    protected $deleted = false;
-    protected $memberSince;
-    protected $roles;
+    protected string $email;
+    protected string $plainPassword;
+    protected string $password;
+    protected bool $activated = false;
+    protected bool $deleted = false;
+    protected \DateTime $memberSince;
+    protected array $roles;
 
     public function __construct()
     {
@@ -94,24 +94,24 @@ class User extends Entity implements \JsonSerializable
         return '9h2hr98Q9834hr208S23rhe9823hWr2938E';
     }
 
-    public function equals(self $user): bool
-    {
-        return
-            $this->getId() === $user->getId()
-            && $this->getEmail() === $user->getEmail()
-            && $this->getActivated() === $user->getActivated()
-            && $this->getDeleted() === $user->getDeleted()
-            && $this->getMemberSince()->format('U') === $user->getMemberSince()->format('U')
-        ;
-    }
-
-    public function jsonSerialize() : array
+    public function serialize(): array
     {
         return [
-            'id' => $this->getId(),
+            'uuid' => $this->getUuid(),
             'email' => $this->getEmail(),
             'activated' => $this->getActivated(),
             'memberSince' => $this->getMemberSince()
         ];
+    }
+
+    public function unserialize($serialized): void
+    {
+        $this->email = $serialized['email'] ?? $this->email;
+        $this->plainPassword = $serialized['plainPassword'] ?? $this->plainPassword;
+        $this->password = $serialized['password'] ?? $this->password;
+        $this->activated = $serialized['activated'] ?? $this->activated;
+        $this->deleted = $serialized['deleted'] ?? $this->deleted;
+        $this->memberSince = $serialized['memberSince'] ?? $this->memberSince;
+        $this->roles = $serialized['roles'] ?? $this->roles;
     }
 }
