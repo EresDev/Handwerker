@@ -12,8 +12,12 @@ class User extends Entity implements \Serializable
     protected \DateTime $memberSince;
     protected array $roles;
 
-    public function __construct()
+    public function __construct(string $uuid, string $email, string $password, array $roles)
     {
+        $this->uuid = $uuid;
+        $this->email = $email;
+        $this->password = $password;
+        $this->roles = $roles;
         $this->memberSince = new \DateTime('now');
     }
 
@@ -87,11 +91,6 @@ class User extends Entity implements \Serializable
     public function setRoles($roles) : void
     {
         $this->roles = $roles;
-    }
-
-    public function getSalt() : string
-    {
-        return '9h2hr98Q9834hr208S23rhe9823hWr2938E';
     }
 
     public function serialize(): array
