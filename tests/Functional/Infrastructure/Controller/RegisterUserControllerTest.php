@@ -24,7 +24,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => self::EMAIL, 'password' => self::PASSWORD]
         );
         $response = $this->response();
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(201, $response->getStatusCode());
 
         $responseObj = json_decode($response->getContent());
         $this->assertObjectHasAttribute('uuid', $responseObj);
