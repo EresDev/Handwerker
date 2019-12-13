@@ -2,7 +2,7 @@
 
 namespace App\Domain\Entity;
 
-class User extends Entity implements \Serializable
+class User extends Entity
 {
     protected string $email;
     protected string $plainPassword;
@@ -19,6 +19,9 @@ class User extends Entity implements \Serializable
         $this->email = $email;
         $this->password = $password;
         $this->roles = $roles;
+
+        $this->activated = false;
+        $this->deleted = false;
         $this->memberSince = new \DateTime('now');
     }
 
@@ -92,26 +95,5 @@ class User extends Entity implements \Serializable
     public function setRoles($roles) : void
     {
         $this->roles = $roles;
-    }
-
-    public function serialize(): array
-    {
-        return [
-            'uuid' => $this->getUuid(),
-            'email' => $this->getEmail(),
-            'activated' => $this->getActivated(),
-            'memberSince' => $this->getMemberSince()
-        ];
-    }
-
-    public function unserialize($serialized): void
-    {
-        $this->email = $serialized['email'] ?? $this->email;
-        $this->plainPassword = $serialized['plainPassword'] ?? $this->plainPassword;
-        $this->password = $serialized['password'] ?? $this->password;
-        $this->activated = $serialized['activated'] ?? $this->activated;
-        $this->deleted = $serialized['deleted'] ?? $this->deleted;
-        $this->memberSince = $serialized['memberSince'] ?? $this->memberSince;
-        $this->roles = $serialized['roles'] ?? $this->roles;
     }
 }
