@@ -7,6 +7,11 @@ abstract class Entity
     protected $id;
     protected string $uuid;
 
+    public function __construct(string $uuid)
+    {
+        $this->uuid = $uuid;
+    }
+
     public function getId() : ?int
     {
         return $this->id;

@@ -14,7 +14,8 @@ class User extends Entity implements \Serializable
 
     public function __construct(string $uuid, string $email, string $password, array $roles)
     {
-        $this->uuid = $uuid;
+        parent::__construct($uuid);
+
         $this->email = $email;
         $this->password = $password;
         $this->roles = $roles;
