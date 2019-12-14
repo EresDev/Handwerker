@@ -3,6 +3,7 @@
 namespace Domain\Entity;
 
 use App\Domain\Entity\Entity;
+use App\Domain\Entity\User;
 
 class Job extends Entity
 {
@@ -12,24 +13,27 @@ class Job extends Entity
     private string $description;
     private \DateTime $execution;
     private Category $category;
+    private User $poster;
 
     public function __construct(
         string $uuid,
         string $title,
-        string $zipcode,
+        string $zipCode,
         string $city,
         string $description,
         \DateTime $execution,
-        Category $category
+        Category $category,
+        User $poster
     ) {
         parent::__construct($uuid);
 
         $this->title = $title;
-        $this->zipCode = $zipcode;
+        $this->zipCode = $zipCode;
         $this->city = $city;
         $this->description = $description;
         $this->execution = $execution;
         $this->category = $category;
+        $this->poster = $poster;
     }
 
     public function getTitle(): string
@@ -90,5 +94,15 @@ class Job extends Entity
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function getPoster(): User
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(User $poster): void
+    {
+        $this->poster = $poster;
     }
 }
