@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\Application\UseCaseHandler;
+namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
@@ -9,8 +9,8 @@ use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\User\UserSaver;
+use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\TestData;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RegisterUserHandlerTest extends KernelTestCase
 {
@@ -31,11 +31,6 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->userSaver =
             $this->createMock(UserSaver::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
-    }
-
-    private function getService(string $className)
-    {
-        return static::$container->get($className);
     }
 
     public function testHandleWithValidData(): void
