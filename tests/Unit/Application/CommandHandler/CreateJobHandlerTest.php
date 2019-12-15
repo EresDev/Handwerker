@@ -36,7 +36,7 @@ class CreateJobHandlerTest extends KernelTestCase
             ->expects($this->once())
             ->method('save');
 
-        $validData = JobMother::toValidParameterArray();
+        $validData = JobMother::toValidParameterArray(false);
         $command = new CreateJobCommand(
             $this->uuidGenerator->generate(),
             $validData['title'],

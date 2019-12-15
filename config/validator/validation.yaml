@@ -21,3 +21,53 @@ App\Application\Command\RegisterUserCommand:
           minMessage: 'user.invalid.password.minLength'
           max: 4096
           maxMessage: 'user.invalid.password.maxLength'
+
+App\Application\Command\CreateJobCommand:
+  constraints:
+    - App\Infrastructure\Validator\Symfony\UniqueEntityConstraint:
+        entityClass: 'App\Domain\Entity\Job'
+        fields: [uuid]
+        message: 'job.uuid.already.exists'
+  properties:
+    uuid:
+      - Uuid:
+          message: 'job.invalid.uuid.invalid'
+    title:
+      - NotBlank:
+          message: 'job.invalid.title.notBlank'
+      - Length:
+          min: 5
+          minMessage: 'job.invalid.title.minLength'
+          max: 4096
+          maxMessage: 'job.invalid.title.maxLength'
+    zipCode:
+      - NotBlank:
+          message: 'job.invalid.zipCode.notBlank'
+      - Length:
+          min: 5
+          minMessage: 'job.invalid.zipCode.minLength'
+          max: 5
+          maxMessage: 'job.invalid.zipCode.maxLength'
+    city:
+      - NotBlank:
+          message: 'job.invalid.city.notBlank'
+      - Length:
+          min: 3
+          minMessage: 'job.invalid.city.minLength'
+          max: 50
+          maxMessage: 'job.invalid.city.maxLength'
+    description:
+      - Length:
+          max: 250
+          maxMessage: 'job.invalid.description.maxLength'
+    executionDateTime:
+      - Type:
+          type: \DateTime
+          message: 'job.invalid.executionDateTime.DateTime'
+    userId:
+      - Uuid:
+          message: 'job.invalid.user.uuid'
+    categoryId:
+      - Uuid:
+          message: 'job.invalid.category.uuid'
+

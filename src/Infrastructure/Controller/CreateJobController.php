@@ -33,13 +33,19 @@ class CreateJobController
     public function handleRequest(): JsonResponse
     {
         $uuid = $this->uuidGenerator->generate();
+
+        $executionTimestamp = $this->request->get('executionDateTime', '');
+        $executionDateTime = (new \DateTime())->setTimestamp(
+            $executionTimestamp
+        );
+
         $command = new CreateJobCommand(
             $uuid,
             $this->request->get('title', ''),
             $this->request->get('zipCode', ''),
             $this->request->get('city', ''),
             $this->request->get('description', ''),
-            $this->request->get('executionDateTime', ''),
+            $executionDateTime,
             $this->request->get('categoryId', ''),
             '3e279073-ca26-41d8-94e8-002e9dc36f9b'//$this->user->getUuid()
         );
