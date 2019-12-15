@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Domain\Entity\Job" table="job" >
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="uuid" column="uuid" type="string" length="36" nullable="false" unique="true"/>
+        <field name="title" type="string" column="title" length="100" nullable="false"></field>
+        <field name="zipCode" type="string" column="zipcode" length="5" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="city" type="string" length="50" column="city" nullable="false"/>
+        <field name="description" type="string" length="250" column="description" nullable="false"/>
+        <field name="executionDateTime" type="datetime" column="executionDateTime" nullable="false"/>
+        <field name="categoryId" type="string" column="categoryUuid" nullable="false"/>
+        <field name="poster" type="string" column="userUuid" nullable="false"/>
+    </entity>
+</doctrine-mapping>

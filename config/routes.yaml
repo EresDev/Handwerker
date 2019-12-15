@@ -7,3 +7,9 @@ createUser:
       de: /benutzer
     controller: App\Infrastructure\Controller\RegisterUserController:handleRequest
 
+createJob:
+  path:
+    en: /job
+    de: /arbeit
+  controller: App\Infrastructure\Controller\CreateJobController:handleRequest
+
