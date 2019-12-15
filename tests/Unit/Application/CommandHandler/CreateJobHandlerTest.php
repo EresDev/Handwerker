@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
+use App\Application\Service\Association\AssociatedEntityCreator;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Repository\Job\JobSaver;
@@ -15,6 +16,7 @@ class CreateJobHandlerTest extends KernelTestCase
     private Validator $validator;
     private JobSaver $jobSaver;
     private Uuid $uuidGenerator;
+    private AssociatedEntityCreator $associatedEntityCreator;
 
     protected function setUp()
     {
@@ -25,6 +27,7 @@ class CreateJobHandlerTest extends KernelTestCase
         $this->jobSaver =
             $this->createMock(JobSaver::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
+        $this->associatedEntityCreator = $this->getService(AssociatedEntityCreator::class);
     }
 
     public function testHandleWithValidData(): void
@@ -47,7 +50,8 @@ class CreateJobHandlerTest extends KernelTestCase
 
         $handler = new CreateJobHandler(
             $this->validator,
-            $this->jobSaver
+            $this->jobSaver,
+            $this->associatedEntityCreator
         );
 
         $handler->handle($command);

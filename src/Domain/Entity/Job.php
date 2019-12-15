@@ -9,8 +9,8 @@ class Job extends Entity
     private string $city;
     private string $description;
     private \DateTime $executionDateTime;
-    private int $categoryId;
-    private string $poster;
+    private Category $category;
+    private User $user;
 
     public function __construct(
         string $uuid,
@@ -19,8 +19,8 @@ class Job extends Entity
         string $city,
         string $description,
         \DateTime $executionDateTime,
-        int $categoryId,
-        string $userId
+        Category $category,
+        User $user
     ) {
         parent::__construct($uuid);
 
@@ -29,8 +29,8 @@ class Job extends Entity
         $this->city = $city;
         $this->description = $description;
         $this->executionDateTime = $executionDateTime;
-        $this->categoryId = $categoryId;
-        $this->poster = $userId;
+        $this->category = $category;
+        $this->user = $user;
     }
 
     public function getTitle(): string
@@ -83,23 +83,23 @@ class Job extends Entity
         $this->executionDateTime = $executionDateTime;
     }
 
-    public function getCategoryId(): Category
+    public function getCategory(): Category
     {
-        return $this->categoryId;
+        return $this->category;
     }
 
-    public function setCategoryId(Category $categoryId): void
+    public function setCategory(Category $category): void
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
     }
 
-    public function getPoster(): string
+    public function getUser(): User
     {
-        return $this->poster;
+        return $this->user;
     }
 
-    public function setPoster(User $poster): void
+    public function setUser(User $user): void
     {
-        $this->poster = $poster;
+        $this->user = $user;
     }
 }

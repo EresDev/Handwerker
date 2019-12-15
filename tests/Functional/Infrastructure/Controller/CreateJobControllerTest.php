@@ -2,11 +2,14 @@
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
-use App\Tests\Shared\WebTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
+use App\Tests\Shared\WebTestCase;
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class CreateJobControllerTest extends WebTestCase
 {
+    use ReloadDatabaseTrait;
+
     protected function setUp(): void
     {
         parent::setUp();

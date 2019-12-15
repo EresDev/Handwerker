@@ -14,7 +14,13 @@
         <field name="city" type="string" length="50" column="city" nullable="false"/>
         <field name="description" type="string" length="250" column="description" nullable="false"/>
         <field name="executionDateTime" type="datetime" column="executionDateTime" nullable="false"/>
-        <field name="categoryId" type="string" column="categoryUuid" nullable="false"/>
-        <field name="poster" type="string" column="userUuid" nullable="false"/>
+
+        <many-to-one field="user" target-entity="App\Domain\Entity\User" >
+            <join-column name="user" referenced-column-name="id" />
+        </many-to-one>
+
+        <many-to-one field="category" target-entity="App\Domain\Entity\Category" >
+            <join-column name="category" referenced-column-name="id" />
+        </many-to-one>
     </entity>
 </doctrine-mapping>

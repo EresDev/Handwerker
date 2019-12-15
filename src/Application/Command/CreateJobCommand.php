@@ -10,7 +10,7 @@ class CreateJobCommand
     private string $city;
     private string $description;
     private \DateTime $executionDateTime;
-    private int $categoryId;
+    private string $categoryId;
     private string $userId;
 
     public function __construct(
@@ -20,7 +20,7 @@ class CreateJobCommand
         string $city,
         string $description,
         \DateTime $executionDateTime,
-        int $categoryId,
+        string $categoryId,
         string $userId
     ) {
         $this->uuid = $uuid;
@@ -30,7 +30,7 @@ class CreateJobCommand
         $this->description = $description;
         $this->executionDateTime = $executionDateTime;
         $this->categoryId = $categoryId;
-        $this->userId = $uuid;
+        $this->userId = $userId;
     }
 
     public function getUuid(): string
@@ -63,7 +63,7 @@ class CreateJobCommand
         return $this->executionDateTime;
     }
 
-    public function getCategoryId(): int
+    public function getCategoryId(): string
     {
         return $this->categoryId;
     }

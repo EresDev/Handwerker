@@ -1,8 +1,6 @@
 <?php
 
-namespace Domain\Entity;
-
-use App\Domain\Entity\Entity;
+namespace App\Domain\Entity;
 
 class Category extends Entity
 {

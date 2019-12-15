@@ -12,7 +12,7 @@ class JobMother
             'city' => 'Bülzig',
             'description' => 'A test description',
             'executionDateTime' => (new \DateTime())->modify('+1 day'),
-            'categoryId' => 804040
+            'categoryId' => '0d195d63-cdc3-4286-90c9-0d6bb8e913ce'
         ];
     }
 }
