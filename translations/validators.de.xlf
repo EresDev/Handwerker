@@ -14,10 +14,6 @@
                 <source>user.invalid.email</source>
                 <target>E-Mail ist ungültig.</target>
             </trans-unit>
-            <trans-unit id="user_invalid_email_maxLength">
-                <source>user.invalid.email.maxlength</source>
-                <target>E-Mail darf nicht länger als {{ limit }} Zeichen sein.</target>
-            </trans-unit>
             <trans-unit id="user_invalid_password_notBlank">
                 <source>user.invalid.password.notBlank</source>
                 <target>Das Passwort darf nicht leer sein.</target>

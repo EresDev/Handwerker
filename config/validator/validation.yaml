@@ -10,9 +10,6 @@ App\Application\Command\RegisterUserCommand:
           message: 'user.invalid.email.notBlank'
       - Email:
           message: 'user.invalid.email'
-      - Length:
-          max: 72
-          maxMessage: 'user.invalid.email.maxlength'
     password:
       - NotBlank:
           message: 'user.invalid.password.notBlank'

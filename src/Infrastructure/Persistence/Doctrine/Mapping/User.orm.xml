@@ -8,7 +8,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="uuid" column="uuid" type="string" length="36" nullable="false" unique="true"/>
-    <field name="email" type="string" column="email" length="72" nullable="false">
+    <field name="email" type="string" column="email" length="254" nullable="false">
       <options>
         <option name="fixed"/>
       </options>

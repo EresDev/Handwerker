@@ -59,8 +59,6 @@ class RegisterUserHandlerTest extends KernelTestCase
      */
     public function testHandleWithInValidEmail(TestData $testData): void
     {
-        $this->expectException(ValidationException::class);
-
         $command = new RegisterUserCommand(
             $this->uuidGenerator->generate(),
             $testData->getInput()['email'],
@@ -73,11 +71,22 @@ class RegisterUserHandlerTest extends KernelTestCase
             $this->userSaver
         );
 
+        $this->expectException(ValidationException::class);
+
         try {
             $handler->handle($command);
         } catch (ValidationException $exception) {
-            $this->assertArrayHasKey($testData->getExpectedValue(), $exception->getMessagesForEndUser()[0]);
-            throw $exception; // so that $this->expectException passes
+            $this->assertArrayHasKey(
+                $testData->getExpectedValue(),
+                $exception->getMessagesForEndUser()[0],
+                $testData->getTestFailureReason()
+            );
+            $this->assertCount(
+                1,
+                $exception->getMessagesForEndUser(),
+                'More than one validation errors found: '.json_encode($exception->getMessagesForEndUser())
+            );
+            throw $exception;
         }
     }
 
@@ -100,7 +109,7 @@ class RegisterUserHandlerTest extends KernelTestCase
             ],
             [
                 new TestData(
-                    ['email' => str_repeat("a", 61) . '.eresdev.com', 'password' => self::PASSWORD],
+                    ['email' => str_repeat("a", 243) . '.eresdev.com', 'password' => self::PASSWORD],
                     'email',
                     'Validation problem: Given too long email but did not get back email validation error'
                 )

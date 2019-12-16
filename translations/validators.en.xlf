@@ -15,10 +15,6 @@
                 <source>user.invalid.email</source>
                 <target>Email is not valid.</target>
             </trans-unit>
-            <trans-unit id="user_invalid_email_maxLength">
-                <source>user.invalid.email.maxlength</source>
-                <target>Email cannot be more than {{ limit }} characters long.</target>
-            </trans-unit>
             <trans-unit id="user_invalid_password_notBlank">
                 <source>user.invalid.password.notBlank</source>
                 <target>Password cannot be blank.</target>
