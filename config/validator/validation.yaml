@@ -64,9 +64,6 @@ App\Application\Command\CreateJobCommand:
       - Type:
           type: \DateTime
           message: 'job.invalid.executionDateTime.DateTime'
-    userId:
-      - Uuid:
-          message: 'job.invalid.user.uuid'
     categoryId:
       - Uuid:
           message: 'job.invalid.category.uuid'
