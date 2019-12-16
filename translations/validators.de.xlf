@@ -30,6 +30,62 @@
                 <source>user.invalid.password.maxLength</source>
                 <target>Das Passwort darf nicht länger als {{ limit }} Zeichen sein.</target>
             </trans-unit>
+
+
+            <!-- Create Job validation messages -->
+            <trans-unit id="createJob1">
+                <source>job.uuid.already.exists</source>
+                <target>Die UUID wird bereits verwendet.</target>
+            </trans-unit>
+            <trans-unit id="createJob2">
+                <source>job.invalid.title.notBlank</source>
+                <target>Der Titel darf nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob3">
+                <source>job.invalid.title.minLength</source>
+                <target>Der Titel darf nicht weniger als {{ limit }} Zeichen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="createJob4">
+                <source>job.invalid.title.maxLength</source>
+                <target>Der Titel darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob5">
+                <source>job.invalid.zipCode.notBlank</source>
+                <target>Die Postleitzahl darf nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob6">
+                <source>job.invalid.zipCode.maxLength</source>
+                <target>Die Postleitzahl darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob7">
+                <source>job.invalid.zipCode.minLength</source>
+                <target>Die Postleitzahl darf nicht weniger als {{ limit }} Zeichen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="createJob8">
+                <source>job.invalid.city.notBlank</source>
+                <target>Die Stadt darf nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob9">
+                <source>job.invalid.city.minLength</source>
+                <target>Der Städtename darf nicht weniger als {{ limit }} Zeichen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="createJob10">
+                <source>job.invalid.city.maxLength</source>
+                <target>Der Städtename darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob11">
+                <source>job.invalid.description.maxLength</source>
+                <target>Die Beschreibung darf nicht länger als {{ limit }} Zeichen sein.</target>
+            </trans-unit>
+            <trans-unit id="createJob12">
+                <source>job.invalid.executionDateTime.DateTime</source>
+                <target>Das Ausführungsdatum ist ungültig.</target>
+            </trans-unit>
+            <trans-unit id="createJob14">
+                <source>job.invalid.category.uuid</source>
+                <target>Die Kategorie ist ungültig.</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

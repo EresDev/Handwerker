@@ -27,7 +27,7 @@ class TranslatorTest  extends WebTestCase
             ['email' => self::EMAIL, 'password' => '']
         );
 
-        $this->assertForInvalidRequestData('password', 'Password can\'t be blank.');
+        $this->assertForInvalidRequestData('password', 'Password cannot be blank.');
     }
 
     private function sendRequest(string $uri, array $parameters): void
