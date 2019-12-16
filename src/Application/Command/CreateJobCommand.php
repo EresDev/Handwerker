@@ -2,7 +2,7 @@
 
 namespace App\Application\Command;
 
-class CreateJobCommand
+class CreateJobCommand extends Command
 {
     private string $uuid;
     private string $title;
@@ -71,5 +71,19 @@ class CreateJobCommand
     public function getUserId(): string
     {
         return $this->userId;
+    }
+
+    public function getContent(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'title' => $this->title,
+            'zipCode' => $this->zipCode,
+            'city' => $this->city,
+            'description' => $this->description,
+            'executionDateTime' => $this->executionDateTime,
+            'categoryId' => $this->categoryId,
+            'userId' => $this->userId
+        ];
     }
 }

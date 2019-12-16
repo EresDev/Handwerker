@@ -85,6 +85,10 @@
                 <source>job.invalid.category.uuid</source>
                 <target>The category is invalid.</target>
             </trans-unit>
+            <trans-unit id="createJob15">
+                <source>job.invalid.executionDateTime.mustBeInFuture</source>
+                <target>Das Ausführungsdatum muss nach dem {{ value }} liegen.</target>
+            </trans-unit>
 
         </body>
     </file>

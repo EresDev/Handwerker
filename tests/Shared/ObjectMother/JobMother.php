@@ -7,7 +7,7 @@ class JobMother
     public static function toValidParameterArray(bool $withTimestamp = true): array
     {
         $executionDateTime = new \DateTime();
-        $executionDateTime->modify('+1 day');
+        $executionDateTime->modify('+2 days');
 
         if ($withTimestamp) {
             $executionDateTime = $executionDateTime->getTimestamp();

@@ -64,6 +64,9 @@ App\Application\Command\CreateJobCommand:
       - Type:
           type: \DateTime
           message: 'job.invalid.executionDateTime.DateTime'
+      - GreaterThan:
+          value: +1 day
+          message: 'job.invalid.executionDateTime.mustBeInFuture'
     categoryId:
       - Uuid:
           message: 'job.invalid.category.uuid'
