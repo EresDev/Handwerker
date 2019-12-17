@@ -38,4 +38,39 @@ class CreateJobControllerTest extends WebTestCase
             []
         );
     }
+
+    public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(): void
+    {
+        $jobParameters = JobMother::toValidParameterArray();
+        $jobParameters['executionDateTime'] = '';
+
+        $this->sendRequest($jobParameters);
+
+        $this->assertForInvalidRequestData('executionDateTime');
+    }
+
+    private function assertForInvalidRequestData(string $invalidField): void
+    {
+        $response = $this->response();
+        $this->assertEquals(422, $response->getStatusCode());
+
+        $content = $this->response()->getContent();
+        $contentObjects = json_decode($content);
+
+        $this->assertObjectHasAttribute($invalidField, $contentObjects[0]);
+    }
+
+    public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(): void
+    {
+        $jobParameters = JobMother::toValidParameterArray();
+        $timestampNow = (new \DateTime())
+            ->modify('+2 days')
+            ->getTimestamp();
+        $jobParameters['executionDateTime'] = -$timestampNow;
+
+        $this->sendRequest($jobParameters);
+
+        $this->assertForInvalidRequestData('executionDateTime');
+    }
+
 }

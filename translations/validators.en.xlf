@@ -83,7 +83,7 @@
             </trans-unit>
             <trans-unit id="createJob15">
                 <source>job.invalid.executionDateTime.mustBeInFuture</source>
-                <target>Das Ausführungsdatum muss nach dem {{ value }} liegen.</target>
+                <target>The execution DateTime must be after 24 hours from now.</target>
             </trans-unit>
 
         </body>

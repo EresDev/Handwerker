@@ -34,13 +34,14 @@ class CreateJobController
     {
         $uuid = $this->uuidGenerator->generate();
 
+        $executionTimestamp = (int) $this->request->get('executionDateTime', 0);
         $command = new CreateJobCommand(
             $uuid,
             $this->request->get('title', ''),
             $this->request->get('zipCode', ''),
             $this->request->get('city', ''),
             $this->request->get('description', ''),
-            $this->getDateTimeFrom($this->request->get('executionDateTime', '')),
+            $this->getDateTimeFrom($executionTimestamp),
             $this->request->get('categoryId', ''),
             '3e279073-ca26-41d8-94e8-002e9dc36f9b'//$this->user->getUuid()
         );
