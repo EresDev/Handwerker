@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Validator\Symfony;
 
 use Symfony\Component\Validator\Tests\Fixtures\ClassConstraint;
