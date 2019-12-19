@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Bundle\Translator;
 
 use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
-class TranslatorTest  extends WebTestCase
+class TranslatorTest extends WebTestCase
 {
     //TODO: improve test by using dynamically created controller, with independent custom translator files,
     //possibly along with independent custom validations
 
     use RefreshDatabaseTrait;
-
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
 

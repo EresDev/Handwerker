@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\CreateJobCommand;
