@@ -11,14 +11,8 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 class RegisterUserControllerTest extends WebTestCase
 {
     use RefreshDatabaseTrait;
-
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
 
     public function testHandleRequestWithValidData(): void
     {
