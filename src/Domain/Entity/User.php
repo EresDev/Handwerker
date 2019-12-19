@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use DateTime;
+
 class User extends Entity
 {
     protected string $email;
     protected string $password;
     protected bool $activated = false;
     protected bool $deleted = false;
-    protected \DateTime $memberSince;
+    protected DateTime $memberSince;
     protected array $roles;
 
     public function __construct(string $uuid, string $email, string $password, array $roles)
@@ -23,7 +25,7 @@ class User extends Entity
 
         $this->activated = false;
         $this->deleted = false;
-        $this->memberSince = new \DateTime('now');
+        $this->memberSince = new DateTime('now');
     }
 
     public function getEmail() : string
@@ -66,12 +68,12 @@ class User extends Entity
         $this->deleted = $deleted;
     }
 
-    public function getMemberSince() : \DateTime
+    public function getMemberSince() : DateTime
     {
         return $this->memberSince;
     }
 
-    public function setMemberSince(\DateTime $memberSince): void
+    public function setMemberSince(DateTime $memberSince): void
     {
         $this->memberSince = $memberSince;
     }

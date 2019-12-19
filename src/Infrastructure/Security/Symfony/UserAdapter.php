@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Security\Symfony;
 
 use App\Domain\Entity\User;
+use DateTime;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserAdapter implements UserInterface
@@ -66,12 +67,12 @@ class UserAdapter implements UserInterface
         $this->user->setDeleted($deleted);
     }
 
-    public function getMemberSince() : \DateTime
+    public function getMemberSince() : DateTime
     {
         return $this->user->getMemberSince();
     }
 
-    public function setMemberSince(\DateTime $memberSince): void
+    public function setMemberSince(DateTime $memberSince): void
     {
         $this->user->setMemberSince($memberSince);
     }
