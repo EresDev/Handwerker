@@ -84,55 +84,67 @@ class RegisterUserHandlerTest extends KernelTestCase
             $this->assertCount(
                 1,
                 $exception->getMessagesForEndUser(),
-                'More than one validation errors found: '.json_encode($exception->getMessagesForEndUser())
+                'More than one validation errors found: ' . json_encode($exception->getMessagesForEndUser())
             );
             throw $exception;
         }
     }
 
-    public function getInvalidValues() : array
+    public function getInvalidValues(): array
     {
         return [
             [
                 new TestData(
                     ['email' => '', 'password' => self::PASSWORD],
                     'email',
-                    'Validation problem: Given empty email but did not get back email validation error'
+                    'Validation error: ' .
+                    'Given empty email ' .
+                    'but did not get back email validation error'
                 )
             ],
             [
                 new TestData(
                     ['email' => 'invalidEmail', 'password' => self::PASSWORD],
                     'email',
-                    'Validation problem: Given invalid email but did not get back email validation error'
+                    'Validation error: ' .
+                    'Given invalid email ' .
+                    'but did not get back email validation error'
                 )
             ],
             [
                 new TestData(
                     ['email' => str_repeat("a", 243) . '.eresdev.com', 'password' => self::PASSWORD],
                     'email',
-                    'Validation problem: Given too long email but did not get back email validation error'
+                    'Validation error: ' .
+                    'Given too long email ' .
+                    'but did not get back email validation error'
                 )
             ],
             [
                 new TestData(
                     ['email' => self::EMAIL, 'password' => '', 'expectedInvalidField' => 'password'],
                     'password',
-                    'Validation problem: Given empty password but did not get back password validation error'
+                    'Validation error: ' .
+                    'Given empty password ' .
+                    'but did not get back password validation error'
                 )
             ],
             [
                 new TestData(
                     ['email' => self::EMAIL, 'password' => 'foo'],
                     'password',
-                    'Validation problem: Given too short password but did not get back password validation error'
+                    'Validation error: ' .
+                    'Given too short password ' .
+                    'but did not get back password validation error'
                 )
             ],
             [
                 new TestData(
                     ['email' => self::EMAIL, 'password' => str_repeat("a", 4099)],
                     'password',
-                    'Validation problem: Given too long but did not get back password validation error'
+                    'Validation error: ' .
+                    'Given too long password ' .
+                    'but did not get back password validation error'
                 )
             ]
         ];
