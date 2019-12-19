@@ -21,10 +21,9 @@ class RegisterUserHandlerTest extends KernelTestCase
     private UserSaver $userSaver;
     private Uuid $uuidGenerator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         static::bootKernel();
-        parent::setUp();
 
         $this->passwordEncoder = $this->getService(PasswordEncoder::class);
         $this->validator = $this->getService(Validator::class);
@@ -113,7 +112,10 @@ class RegisterUserHandlerTest extends KernelTestCase
             ],
             [
                 new TestData(
-                    ['email' => str_repeat("a", 243) . '.eresdev.com', 'password' => self::PASSWORD],
+                    [
+                        'email' => str_repeat("a", 243) . '.eresdev.com',
+                        'password' => self::PASSWORD
+                    ],
                     'email',
                     'Validation error: ' .
                     'Given too long email ' .
