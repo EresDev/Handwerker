@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Service\Association;
+namespace App\Application\Service\Factory;
 
 use App\Application\Command\CreateJobCommand;
 use App\Domain\Entity\Job;
+use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Category\CategoryFinder;
 use App\Domain\Repository\User\UserFinder;
 
-class AssociatedEntityCreator
+class JobFactoryImpl implements JobFactory
 {
     private CategoryFinder $categoryFinder;
     private UserFinder $userFinder;
@@ -29,12 +30,12 @@ class AssociatedEntityCreator
     {
         $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
         if (!$category) {
-            throw new \Exception("Provided category not found.");
+            throw new ValidationException([['categoryId' => '"Provided category is not found."']]);
         }
 
         $user = $this->userFinder->findOneBy('uuid', $command->getUserId());
         if (!$user) {
-            throw new \Exception("Provided user not found.");
+            throw new ValidationException([['userId' => '"Provided user is not found."']]);
         }
 
         $job = new Job(

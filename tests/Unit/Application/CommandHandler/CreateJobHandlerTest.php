@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
-use App\Application\Service\Association\AssociatedEntityCreator;
+use App\Application\Service\Factory\JobFactoryImpl;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
@@ -20,7 +20,7 @@ class CreateJobHandlerTest extends KernelTestCase
     private Validator $validator;
     private JobSaver $jobSaver;
     private Uuid $uuidGenerator;
-    private AssociatedEntityCreator $associatedEntityCreator;
+    private JobFactoryImpl $associatedEntityCreator;
 
     protected function setUp(): void
     {
@@ -30,7 +30,7 @@ class CreateJobHandlerTest extends KernelTestCase
         $this->jobSaver =
             $this->createMock(JobSaver::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
-        $this->associatedEntityCreator = $this->getService(AssociatedEntityCreator::class);
+        $this->associatedEntityCreator = $this->getService(JobFactoryImpl::class);
     }
 
     public function testHandleWithValidData(): void
@@ -62,7 +62,7 @@ class CreateJobHandlerTest extends KernelTestCase
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
             $commandAttrs['categoryId'],
-            '3e279073-ca26-41d8-94e8-002e9dc36f9b'
+            $commandAttrs['userId'] ?? '3e279073-ca26-41d8-94e8-002e9dc36f9b'
         );
     }
 
@@ -196,7 +196,16 @@ class CreateJobHandlerTest extends KernelTestCase
                     $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
                     'categoryId',
                     'Validation error: ' .
-                    'Given invalid format UUID of categoryId ' .
+                    'Given invalid categoryId ' .
+                    'but did not get back city validation error'
+                )
+            ],
+            [
+                new TestData(
+                    $this->prepareTestDataForInvalidJob('userId', 'fooBar'),
+                    'userId',
+                    'Validation error: ' .
+                    'Given invalid userId ' .
                     'but did not get back city validation error'
                 )
             ],
