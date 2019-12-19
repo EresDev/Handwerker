@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
+use App\Application\Service\Factory\UserFactory;
 use App\Application\Service\PasswordEncoder;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
@@ -18,20 +19,22 @@ class RegisterUserHandlerTest extends KernelTestCase
 {
     public const EMAIL = 'registerUserHanlderTest@eresdev.com';
     public const PASSWORD = 'SomeRandomPassword2348';
-    private PasswordEncoder $passwordEncoder;
+    //private PasswordEncoder $passwordEncoder;
     private Validator $validator;
     private UserSaver $userSaver;
     private Uuid $uuidGenerator;
+    private UserFactory $userFactory;
 
     protected function setUp(): void
     {
         static::bootKernel();
 
-        $this->passwordEncoder = $this->getService(PasswordEncoder::class);
+        //$this->passwordEncoder = $this->getService(PasswordEncoder::class);
         $this->validator = $this->getService(Validator::class);
         $this->userSaver =
             $this->createMock(UserSaver::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
+        $this->userFactory = $this->getService(UserFactory::class);
     }
 
     public function testHandleWithValidData(): void
@@ -47,9 +50,9 @@ class RegisterUserHandlerTest extends KernelTestCase
         );
 
         $handler = new RegisterUserHandler(
-            $this->passwordEncoder,
             $this->validator,
-            $this->userSaver
+            $this->userSaver,
+            $this->userFactory
         );
 
         $handler->handle($command);
@@ -67,9 +70,9 @@ class RegisterUserHandlerTest extends KernelTestCase
         );
 
         $handler = new RegisterUserHandler(
-            $this->passwordEncoder,
             $this->validator,
-            $this->userSaver
+            $this->userSaver,
+            $this->userFactory
         );
 
         $this->expectException(ValidationException::class);
@@ -85,7 +88,8 @@ class RegisterUserHandlerTest extends KernelTestCase
             $this->assertCount(
                 1,
                 $exception->getMessagesForEndUser(),
-                'More than one validation errors found: ' . json_encode($exception->getMessagesForEndUser())
+                'More than one validation errors found: ' .
+                json_encode($exception->getMessagesForEndUser())
             );
             throw $exception;
         }
