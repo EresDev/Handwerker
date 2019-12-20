@@ -1,9 +1,0 @@
-App\Domain\Entity\Category:
-  category_{1}:
-    __construct:
-      - '0d195d63-cdc3-4286-90c9-0d6bb8e913ce'
-      - 'Sonstige Umzugsleistungen' #email
-      - 'image/uri'
-
-
-
