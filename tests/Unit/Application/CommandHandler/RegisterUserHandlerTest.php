@@ -7,7 +7,6 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
 use App\Application\Service\Factory\UserFactory;
-use App\Application\Service\PasswordEncoder;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
@@ -19,7 +18,6 @@ class RegisterUserHandlerTest extends KernelTestCase
 {
     public const EMAIL = 'registerUserHanlderTest@eresdev.com';
     public const PASSWORD = 'SomeRandomPassword2348';
-    //private PasswordEncoder $passwordEncoder;
     private Validator $validator;
     private UserSaver $userSaver;
     private Uuid $uuidGenerator;
@@ -29,7 +27,6 @@ class RegisterUserHandlerTest extends KernelTestCase
     {
         static::bootKernel();
 
-        //$this->passwordEncoder = $this->getService(PasswordEncoder::class);
         $this->validator = $this->getService(Validator::class);
         $this->userSaver =
             $this->createMock(UserSaver::class);
