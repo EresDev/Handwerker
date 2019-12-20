@@ -21,7 +21,7 @@ class ManualUserFixtureLoadTest extends KernelTestCase
         $loader->getFakerGenerator()->addProvider(
             self::$container->get(PasswordEncoderAdapter::class)
         );
-        $this->fixture = $loader->loadFile(self::$kernel->getProjectDir().'/fixtures/user.yaml');
+        $this->fixture = $loader->loadFile(self::$kernel->getProjectDir() . '/fixtures/user.php');
     }
 
     public function testUserFixture() : void
