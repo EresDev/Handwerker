@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller;
 
+use App\Application\Command\CreateJobCommand;
+use App\Application\CommandHandler\CreateJobHandler;
+use App\Application\Service\Security\Security;
 use App\Application\Service\Uuid;
 use App\Domain\Entity\User;
 use App\Domain\Exception\ValidationException;
-use App\Application\Command\CreateJobCommand;
-use App\Application\CommandHandler\CreateJobHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,20 +24,20 @@ class CreateJobController
     public function __construct(
         RequestStack $requestStack,
         Uuid $uuidGenerator,
-        CreateJobHandler $handler//,
-        //User $user
+        CreateJobHandler $handler,
+        Security $security
     ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->uuidGenerator = $uuidGenerator;
         $this->handler = $handler;
-        //$this->user = $user;
+        $this->user = $security->getUser();
     }
 
     public function handleRequest(): JsonResponse
     {
         $uuid = $this->uuidGenerator->generate();
 
-        $executionTimestamp = (int) $this->request->get('executionDateTime', 0);
+        $executionTimestamp = (int)$this->request->get('executionDateTime', 0);
         $command = new CreateJobCommand(
             $uuid,
             $this->request->get('title', ''),
@@ -45,7 +46,7 @@ class CreateJobController
             $this->request->get('description', ''),
             $this->getDateTimeFrom($executionTimestamp),
             $this->request->get('categoryId', ''),
-            '3e279073-ca26-41d8-94e8-002e9dc36f9b'//$this->user->getUuid()
+            $this->user->getUuid()
         );
 
         try {

@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Tests\Shared\AuthenticatedWebTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
-use App\Tests\Shared\WebTestCase;
-use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class CreateJobControllerTest extends WebTestCase
+class CreateJobControllerTest extends AuthenticatedWebTestCase
 {
-    use ReloadDatabaseTrait;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testHandleRequestForValidData(): void
     {
+        $this->authenticateClient();
+
         $this->sendRequest(
             JobMother::toValidParameterArray()
         );
@@ -28,6 +22,18 @@ class CreateJobControllerTest extends WebTestCase
         $responseObj = json_decode($response->getContent());
         $this->assertObjectHasAttribute('uuid', $responseObj);
         $this->assertNotNull($responseObj->uuid);
+    }
+
+    public function testHandleRequestForValidDataUnauthenticated(): void
+    {
+        $this->sendRequest(
+            JobMother::toValidParameterArray()
+        );
+        $response = $this->response();
+        $this->assertEquals(401, $response->getStatusCode());
+
+        $responseObj = json_decode($response->getContent());
+        $this->assertEquals('JWT Token not found', $responseObj->message);
     }
 
     private function sendRequest(array $parameters): void
@@ -43,6 +49,8 @@ class CreateJobControllerTest extends WebTestCase
 
     public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(): void
     {
+        $this->authenticateClient();
+
         $jobParameters = JobMother::toValidParameterArray();
         $jobParameters['executionDateTime'] = '';
 
@@ -64,6 +72,7 @@ class CreateJobControllerTest extends WebTestCase
 
     public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(): void
     {
+        $this->authenticateClient();
         $jobParameters = JobMother::toValidParameterArray();
         $timestampNow = (new \DateTime())
             ->modify('+2 days')
@@ -74,5 +83,4 @@ class CreateJobControllerTest extends WebTestCase
 
         $this->assertForInvalidRequestData('executionDateTime');
     }
-
 }
