@@ -11,7 +11,7 @@ return [
             '__construct' => [
                 CategoryFixture::UUID,
                 CategoryFixture::TITLE,
-                CategoryFixture::IMAGE_URI,
+                CategoryFixture::IMAGE_URI
             ]
         ],
     ],
