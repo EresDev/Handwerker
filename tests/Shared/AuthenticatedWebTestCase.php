@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared;
 
+use App\Tests\Shared\Fixture\UserFixture;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class AuthenticatedWebTestCase extends WebTestCase
@@ -18,7 +19,7 @@ class AuthenticatedWebTestCase extends WebTestCase
             [],
             [],
             array('CONTENT_TYPE' => 'application/json'),
-            json_encode(['email' => 'auth_user2@eresdev.com', 'password' => 'somePassword1145236'])
+            json_encode(['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD])
         );
 
         $data = json_decode($this->response()->getContent(), true);

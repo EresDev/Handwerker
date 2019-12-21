@@ -6,6 +6,7 @@ namespace App\Tests\Integration\Bundle\LexikJWTAuthenticationBundle;
 
 use App\Kernel;
 use App\Infrastructure\Security\Symfony\PasswordEncoder;
+use App\Tests\Shared\Fixture\UserFixture;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class JWTTokenGenerationTest extends KernelTestCase
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['email' => 'auth_user2@eresdev.com', 'password' => 'somePassword1145236'])
+            json_encode(['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD])
         );
 
         $kernel = self::$kernel;
@@ -53,7 +54,7 @@ class JWTTokenGenerationTest extends KernelTestCase
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['email' => 'userDoesNotExistInDB@eresdev.com', 'password' => 'somePassword1145236'])
+            json_encode(['email' => 'userShouldNotExistInDB@eresdev.com', 'password' => 'somePassword1145236'])
         );
 
         $kernel = new Kernel('test', true);
