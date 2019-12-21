@@ -11,6 +11,7 @@ use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Job\JobSaver;
+use App\Tests\Shared\Fixture\UserFixture;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
 use App\Tests\Shared\TestData;
@@ -20,7 +21,7 @@ class CreateJobHandlerTest extends KernelTestCase
     private Validator $validator;
     private JobSaver $jobSaver;
     private Uuid $uuidGenerator;
-    private JobFactoryImpl $associatedEntityCreator;
+    private JobFactoryImpl $jobFactory;
 
     protected function setUp(): void
     {
@@ -30,7 +31,7 @@ class CreateJobHandlerTest extends KernelTestCase
         $this->jobSaver =
             $this->createMock(JobSaver::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
-        $this->associatedEntityCreator = $this->getService(JobFactoryImpl::class);
+        $this->jobFactory = $this->getService(JobFactoryImpl::class);
     }
 
     public function testHandleWithValidData(): void
@@ -46,7 +47,7 @@ class CreateJobHandlerTest extends KernelTestCase
         $handler = new CreateJobHandler(
             $this->validator,
             $this->jobSaver,
-            $this->associatedEntityCreator
+            $this->jobFactory
         );
 
         $handler->handle($command);
@@ -62,7 +63,7 @@ class CreateJobHandlerTest extends KernelTestCase
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
             $commandAttrs['categoryId'],
-            $commandAttrs['userId'] ?? '3e279073-ca26-41d8-94e8-002e9dc36f9b'
+            $commandAttrs['userId'] ?? UserFixture::UUID
         );
     }
 
@@ -76,7 +77,7 @@ class CreateJobHandlerTest extends KernelTestCase
         $handler = new CreateJobHandler(
             $this->validator,
             $this->jobSaver,
-            $this->associatedEntityCreator
+            $this->jobFactory
         );
 
         $this->expectException(ValidationException::class);

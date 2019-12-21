@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use DateTime;
+
 class Job extends Entity
 {
     private string $title;
     private string $zipCode;
     private string $city;
     private string $description;
-    private \DateTime $executionDateTime;
+    private DateTime $executionDateTime;
     private Category $category;
     private User $user;
 
@@ -20,7 +22,7 @@ class Job extends Entity
         string $zipCode,
         string $city,
         string $description,
-        \DateTime $executionDateTime,
+        DateTime $executionDateTime,
         Category $category,
         User $user
     ) {
@@ -75,12 +77,12 @@ class Job extends Entity
         $this->description = $description;
     }
 
-    public function getExecutionDateTime(): \DateTime
+    public function getExecutionDateTime(): DateTime
     {
         return $this->executionDateTime;
     }
 
-    public function setExecutionDateTime(\DateTime $executionDateTime): void
+    public function setExecutionDateTime(DateTime $executionDateTime): void
     {
         $this->executionDateTime = $executionDateTime;
     }

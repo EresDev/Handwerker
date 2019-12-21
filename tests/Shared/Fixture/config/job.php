@@ -15,9 +15,10 @@ return [
                 JobFixture::CITY,
                 JobFixture::DESCRIPTION,
                 JobFixture::getExecutionDateTime(),
-                JobFixture::CATEGORY_ID,
-                JobFixture::USER_ID
-            ]
+                '@category_1',
+                '@user_1',
+            ],
+
         ],
     ],
 ];

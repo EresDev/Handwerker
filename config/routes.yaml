@@ -6,10 +6,19 @@ createUser:
       en: /user
       de: /benutzer
     controller: App\Infrastructure\Controller\RegisterUserController:handleRequest
+    methods: [post]
 
 createJob:
   path:
     en: /job
     de: /arbeit
   controller: App\Infrastructure\Controller\CreateJobController:handleRequest
+  methods: [post]
 
+
+updateJob:
+  path:
+    en: /job
+    de: /arbeit
+  controller: App\Infrastructure\Controller\UpdateJobController:handleRequest
+  methods: [put]
