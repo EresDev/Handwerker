@@ -22,9 +22,9 @@ class ValidationException extends MultiResponseException
         return $this->validationErrors;
     }
 
-    public static function fromSingleViolation(array $errorMessage): ValidationException
+    public static function fromSingleViolation(string $field, string $errorMessage): ValidationException
     {
-        return new self([$errorMessage]);
+        return new self([[$field => $errorMessage]]);
     }
 
     public static function fromMultiViolations(array $errorMessages): self
