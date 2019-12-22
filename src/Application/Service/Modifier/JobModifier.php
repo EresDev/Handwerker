@@ -26,13 +26,13 @@ class JobModifier
         $job = $this->jobFinder->find($command->getUuid());
 
         if (!$job) {
-            throw ValidationException::fromSingleViolation(['uuid' => 'No such job exists to update.']);
+            throw ValidationException::fromSingleViolation('uuid', 'No such job exists to update.');
         }
 
         if ($job->getCategory()->getUuid() !== $command->getCategoryId()) {
             $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
             if (!$category) {
-                throw ValidationException::fromSingleViolation(['categoryId' => 'Given category does not exist.']);
+                throw ValidationException::fromSingleViolation('categoryId', 'Given category does not exist.');
             }
             $job->setCategory($category);
         }

@@ -35,7 +35,7 @@ class JobRepository extends Repository implements JobFinder, JobSaver, JobUpdate
 
     public function update(Job $job): void
     {
-        $this->entityManager->merge($job);
+        //$this->entityManager->merge($job);
         $this->completeTransaction();
     }
 
