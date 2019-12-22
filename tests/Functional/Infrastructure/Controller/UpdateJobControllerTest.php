@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Domain\Repository\Job\JobFinder;
 use App\Tests\Shared\AuthenticatedWebTestCase;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\ObjectMother\JobMother;
@@ -23,6 +24,14 @@ class UpdateJobControllerTest extends AuthenticatedWebTestCase
 
         $response = $this->response();
         $this->assertEquals(204, $response->getStatusCode());
+
+        /**
+         * @var JobFinder $jobFinder
+         */
+        $jobFinder = $this->getService(JobFinder::class);
+        $job = $jobFinder->find($jobParameters['uuid']);
+        $this->assertNotNull($job);
+        $this->assertEquals($jobParameters['title'], $job->getTitle());
     }
 
     private function sendRequest(array $parameters): void
