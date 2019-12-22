@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 
 use App\Application\Command\UpdateJobCommand;
 use App\Application\CommandHandler\UpdateJobHandler;
-use App\Application\Service\JobUpdaterService;
+use App\Application\Service\Modifier\JobModifier;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Repository\Job\JobUpdater;
@@ -19,7 +19,7 @@ class UpdateJobHandlerTest extends KernelTestCase
     private Validator $validator;
     private JobUpdater $jobUpdater;
     private Uuid $uuidGenerator;
-    private JobUpdaterService $jobUpdaterService;
+    private JobModifier $jobUpdaterService;
 
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ class UpdateJobHandlerTest extends KernelTestCase
         $this->jobUpdater =
             $this->createMock(JobUpdater::class);
         $this->uuidGenerator = $this->getService(Uuid::class);
-        $this->jobUpdaterService = $this->getService(JobUpdaterService::class);
+        $this->jobUpdaterService = $this->getService(JobModifier::class);
     }
 
     public function testHandleWithValidData(): void

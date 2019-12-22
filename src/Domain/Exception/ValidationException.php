@@ -8,20 +8,27 @@ use Throwable;
 
 class ValidationException extends MultiResponseException
 {
-    private $validationErrors;
+    use DebugTrait;
+    private array $validationErrors;
 
-    public function __construct(
-        array $validationErrors,
-        string $message = "",
-        int $code = 0,
-        Throwable $previous = null
-    ) {
-        parent::__construct($message, $code, $previous);
+    private function __construct(array $validationErrors)
+    {
+        parent::__construct('');
         $this->validationErrors = $validationErrors;
     }
 
     public function getMessagesForEndUser(): array
     {
         return $this->validationErrors;
+    }
+
+    public static function fromSingleViolation(array $errorMessage): ValidationException
+    {
+        return new self([$errorMessage]);
+    }
+
+    public static function fromMultiViolations(array $errorMessages): self
+    {
+        return new self($errorMessages);
     }
 }

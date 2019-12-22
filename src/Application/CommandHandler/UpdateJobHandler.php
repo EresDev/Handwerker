@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\CommandHandler;
 
 use App\Application\Command\UpdateJobCommand;
-use App\Application\Service\JobUpdaterService;
+use App\Application\Service\Modifier\JobModifier;
 use App\Application\Service\Validator;
 use App\Domain\Repository\Job\JobUpdater;
 
@@ -13,9 +13,9 @@ class UpdateJobHandler
 {
     private Validator $validator;
     private JobUpdater $jobUpdater;
-    private JobUpdaterService $jobUpdaterService;
+    private JobModifier $jobUpdaterService;
 
-    public function __construct(Validator $validator, JobUpdater $jobUpdater, JobUpdaterService $jobUpdaterService)
+    public function __construct(Validator $validator, JobUpdater $jobUpdater, JobModifier $jobUpdaterService)
     {
         $this->validator = $validator;
         $this->jobUpdater = $jobUpdater;

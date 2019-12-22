@@ -30,12 +30,12 @@ class JobFactoryImpl implements JobFactory
     {
         $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
         if (!$category) {
-            throw new ValidationException([['categoryId' => '"Provided category is not found."']]);
+            throw ValidationException::fromSingleViolation(['categoryId' => '"Provided category is not found."']);
         }
 
         $user = $this->userFinder->findOneBy('uuid', $command->getUserId());
         if (!$user) {
-            throw new ValidationException([['userId' => '"Provided user is not found."']]);
+            throw ValidationException::fromSingleViolation(['userId' => '"Provided user is not found."']);
         }
 
         $job = new Job(

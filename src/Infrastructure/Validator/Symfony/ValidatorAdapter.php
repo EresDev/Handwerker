@@ -24,15 +24,15 @@ class ValidatorAdapter implements Validator
 
         if (count($constraintViolations) > 0) {
             $errors = $this->extractErrors($constraintViolations);
-            throw new ValidationException(
-                $errors,
-                sprintf(
-                    "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",
-                    get_class($object),
-                    $object,
-                    json_encode($errors)
-                )
-            );
+            throw ValidationException::fromMultiViolations($errors)
+                ->withDebugInfo(
+                    sprintf(
+                        "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",
+                        get_class($object),
+                        $object,
+                        json_encode($errors)
+                    )
+                );
         }
     }
 
