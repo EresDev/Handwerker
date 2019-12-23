@@ -29,7 +29,7 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api:
-            pattern:   ^/job
+            pattern:   ^/(job|arbeit)
             stateless: true
             guard:
                 authenticators:
@@ -39,4 +39,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: !php/const App\Application\Service\Security\Role::ANONYMOUS }
-        - { path: ^/job, roles: !php/const App\Application\Service\Security\Role::USER }
+        - { path: ^/(job|arbeit), roles: !php/const App\Application\Service\Security\Role::USER }

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Entity\User;
+use App\Tests\Functional\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class RegisterUserControllerTest extends WebTestCase
 {
+    use ValidationErrorsAssertionTrait;
     use RefreshDatabaseTrait;
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
@@ -61,7 +63,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => self::EMAIL, 'password' => '']
         );
 
-        $this->assertForInvalidRequestData('password', $expectedError);
+        $this->assertForValidationError('password', $expectedError);
     }
 
     public function emptyPasswordDataProvider(): array
@@ -70,41 +72,6 @@ class RegisterUserControllerTest extends WebTestCase
             [self::URI['en'], 'Password cannot be blank.'],
             [self::URI['de'], 'Das Passwort darf nicht leer sein.']
         ];
-    }
-
-    private function assertForInvalidRequestData(string $invalidField, string $expectedError): void
-    {
-        $response = $this->response();
-        $this->assertEquals(422, $response->getStatusCode());
-
-        $content = $this->response()->getContent();
-        $contentObjects = json_decode($content);
-
-        $this->assertCount(
-            1,
-            $contentObjects,
-            sprintf(
-                "Number of received validation errors is not exactly one. The errors received are: %s\n",
-                print_r($contentObjects, true)
-            )
-        );
-
-        $this->assertObjectHasAttribute(
-            $invalidField,
-            $contentObjects[0],
-            sprintf(
-                "Validation errors does not contain error for invalid %s. " .
-                "Errors received are: \n%s",
-                $invalidField,
-                print_r($contentObjects, true)
-            )
-        );
-
-        $this->assertEquals(
-            $contentObjects[0]->$invalidField,
-            $expectedError,
-            sprintf("Validation error received for invalid %s is not as expected.", $invalidField)
-        );
     }
 
     /**
@@ -117,7 +84,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
         );
 
-        $this->assertForInvalidRequestData('email', $expectedError);
+        $this->assertForValidationError('email', $expectedError);
     }
 
     public function invalidEmailDataProvider(): array
@@ -143,7 +110,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => $user->getEmail(), 'password' => self::PASSWORD]
         );
 
-        $this->assertForInvalidRequestData('email', $expectedError);
+        $this->assertForValidationError('email', $expectedError);
     }
 
     public function existingEmailDataProvider(): array

@@ -73,10 +73,6 @@
                 <source>job.invalid.description.maxLength</source>
                 <target>Die Beschreibung darf nicht länger als {{ limit }} Zeichen sein.</target>
             </trans-unit>
-            <trans-unit id="createJob12">
-                <source>job.invalid.executionDateTime.DateTime</source>
-                <target>Das Ausführungsdatum ist ungültig.</target>
-            </trans-unit>
             <trans-unit id="createJob14">
                 <source>job.invalid.category.uuid</source>
                 <target>Die Kategorie ist ungültig.</target>

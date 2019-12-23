@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Tests\Functional\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\AuthenticatedWebTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
 
 class CreateJobControllerTest extends AuthenticatedWebTestCase
 {
-    public function testHandleRequestForValidData(): void
+    use ValidationErrorsAssertionTrait;
+    private const URI = ['en' => 'job', 'de' => 'arbeit'];
+
+    /**
+     * @dataProvider uriProvider
+     */
+    public function testHandleRequestForValidData(string $uri): void
     {
         $this->authenticateClient();
 
         $this->sendRequest(
+            $uri,
             JobMother::toValidParameterArray()
         );
         $response = $this->response();
@@ -24,54 +32,99 @@ class CreateJobControllerTest extends AuthenticatedWebTestCase
         $this->assertNotNull($responseObj->uuid);
     }
 
-    public function testHandleRequestForValidDataUnauthenticated(): void
+    public function uriProvider(): array
+    {
+        return [
+            'EN URI' => [self::URI['en']],
+            'DE URI' => [self::URI['de']]
+        ];
+    }
+
+    /**
+     * @dataProvider unauthenticatedDataProvider
+     */
+    public function testHandleRequestForValidDataUnauthenticated(string $uri, string $expectedError): void
     {
         $this->sendRequest(
+            $uri,
             JobMother::toValidParameterArray()
         );
         $response = $this->response();
-        $this->assertEquals(401, $response->getStatusCode());
+        $this->assertEquals(
+            401,
+            $response->getStatusCode(),
+            'Test to get error message for unauthorized access to create a new job failed. ' .
+            'Received wrong HTTP status code.'
+        );
 
         $responseObj = json_decode($response->getContent());
-        $this->assertEquals('JWT Token not found', $responseObj->message);
+        $this->assertEquals(
+            $expectedError,
+            $responseObj->message,
+            'Test to get error message for unauthorized access to create a new job failed. ' .
+            'We did not get back the error message we ' .
+            'were expecting.'
+        );
     }
 
-    private function sendRequest(array $parameters): void
+    public function unauthenticatedDataProvider(): array
+    {
+        //TODO: add translation for this error message
+        return [
+            'EN: Unauthenticated Error' => [self::URI['en'], 'JWT Token not found'],
+            'DE: Unauthenticated Error' => [self::URI['de'], 'JWT Token not found']
+        ];
+    }
+
+    private function sendRequest(string $uri, array $parameters): void
     {
         $this->client->request(
             'post',
-            '/job',
+            '/' . $uri,
             $parameters,
             [],
             []
         );
     }
 
-    public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(): void
-    {
+    /**
+     * @dataProvider invalidExecutionDateTimeDataProvider
+     */
+    public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(
+        string $uri,
+        string $expectedError
+    ): void {
         $this->authenticateClient();
 
         $jobParameters = JobMother::toValidParameterArray();
         $jobParameters['executionDateTime'] = '';
 
-        $this->sendRequest($jobParameters);
+        $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForInvalidRequestData('executionDateTime');
+        $this->assertForValidationError('executionDateTime', $expectedError);
     }
 
-    private function assertForInvalidRequestData(string $invalidField): void
+    public function invalidExecutionDateTimeDataProvider(): array
     {
-        $response = $this->response();
-        $this->assertEquals(422, $response->getStatusCode());
-
-        $content = $this->response()->getContent();
-        $contentObjects = json_decode($content);
-
-        $this->assertObjectHasAttribute($invalidField, $contentObjects[0]);
+        return [
+            'EN: Invalid execution datetime' => [
+                self::URI['en'],
+                'The execution DateTime must be after 24 hours from now.'
+            ],
+            'DE: Invalid execution datetime' => [
+                self::URI['de'],
+                'Die Ausführung von DateTime muss nach 24 Stunden erfolgen.'
+            ]
+        ];
     }
 
-    public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(): void
-    {
+    /**
+     * @dataProvider invalidExecutionDateTimeDataProvider
+     */
+    public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(
+        string $uri,
+        string $expectedError
+    ): void {
         $this->authenticateClient();
         $jobParameters = JobMother::toValidParameterArray();
         $timestampNow = (new \DateTime())
@@ -79,8 +132,8 @@ class CreateJobControllerTest extends AuthenticatedWebTestCase
             ->getTimestamp();
         $jobParameters['executionDateTime'] = -$timestampNow;
 
-        $this->sendRequest($jobParameters);
+        $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForInvalidRequestData('executionDateTime');
+        $this->assertForValidationError('executionDateTime', $expectedError);
     }
 }
