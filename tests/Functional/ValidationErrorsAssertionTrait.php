@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use Symfony\Component\HttpFoundation\Response;
-
 trait ValidationErrorsAssertionTrait
 {
     //TODO: find the undefined methods solution
