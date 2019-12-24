@@ -46,7 +46,7 @@ class CreateJobController
             $this->request->get('description', ''),
             $this->getDateTimeFrom($executionTimestamp),
             $this->request->get('categoryId', ''),
-            $this->user->getUuid()
+            $this->user
         );
 
         //try {

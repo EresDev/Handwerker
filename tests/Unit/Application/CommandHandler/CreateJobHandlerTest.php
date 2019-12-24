@@ -9,6 +9,7 @@ use App\Application\CommandHandler\CreateJobHandler;
 use App\Application\Service\Factory\JobFactoryImpl;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
+use App\Domain\Entity\User;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Job\JobSaver;
 use App\Tests\Shared\Fixture\UserFixture;
@@ -63,7 +64,7 @@ class CreateJobHandlerTest extends KernelTestCase
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
             $commandAttrs['categoryId'],
-            $commandAttrs['userId'] ?? UserFixture::UUID
+            $this->createMock(User::class)
         );
     }
 
@@ -100,7 +101,7 @@ class CreateJobHandlerTest extends KernelTestCase
     public function getInvalidValues(): array
     {
         return [
-            [
+            'Blank title validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('title', ''),
                     'title',
@@ -109,7 +110,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back title validation error'
                 )
             ],
-            [
+            'Execution datetime before 24 hours validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob(
                         'executionDateTime',
@@ -121,7 +122,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back executionDateTime validation error'
                 )
             ],
-            [
+            'Blank zip code validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('zipCode', ''),
                     'zipCode',
@@ -130,7 +131,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back zipCode validation error'
                 )
             ],
-            [
+            '6 digit zip code validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('zipCode', '121212'),
                     'zipCode',
@@ -140,7 +141,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'Expected 5 chars zipCode'
                 )
             ],
-            [
+            '4 digit zip code validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('zipCode', '1212'),
                     'zipCode',
@@ -150,7 +151,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'Expected 5 chars zipCode'
                 )
             ],
-            [
+            'Blank city validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('city', ''),
                     'city',
@@ -159,7 +160,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back city validation error'
                 )
             ],
-            [
+            'Too short city name validation error validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('city', 'ab'),
                     'city',
@@ -168,7 +169,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back city validation error'
                 )
             ],
-            [
+            'Too long city name validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob(
                         'city',
@@ -180,7 +181,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back city validation error'
                 )
             ],
-            [
+            'Too long description validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob(
                         'description',
@@ -192,7 +193,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back description validation error'
                 )
             ],
-            [
+            'Invalid format of UUID categoryId validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
                     'categoryId',
@@ -201,22 +202,13 @@ class CreateJobHandlerTest extends KernelTestCase
                     'but did not get back categoryId validation error'
                 )
             ],
-            [
+            'Valid UUID categoryId that is not existing in DB validation error' => [
                 new TestData(
                     $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
                     'categoryId',
                     'Validation error: ' .
                     'Given valid UUID categoryId that is not existing in DB ' .
                     'but did not get back categoryId validation error'
-                )
-            ],
-            [
-                new TestData(
-                    $this->prepareTestDataForInvalidJob('userId', 'fooBar'),
-                    'userId',
-                    'Validation error: ' .
-                    'Given invalid userId ' .
-                    'but did not get back userId validation error'
                 )
             ],
         ];

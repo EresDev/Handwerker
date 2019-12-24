@@ -36,23 +36,6 @@ class JobFactoryImpl implements JobFactory
             );
         }
 
-        $user = $this->userFinder->findOneBy('uuid', $command->getUserId());
-        if (!$user) {
-            throw ValidationException::fromSingleViolation(
-                'userId',
-                'Provided user is not found.'
-            )
-                ->withDebugInfo(
-                    sprintf(
-                        "Job creation is not accessible to unauthorized users, " .
-                        "and the user does not exist in database." .
-                        "\nGiven class %s, object %s",
-                        CreateJobCommand::class,
-                        $command
-                    )
-                );
-        }
-
         $job = new Job(
             $command->getUuid(),
             $command->getTitle(),
@@ -61,7 +44,7 @@ class JobFactoryImpl implements JobFactory
             $command->getDescription(),
             $command->getExecutionDateTime(),
             $category,
-            $user
+            $command->getUser()
         );
 
         return $job;

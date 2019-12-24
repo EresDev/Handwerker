@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
+use App\Domain\Entity\User;
 use DateTime;
 
 class CreateJobCommand extends JobCommand
 {
-    private string $userId;
+    private User $user;
 
     public function __construct(
         string $uuid,
@@ -18,27 +19,22 @@ class CreateJobCommand extends JobCommand
         string $description,
         DateTime $executionDateTime,
         string $categoryId,
-        string $userId
+        User $user
     ) {
         parent::__construct($uuid, $title, $zipCode, $city, $description, $executionDateTime, $categoryId);
 
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
-    public function getUserId(): string
+    public function getUser(): User
     {
-        return $this->userId;
-    }
-
-    public function setUserId(string $userId): void
-    {
-        $this->userId = $userId;
+        return $this->user;
     }
 
     public function getContent(): array
     {
         $content = parent::getContent();
-        $content['userId'] = $this->userId;
+        $content['userId'] = $this->user->getUuid();
 
         return $content;
     }
