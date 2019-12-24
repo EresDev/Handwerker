@@ -189,7 +189,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'description',
                     'Validation error: ' .
                     'Given too long description ' .
-                    'but did not get back city validation error'
+                    'but did not get back description validation error'
                 )
             ],
             [
@@ -197,8 +197,17 @@ class CreateJobHandlerTest extends KernelTestCase
                     $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
                     'categoryId',
                     'Validation error: ' .
-                    'Given invalid categoryId ' .
-                    'but did not get back city validation error'
+                    'Given invalid format of UUID categoryId ' .
+                    'but did not get back categoryId validation error'
+                )
+            ],
+            [
+                new TestData(
+                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
+                    'categoryId',
+                    'Validation error: ' .
+                    'Given valid UUID categoryId that is not existing in DB ' .
+                    'but did not get back categoryId validation error'
                 )
             ],
             [
@@ -207,7 +216,7 @@ class CreateJobHandlerTest extends KernelTestCase
                     'userId',
                     'Validation error: ' .
                     'Given invalid userId ' .
-                    'but did not get back city validation error'
+                    'but did not get back userId validation error'
                 )
             ],
         ];

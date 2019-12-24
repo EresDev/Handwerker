@@ -1,5 +1,7 @@
 api_login_check:
-  path: /login_check
+  path:
+    en: /login_check
+    de: /login_check
 
 createUser:
     path:

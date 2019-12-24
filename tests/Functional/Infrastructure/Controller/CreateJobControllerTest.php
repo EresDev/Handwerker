@@ -136,4 +136,35 @@ class CreateJobControllerTest extends AuthenticatedWebTestCase
 
         $this->assertForValidationError('executionDateTime', $expectedError);
     }
+
+    /**
+     * @dataProvider validCategoryUuidThatDoesNotExistDataProvider
+     */
+    public function testHandleRequestWithValidCategoryUuidThatDoesNotExist(
+        string $uri,
+        string $expectedError
+    ): void {
+        $this->authenticateClient();
+
+        $jobParameters = JobMother::toValidParameterArray();
+        $jobParameters['categoryId'] = 'd2b00dae-905b-4c19-9c26-d530874a4910';
+
+        $this->sendRequest($uri, $jobParameters);
+
+        $this->assertForValidationError('categoryId', $expectedError);
+    }
+
+    public function validCategoryUuidThatDoesNotExistDataProvider(): array
+    {
+        return [
+            'EN: Valid Category UUID that does not exist in DB' => [
+                self::URI['en'],
+                'Provided category for new job does not exist.'
+            ],
+            'DE: Valid Category UUID that does not exist in DB' => [
+                self::URI['de'],
+                'Die angegebene Kategorie für einen neuen Job existiert nicht.'
+            ]
+        ];
+    }
 }

@@ -15,12 +15,16 @@ services:
     exclude: '../src/{DependencyInjection,Domain/Entity,Migrations,Tests,Kernel.php,Application/Command,Domain/ValueObject,Domain/Exception,Infrastructure/Security/Symfony/UserAdapter.php}'
 
 
-#  #Command Handlers
-#  App\Application\CommandHandler\RegisterUserHandler:
-#    tags:
-#      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
+  #  #Command Handlers
+  #  App\Application\CommandHandler\RegisterUserHandler:
+  #    tags:
+  #      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
 
 
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
     class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
+
+  App\Infrastructure\Event\Listener\ExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }
 

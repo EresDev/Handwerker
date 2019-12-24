@@ -49,11 +49,11 @@ class CreateJobController
             $this->user->getUuid()
         );
 
-        try {
-            $this->handler->handle($command);
-        } catch (ValidationException $exception) {
-            return new JsonResponse($exception->getMessagesForEndUser(), 422);
-        }
+        //try {
+        $this->handler->handle($command);
+//        } catch (ValidationException $exception) {
+//            return new JsonResponse($exception->getMessage(), 422);
+//        }
 
         return new JsonResponse(['uuid' => $uuid], 201);
     }
