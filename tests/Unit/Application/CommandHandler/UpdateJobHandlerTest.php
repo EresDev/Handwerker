@@ -11,10 +11,9 @@ use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Repository\Job\JobUpdater;
 use App\Tests\Shared\Fixture\JobFixture;
-use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
 
-class UpdateJobHandlerTest extends KernelTestCase
+class UpdateJobHandlerTest extends UpsertJobHandlerBaseTestCase
 {
     private Validator $validator;
     private JobUpdater $jobUpdater;
@@ -51,7 +50,7 @@ class UpdateJobHandlerTest extends KernelTestCase
         $handler->handle($command);
     }
 
-    private function getCommandFrom(array $commandAttrs): UpdateJobCommand
+    protected function getCommandFrom(array $commandAttrs): UpdateJobCommand
     {
         return new UpdateJobCommand(
             JobFixture::UUID,
@@ -61,6 +60,15 @@ class UpdateJobHandlerTest extends KernelTestCase
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
             $commandAttrs['categoryId']
+        );
+    }
+
+    protected function getHandlerInstance(): UpdateJobHandler
+    {
+        return new UpdateJobHandler(
+            $this->validator,
+            $this->jobUpdater,
+            $this->jobUpdaterService
         );
     }
 }
