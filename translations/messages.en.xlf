@@ -3,8 +3,8 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="messages1">
-                <source>Provided category for new job does not exist.</source>
-                <target>Provided category for new job does not exist.</target>
+                <source>Provided category for the job does not exist.</source>
+                <target>Provided category for the job does not exist.</target>
             </trans-unit>
         </body>
     </file>

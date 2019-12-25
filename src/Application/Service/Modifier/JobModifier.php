@@ -32,7 +32,10 @@ class JobModifier
         if ($job->getCategory()->getUuid() !== $command->getCategoryId()) {
             $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
             if (!$category) {
-                throw ValidationException::fromSingleViolation('categoryId', 'Given category does not exist.');
+                throw ValidationException::fromSingleViolation(
+                    'categoryId',
+                    'Provided category for the job does not exist.'
+                );
             }
             $job->setCategory($category);
         }

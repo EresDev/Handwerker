@@ -32,7 +32,7 @@ class JobFactoryImpl implements JobFactory
         if (!$category) {
             throw ValidationException::fromSingleViolation(
                 'categoryId',
-                'Provided category for new job does not exist.'
+                'Provided category for the job does not exist.'
             );
         }
 

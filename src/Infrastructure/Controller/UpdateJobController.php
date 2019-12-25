@@ -45,11 +45,11 @@ class UpdateJobController
             $this->request->get('categoryId', '')
         );
 
-        try {
-            $this->handler->handle($command);
-        } catch (ValidationException $exception) {
-            return new JsonResponse($exception->getMessagesForEndUser(), 422);
-        }
+//        try {
+        $this->handler->handle($command);
+//        } catch (ValidationException $exception) {
+//            return new JsonResponse($exception->getMessagesForEndUser(), 422);
+//        }
 
         return new JsonResponse('', 204);
     }
