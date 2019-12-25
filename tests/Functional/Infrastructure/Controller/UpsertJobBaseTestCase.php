@@ -7,7 +7,7 @@ namespace App\Tests\Functional\Infrastructure\Controller;
 use App\Tests\Functional\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\AuthenticatedWebTestCase;
 
-abstract class UpsertJobTestCase extends AuthenticatedWebTestCase
+abstract class UpsertJobBaseTestCase extends AuthenticatedWebTestCase
 {
     use ValidationErrorsAssertionTrait;
     private const URI = ['en' => 'job', 'de' => 'arbeit'];

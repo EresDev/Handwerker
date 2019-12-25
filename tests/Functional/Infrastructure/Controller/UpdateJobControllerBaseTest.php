@@ -9,7 +9,7 @@ use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\ObjectMother\JobMother;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class UpdateJobControllerTest extends UpsertJobTestCase
+class UpdateJobControllerBaseTest extends UpsertJobBaseTestCase
 {
     use ReloadDatabaseTrait;
 

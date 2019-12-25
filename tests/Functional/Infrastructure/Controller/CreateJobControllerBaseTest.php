@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Tests\Shared\ObjectMother\JobMother;
 
-class CreateJobControllerTest extends UpsertJobTestCase
+class CreateJobControllerBaseTest extends UpsertJobBaseTestCase
 {
     /**
      * @dataProvider uriProvider
