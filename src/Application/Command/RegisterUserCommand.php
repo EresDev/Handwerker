@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-class RegisterUserCommand extends Command
+class RegisterUserCommand
 {
     private string $uuid;
     private string $email;
@@ -32,13 +32,15 @@ class RegisterUserCommand extends Command
         return $this->password;
     }
 
-    public function getContent(): array
+    public function __toString(): string
     {
-        return [
-            'uuid' => $this->uuid,
-            'email' => $this->email,
-            'password' => $this->password
-        ];
+        return print_r(
+            [
+                'uuid' => $this->uuid,
+                'email' => $this->email,
+                'password' => $this->password
+            ],
+            true
+        );
     }
-
 }

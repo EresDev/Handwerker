@@ -6,7 +6,7 @@ namespace App\Application\Command;
 
 use DateTime;
 
-abstract class JobCommand extends Command
+abstract class JobCommand
 {
     protected string $uuid;
     protected string $title;
@@ -74,16 +74,19 @@ abstract class JobCommand extends Command
         $this->categoryId = $categoryId;
     }
 
-    public function getContent(): array
+    public function __toString(): string
     {
-        return [
-            'uuid' => $this->uuid,
-            'title' => $this->title,
-            'zipCode' => $this->zipCode,
-            'city' => $this->city,
-            'description' => $this->description,
-            'executionDateTime' => $this->executionDateTime,
-            'categoryId' => $this->categoryId
-        ];
+        return print_r(
+            [
+                'uuid' => $this->uuid,
+                'title' => $this->title,
+                'zipCode' => $this->zipCode,
+                'city' => $this->city,
+                'description' => $this->description,
+                'executionDateTime' => $this->executionDateTime,
+                'categoryId' => $this->categoryId
+            ],
+            true
+        );
     }
 }
