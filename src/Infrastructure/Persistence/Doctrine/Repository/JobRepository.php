@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Entity\Job;
+use App\Domain\Entity\User;
+use App\Domain\Repository\Job\JobByUserFinder;
 use App\Domain\Repository\Job\JobFinder;
 use App\Domain\Repository\Job\JobSaver;
 use App\Domain\Repository\Job\JobUpdater;
 use Doctrine\ORM\EntityManagerInterface;
 
-class JobRepository extends Repository implements JobFinder, JobSaver, JobUpdater
+class JobRepository extends Repository implements JobFinder, JobByUserFinder, JobSaver, JobUpdater
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -19,12 +21,22 @@ class JobRepository extends Repository implements JobFinder, JobSaver, JobUpdate
 
     public function find(string $uuid): ?Job
     {
-        return $this->findOneBy('uuid', $uuid);
+        return $this->findOneBy(['uuid' => $uuid]);
     }
 
-    public function findOneBy(string $key, string $value): ?Job
+    public function findOneBy(array $conditions): ?Job
     {
-        return $this->repository->findOneBy([$key => $value]);
+        return $this->repository->findOneBy($conditions);
+    }
+
+    public function findOneByUser(string $jobUuid, User $user): ?Job
+    {
+        return $this->repository->findOneBy(
+            [
+                'uuid' => $jobUuid,
+                'user' => $user->getId()
+            ]
+        );
     }
 
     public function save(Job $job): void

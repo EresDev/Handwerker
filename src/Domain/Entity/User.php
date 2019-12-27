@@ -85,8 +85,18 @@ class User extends Entity
         return array_unique($roles);
     }
 
-    public function setRoles($roles) : void
+    public function setRoles($roles): void
     {
         $this->roles = $roles;
+    }
+
+    public function equals(self $user): bool
+    {
+        return $this->uuid === $user->uuid &&
+            $this->email === $user->email &&
+            $this->activated === $user->activated &&
+            $this->deleted === $user->deleted &&
+            $this->memberSince === $user->memberSince &&
+            $this->roles == $user->roles;
     }
 }

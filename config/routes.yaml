@@ -24,3 +24,12 @@ updateJob:
     de: /arbeit
   controller: App\Infrastructure\Controller\UpdateJobController:handleRequest
   methods: [put]
+
+getJob:
+  path:
+    en: /job/{uuid}
+    de: /arbeit/{uuid}
+  controller: App\Infrastructure\Controller\GetJobController:handleRequest
+  methods: [get]
+  requirements:
+    uuid: \w{8}-\w{4}-\w{4}-\w{4}-\w{12}

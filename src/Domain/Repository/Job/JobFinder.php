@@ -10,5 +10,5 @@ interface JobFinder
 {
     public function find(string $uuid): ?Job;
 
-    public function findOneBy(string $key, string $value): ?Job;
+    public function findOneBy(array $conditions): ?Job;
 }

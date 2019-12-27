@@ -36,4 +36,19 @@ class Category extends Entity
     {
         $this->imageUri = $imageUri;
     }
+
+    public function equals(self $category): bool
+    {
+        return $this->uuid === $category->uuid &&
+            $this->name === $category->name &&
+            $this->imageUri === $category->imageUri;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'name' => $this->name
+        ];
+    }
 }

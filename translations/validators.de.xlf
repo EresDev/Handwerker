@@ -82,6 +82,10 @@
                 <target>Die Ausführung von DateTime muss nach 24 Stunden erfolgen.</target>
             </trans-unit>
 
+            <trans-unit id="createJob16">
+                <source>job.invalid.uuid.invalid.notBlank</source>
+                <target>Job ID darf nicht leer sein.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

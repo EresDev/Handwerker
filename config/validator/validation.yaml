@@ -112,3 +112,12 @@ App\Application\Command\UpdateJobCommand:
     categoryId:
       - Uuid:
           message: 'job.invalid.category.uuid'
+
+
+App\Application\Query\GetJobQuery:
+  properties:
+    uuid:
+      - NotBlank:
+          message: 'job.invalid.uuid.invalid.notBlank'
+      - Uuid:
+          message: 'job.invalid.uuid.invalid'

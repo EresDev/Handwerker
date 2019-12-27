@@ -106,4 +106,28 @@ class Job extends Entity
     {
         $this->user = $user;
     }
+
+    public function equals(self $job): bool
+    {
+        return $this->uuid === $job->uuid &&
+            $this->title === $job->title &&
+            $this->zipCode === $job->zipCode &&
+            $this->city === $job->city &&
+            $this->executionDateTime === $job->executionDateTime &&
+            $this->category->equals($job->category) &&
+            $this->user->equals($job->user);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'title' => $this->title,
+            'zipCode' => $this->zipCode,
+            'city' => $this->city,
+            'description' => $this->description,
+            'executionDatetime' => $this->executionDateTime->getTimestamp(),
+            'category' => $this->category->toArray()
+        ];
+    }
 }

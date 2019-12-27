@@ -81,7 +81,10 @@
                 <source>job.invalid.executionDateTime.mustBeInFuture</source>
                 <target>The execution DateTime must be after 24 hours from now.</target>
             </trans-unit>
-
+            <trans-unit id="createJob16">
+                <source>job.invalid.uuid.invalid.notBlank</source>
+                <target>Job ID cannot be blank.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
