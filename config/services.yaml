@@ -21,6 +21,9 @@ services:
   #      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
 
 
+  App\Infrastructure\Controller\CreateJobController:
+    public: true
+
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
     class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
 
