@@ -37,10 +37,16 @@ class JWTTokenGenerationTest extends KernelTestCase
 
         $kernel = self::$kernel;
         $response = $kernel->handle($this->request);
+
+        $this->assertEquals(
+            200,
+            $response->getStatusCode(),
+            'JWT login check, to receive token failed. Got invalid status code.'
+        );
         $this->assertArrayHasKey(
             'token',
             json_decode($response->getContent(), true),
-            'No token received. The content received: \n'.
+            "No token received. The content received: \n" .
             $response->getContent()
         );
     }
