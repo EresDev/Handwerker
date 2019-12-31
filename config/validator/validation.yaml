@@ -35,7 +35,7 @@ App\Application\Command\CreateJobCommand:
       - Length:
           min: 5
           minMessage: 'job.invalid.title.minLength'
-          max: 4096
+          max: 100
           maxMessage: 'job.invalid.title.maxLength'
     zipCode:
       - NotBlank:
