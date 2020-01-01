@@ -23,24 +23,20 @@ paths:
       tags:
         - User
       summary: Authenticate user and get a JWT Token
-      consumes:
-        - application/json
       operationId: login
       parameters:
-        - in: body
-          name: user
-          schema:
-            type: object
-            required:
-              - email
-              - password
-            properties:
-              email:
-                type: string
-                example: auth_user2@eresdev.com
-              password:
-                type: string
-                example: somePassword1145236
+        - in: formData
+          name: email
+          required: true
+          type: string
+          default: auth_user2@eresdev.com
+        - in: formData
+          name: password
+          required: true
+          type: string
+          minLength: 6
+          maxLength: 4096
+          default: somePassword1145236
 
       responses:
         200:
@@ -161,7 +157,7 @@ paths:
           description: Uuid of an existing job to return
           required: true
           type: string
-          default: 2e487e8d-1c4d-4484-b783-0e9d2c62051c
+          default: ccae6db1-165f-43d9-ad91-48c40a4d1ea4
       responses:
         200:
           description: successful operation
@@ -259,7 +255,6 @@ parameters:
     name: email
     required: true
     type: string
-    description: An email address
     default: swagger@eresdev.com
   passwordUser:
     in: formData
@@ -277,7 +272,7 @@ parameters:
     required: true
     type: string
     description: UUID v4
-    default: 2e487e8d-1c4d-4484-b783-0e9d2c62051c
+    default: ccae6db1-165f-43d9-ad91-48c40a4d1ea4
   titleJob:
     in: formData
     name: title
