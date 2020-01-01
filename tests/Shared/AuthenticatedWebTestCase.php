@@ -16,10 +16,7 @@ class AuthenticatedWebTestCase extends WebTestCase
         $this->request(
             'POST',
             '/login_check',
-            [],
-            [],
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode(['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD])
+            ['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD]
         );
 
         $data = json_decode($this->response()->getContent(), true);

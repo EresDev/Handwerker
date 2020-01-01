@@ -28,11 +28,7 @@ class JWTTokenGenerationTest extends KernelTestCase
         $this->request = Request::create(
             '/login_check',
             'POST',
-            [],
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD])
+            ['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD]
         );
 
         $kernel = self::$kernel;
@@ -56,11 +52,7 @@ class JWTTokenGenerationTest extends KernelTestCase
         $this->request = Request::create(
             '/login_check',
             'POST',
-            [],
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['email' => 'userShouldNotExistInDB@eresdev.com', 'password' => 'somePassword1145236'])
+            ['email' => 'userShouldNotExistInDB@eresdev.com', 'password' => 'somePassword1145236']
         );
 
         $kernel = new Kernel('test', true);

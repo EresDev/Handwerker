@@ -21,10 +21,10 @@ security:
             stateless: true
             anonymous: true
             provider: custom_provider
-            json_login:
+            form_login:
                 check_path:  /login_check
-                username_path: email
-                password_path: password
+                username_parameter: email
+                password_parameter: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
