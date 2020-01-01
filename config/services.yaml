@@ -14,15 +14,9 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Domain/Entity,Migrations,Tests,Kernel.php,Application/Command,Application/Query,Domain/ValueObject,Domain/Exception,Infrastructure/Security/Symfony/UserAdapter.php}'
 
-
-  #  #Command Handlers
-  #  App\Application\CommandHandler\RegisterUserHandler:
-  #    tags:
-  #      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
-
-
-  App\Infrastructure\Controller\CreateJobController:
-    public: true
+  App\Infrastructure\Controller\:
+    resource: ../src/Infrastructure/Controller/
+    tags: ['controller.service_arguments']
 
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
     class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
