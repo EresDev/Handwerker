@@ -79,7 +79,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         } catch (ValidationException $exception) {
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
-                $exception->getMessagesForEndUser()[0],
+                $exception->getMessagesForEndUser(),
                 $testData->getTestFailureReason()
             );
             $this->assertCount(

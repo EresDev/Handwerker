@@ -13,31 +13,22 @@ trait ValidationErrorsAssertionTrait
         $this->assertEquals(422, $response->getStatusCode());
 
         $content = $response->getContent();
-        $contentObjects = json_decode($content);
-
-        $this->assertCount(
-            1,
-            $contentObjects,
-            sprintf(
-                "Number of received validation errors is not exactly one. The errors received are: %s\n",
-                print_r($contentObjects, true)
-            )
-        );
+        $contentObject = json_decode($content);
 
         $this->assertObjectHasAttribute(
             $invalidField,
-            $contentObjects[0],
+            $contentObject,
             sprintf(
                 "Validation errors does not contain error for invalid %s. " .
                 "Errors received are: \n%s",
                 $invalidField,
-                print_r($contentObjects, true)
+                print_r($contentObject, true)
             )
         );
 
         $this->assertEquals(
             $expectedError,
-            $contentObjects[0]->$invalidField,
+            $contentObject->$invalidField[0],
             sprintf("Validation error received for invalid %s is not as expected.", $invalidField)
         );
     }

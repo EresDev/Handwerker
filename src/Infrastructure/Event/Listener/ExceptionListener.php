@@ -29,13 +29,13 @@ class ExceptionListener
              */
             if ($exception->isTranslatable()) {
                 $messages = $exception->getMessagesForEndUser();
-                foreach ($messages[0] as $field => $message) {
+                foreach ($messages as $field => $message) {
                     //TODO: this loop currently expects only one message to be translatable.
                     //Update and improve this code accordingly. Cleanup needed.
                     //Either enforce some constraint in ValidationException that is translatable to
                     //have only one message, or change this into some efficient way to translate any
                     //number of arrays
-                    $response[][$field] = $this->translator->trans($message);
+                    $response[$field][] = $this->translator->trans($message);
                 }
             } else {
                 $response = $exception->getMessagesForEndUser();

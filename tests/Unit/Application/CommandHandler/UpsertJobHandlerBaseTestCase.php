@@ -29,7 +29,7 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
             $errors = $exception->getMessagesForEndUser();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
-                $errors[0],
+                $errors,
                 $testData->getTestFailureReason()
             );
 

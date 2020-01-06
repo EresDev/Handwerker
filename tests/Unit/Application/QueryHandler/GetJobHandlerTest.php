@@ -108,7 +108,7 @@ class GetJobHandlerTest extends KernelTestCase
             $errors = $exception->getMessagesForEndUser();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
-                $errors[0],
+                $errors,
                 $testData->getTestFailureReason()
             );
 
