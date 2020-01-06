@@ -7,12 +7,18 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 use App\Domain\Entity\Job;
 use App\Domain\Entity\User;
 use App\Domain\Repository\Job\JobByUserFinder;
+use App\Domain\Repository\Job\JobDeleter;
 use App\Domain\Repository\Job\JobFinder;
 use App\Domain\Repository\Job\JobSaver;
 use App\Domain\Repository\Job\JobUpdater;
 use Doctrine\ORM\EntityManagerInterface;
 
-class JobRepository extends Repository implements JobFinder, JobByUserFinder, JobSaver, JobUpdater
+class JobRepository extends Repository implements
+    JobFinder,
+    JobByUserFinder,
+    JobSaver,
+    JobUpdater,
+    JobDeleter
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -47,6 +53,12 @@ class JobRepository extends Repository implements JobFinder, JobByUserFinder, Jo
 
     public function update(Job $job): void
     {
+        $this->completeTransaction();
+    }
+
+    public function delete(Job $job): void
+    {
+        $this->entityManager->remove($job);
         $this->completeTransaction();
     }
 
