@@ -12,11 +12,12 @@ use App\Application\Service\Validator;
 use App\Domain\Entity\User;
 use App\Domain\Repository\Job\JobSaver;
 use App\Tests\Shared\ObjectMother\JobMother;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class CreateJobHandlerTest extends UpsertJobHandlerBaseTestCase
 {
     private Validator $validator;
-    private JobSaver $jobSaver;
+    private MockObject $jobSaver;
     private Uuid $uuidGenerator;
     private JobFactoryImpl $jobFactory;
 
