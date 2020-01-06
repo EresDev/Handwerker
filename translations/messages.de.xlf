@@ -6,6 +6,10 @@
                 <source>Provided category for the job does not exist.</source>
                 <target>Die angegebene Kategorie für den Job existiert nicht.</target>
             </trans-unit>
+            <trans-unit id="messages2">
+                <source>Requested job was not found. Delete operation failed.</source>
+                <target>Der angeforderte Job wurde nicht gefunden. Löschvorgang fehlgeschlagen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
