@@ -7,6 +7,7 @@ namespace App\Infrastructure\Controller;
 use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
 use App\Application\Service\Security\Security;
+use App\Application\Service\Translator;
 use App\Application\Service\Uuid;
 use App\Domain\Entity\User;
 use App\Domain\Exception\ValidationException;
@@ -14,20 +15,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class CreateJobController
+class CreateJobController extends BaseController
 {
-    private Request $request;
     private Uuid $uuidGenerator;
     private CreateJobHandler $handler;
     private User $user;
 
     public function __construct(
+        Translator $translator,
         RequestStack $requestStack,
         Uuid $uuidGenerator,
         CreateJobHandler $handler,
         Security $security
     ) {
-        $this->request = $requestStack->getCurrentRequest();
+        parent::__construct($translator, $requestStack);
+
         $this->uuidGenerator = $uuidGenerator;
         $this->handler = $handler;
         $this->user = $security->getUser();
@@ -49,13 +51,16 @@ class CreateJobController
             $this->user
         );
 
-        //try {
-        $this->handler->handle($command);
-//        } catch (ValidationException $exception) {
-//            return new JsonResponse($exception->getMessage(), 422);
-//        }
+        try {
+            $this->handler->handle($command);
+        } catch (ValidationException $exception) {
+            return $this->createTranslatedResponseFromArray(
+                $exception->getMessagesForEndUser(),
+                422
+            );
+        }
 
-        return new JsonResponse(['uuid' => $uuid], 201);
+        return $this->createTranslatedResponseFromArray(['uuid' => $uuid], 201);
     }
 
     private function getDateTimeFrom($timestamp): \DateTime

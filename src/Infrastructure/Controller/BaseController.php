@@ -20,7 +20,15 @@ abstract class BaseController
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    protected function createResponse(?string $content, int $httpStatusCode): JsonResponse
+    protected function createEmptyResponse(int $httpStatusCode): JsonResponse
+    {
+        return new JsonResponse(
+            '',
+            $httpStatusCode
+        );
+    }
+
+    protected function createTranslatedResponse(string $content, int $httpStatusCode): JsonResponse
     {
         return new JsonResponse(
             $this->translator->translate($content),
@@ -28,9 +36,18 @@ abstract class BaseController
         );
     }
 
-    protected function createResponseFromArray(array $content, int $httpStatusCode): JsonResponse
-    {
+    protected function createTranslatedResponseFromArray(
+        array $content,
+        int $httpStatusCode
+    ): JsonResponse {
         $translatedContent = $this->translator->translateValues($content);
-        return new JsonResponse($translatedContent, $httpStatusCode);
+        return $this->createResponseFromArray($translatedContent, $httpStatusCode);
+    }
+
+    protected function createResponseFromArray(
+        array $content,
+        int $httpStatusCode
+    ): JsonResponse {
+        return new JsonResponse($content, $httpStatusCode);
     }
 }

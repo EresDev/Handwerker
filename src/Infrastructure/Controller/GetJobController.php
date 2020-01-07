@@ -7,20 +7,25 @@ namespace App\Infrastructure\Controller;
 use App\Application\Query\GetJobQuery;
 use App\Application\QueryHandler\GetJobHandler;
 use App\Application\Service\Security\Security;
+use App\Application\Service\Translator;
 use App\Domain\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class GetJobController
+class GetJobController extends BaseController
 {
-    private Request $request;
     private User $user;
     private GetJobHandler $handler;
 
-    public function __construct(RequestStack $requestStack, Security $security, GetJobHandler $handler)
-    {
-        $this->request = $requestStack->getCurrentRequest();
+    public function __construct(
+        Translator $translator,
+        RequestStack $requestStack,
+        Security $security,
+        GetJobHandler $handler
+    ) {
+        parent::__construct($translator, $requestStack);
+
         $this->user = $security->getUser();
         $this->handler = $handler;
     }
@@ -35,9 +40,10 @@ class GetJobController
         $job = $this->handler->handle($query);
 
         if (!$job) {
-            return new JsonResponse('', 404);
+            return $this->createEmptyResponse(404);
+            new JsonResponse('', 404);
         }
 
-        return new JsonResponse($job->toArray(), 200);
+        return $this->createResponseFromArray($job->toArray(), 200);
     }
 }

@@ -14,10 +14,3 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Domain/Entity,Migrations,Tests,Kernel.php,Application/Command,Application/Query,Domain/ValueObject,Domain/Exception,Infrastructure/Security/Symfony/UserAdapter.php}'
 
-  #  App\Application\CommandHandler\RegisterUserHandler:
-  #    tags:
-  #      - { name: command_handler, handles: App\Application\Command\RegisterUserCommand, method: handle }
-
-  App\Infrastructure\Event\Listener\ExceptionListener:
-    tags:
-      - { name: kernel.event_listener, event: kernel.exception }

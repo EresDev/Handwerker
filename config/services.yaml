@@ -21,7 +21,4 @@ services:
   Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
     class: Symfony\Component\Security\Core\Encoder\NativePasswordEncoder
 
-  App\Infrastructure\Event\Listener\ExceptionListener:
-    tags:
-      - { name: kernel.event_listener, event: kernel.exception }
 

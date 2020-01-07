@@ -76,6 +76,7 @@ class GetJobControllerTest extends AuthenticatedWebTestCase
     public function testHandleRequestWithValidJobUuidForUnauthenticatedUser(
         string $uri,
         string $expectedError
+
     ): void {
         $this->sendRequest($uri, JobFixture::UUID);
         $response = $this->response();

@@ -41,12 +41,12 @@ class DeleteJobController extends BaseController
         try {
             $this->handler->handle($query);
         } catch (ValidationException $exception) {
-            return $this->createResponseFromArray(
+            return $this->createTranslatedResponseFromArray(
                 $exception->getMessagesForEndUser(),
                 404
             );
         }
 
-        return new JsonResponse(null, 204);
+        return $this->createEmptyResponse(204);
     }
 }

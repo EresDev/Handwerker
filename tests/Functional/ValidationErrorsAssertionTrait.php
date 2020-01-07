@@ -28,7 +28,7 @@ trait ValidationErrorsAssertionTrait
 
         $this->assertEquals(
             $expectedError,
-            $contentObject->$invalidField[0],
+            $contentObject->$invalidField,
             sprintf("Validation error received for invalid %s is not as expected.", $invalidField)
         );
     }

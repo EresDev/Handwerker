@@ -42,7 +42,7 @@ class ValidatorAdapter implements Validator
         $errors = [];
         foreach ($constraintViolationList as $index => $constraintViolation) {
             $propertyNameOfEntity = $constraintViolation->getPropertyPath();
-            $errors[$propertyNameOfEntity][] = $constraintViolation->getMessage();
+            $errors[$propertyNameOfEntity] = $constraintViolation->getMessage();
         }
         $errors;
         return $errors;
