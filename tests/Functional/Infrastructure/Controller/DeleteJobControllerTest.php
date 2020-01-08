@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
-use App\Tests\Shared\AuthenticatedWebTestCase;
+use App\Tests\Shared\AuthenticatedClientTrait;
 use App\Tests\Shared\Fixture\JobFixture;
+use App\Tests\Shared\Functional\Assertion\Assertion404NotFoundTrait;
+use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
-class DeleteJobControllerTest extends AuthenticatedWebTestCase
+class DeleteJobControllerTest extends WebTestCase
 {
     use RefreshDatabaseTrait;
+    use AuthenticatedClientTrait;
+    use Assertion404NotFoundTrait;
     private const URI = ['en' => 'job', 'de' => 'arbeit'];
 
     /**
@@ -53,7 +57,7 @@ class DeleteJobControllerTest extends AuthenticatedWebTestCase
      */
     public function testHandleRequestWithValidButNonExistingJobUuid(
         string $uri,
-        $expectedError
+        string $expectedContent
     ): void {
         $this->authenticateClient();
 
@@ -61,31 +65,10 @@ class DeleteJobControllerTest extends AuthenticatedWebTestCase
             $uri,
             '28b4640e-f445-4107-bbd4-3768b788e893'
         );
-        $response = $this->response();
 
-        $this->assertEquals(
-            404,
-            $response->getStatusCode()
-        );
-
-        $content = $response->getContent();
-        $contentObject = json_decode($content);
-
-        $this->assertObjectHasAttribute(
-            'uuid',
-            $contentObject,
-            sprintf(
-                "Validation errors does not contain error for invalid %s. " .
-                "Errors received are: \n%s",
-                'uuid',
-                print_r($contentObject, true)
-            )
-        );
-
-        $this->assertEquals(
-            $expectedError,
-            $contentObject->uuid,
-            sprintf("Validation error received for valid but non existing %s is not as expected.", 'uuid')
+        $this->assertForValidButNonExistingEntityUuid(
+            $expectedContent,
+            $this->response()
         );
     }
 
@@ -100,6 +83,25 @@ class DeleteJobControllerTest extends AuthenticatedWebTestCase
                 self::URI['de'],
                 'Der angeforderte Job wurde nicht gefunden. Löschvorgang fehlgeschlagen.'
             ]
+        ];
+    }
+
+    /**
+     * @dataProvider unauthenticatedUserTestDataProvider
+     */
+    public function testHandleRequestWithValidJobUuidForUnauthenticatedUser(
+        string $uri,
+        string $locale
+    ): void {
+        $this->sendRequest($uri, JobFixture::UUID);
+        $this->assertForUnauthenticatedUser($locale);
+    }
+
+    public function unauthenticatedUserTestDataProvider(): array
+    {
+        return [
+            'EN: Unauthenticated Error' => [self::URI['en'], 'en'],
+            'DE: Unauthenticated Error' => [self::URI['de'], 'de']
         ];
     }
 }

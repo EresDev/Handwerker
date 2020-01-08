@@ -7,12 +7,14 @@ namespace App\Tests\Functional\Infrastructure\Controller;
 use App\Domain\Entity\User;
 use App\Tests\Functional\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
+use App\Tests\Shared\WebTestCaseTrait;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class RegisterUserControllerTest extends WebTestCase
 {
-    use ValidationErrorsAssertionTrait;
     use RefreshDatabaseTrait;
+    use WebTestCaseTrait;
+    use ValidationErrorsAssertionTrait;
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
     private const URI = ['en' => 'user', 'de' => 'benutzer'];
@@ -47,9 +49,7 @@ class RegisterUserControllerTest extends WebTestCase
         $this->client->request(
             'post',
             '/' . $uri,
-            $parameters,
-            [],
-            []
+            $parameters
         );
     }
 

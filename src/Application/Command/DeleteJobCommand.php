@@ -26,4 +26,15 @@ class DeleteJobCommand
     {
         return $this->user;
     }
+
+    public function __toString(): string
+    {
+        return print_r(
+            [
+                'uuid' => $this->uuid,
+                'userId' => $this->user->getUuid()
+            ],
+            true
+        );
+    }
 }

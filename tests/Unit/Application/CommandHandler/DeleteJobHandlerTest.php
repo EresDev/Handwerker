@@ -7,11 +7,13 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\DeleteJobCommand;
 use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Validator;
+use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Job\JobByUserFinder;
 use App\Domain\Repository\Job\JobDeleter;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\Fixture\UserFixture;
 use App\Tests\Shared\KernelTestCase;
+use App\Tests\Shared\TestData;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class DeleteJobHandlerTest extends KernelTestCase
@@ -34,7 +36,7 @@ class DeleteJobHandlerTest extends KernelTestCase
             ->willReturn(JobFixture::getInstance());
     }
 
-    public function testHandleRequest(): void
+    public function testHandleRequestWithValidAndExistingJobUuid(): void
     {
         $this->jobDeleter
             ->expects($this->atLeast(1))
@@ -49,5 +51,59 @@ class DeleteJobHandlerTest extends KernelTestCase
         );
 
         $handler->handle($command);
+    }
+
+    /**
+     * @dataProvider invalidUuidValuesDataProvider
+     */
+    public function testHandleRequestWithQueryForJobWithJobUuidAsAnEmptyString(TestData $testData): void
+    {
+        $command = new DeleteJobCommand($testData->getInput(), UserFixture::getInstance());
+
+        $handler = new DeleteJobHandler(
+            $this->validator,
+            $this->jobByUserFinder,
+            $this->jobDeleter
+        );
+
+        $this->expectException(ValidationException::class);
+
+        try {
+            $handler->handle($command);
+        } catch (ValidationException $exception) {
+            $errors = $exception->getMessagesForEndUser();
+            $this->assertArrayHasKey(
+                $testData->getExpectedValue(),
+                $errors,
+                $testData->getTestFailureReason()
+            );
+
+            $this->assertCount(1, $errors);
+            throw $exception;
+        }
+    }
+
+    public function invalidUuidValuesDataProvider(): array
+    {
+        return [
+            'Invalid Uuid as empty string' => [
+                new TestData(
+                    '',
+                    'uuid',
+                    'Validation error: ' .
+                    'Given empty uuid ' .
+                    'but did not get back uuid blank validation error'
+                )
+            ],
+            'Invalid Uuid as a string foobar' => [
+                new TestData(
+                    'foobar',
+                    'uuid',
+                    'Validation error: ' .
+                    'Given invalid Uuid as foobar' .
+                    'but did not get back invalid uuid validation error'
+                )
+            ]
+        ];
     }
 }

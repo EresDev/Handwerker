@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Bundle\Translator;
 
 use App\Tests\Shared\WebTestCase;
+use App\Tests\Shared\WebTestCaseTrait;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class TranslatorTest extends WebTestCase
@@ -13,13 +14,9 @@ class TranslatorTest extends WebTestCase
     //possibly along with independent custom validations
 
     use RefreshDatabaseTrait;
+    use WebTestCaseTrait;
     private const EMAIL = 'registerUserControllerTest@eresdev.com';
     private const PASSWORD = 'somePassword1145236';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
 
     public function testRegisterUserControllerWithEmptyPasswordForEnglishErrors(): void
     {

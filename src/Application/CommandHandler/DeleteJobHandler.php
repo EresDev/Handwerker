@@ -39,8 +39,7 @@ class DeleteJobHandler
         );
 
         if (!$job) {
-            throw ValidationException::fromSingleViolation(
-                'uuid',
+            throw ValidationException::fromGeneralViolation(
                 'Requested job was not found. Delete operation failed.'
             );
         }

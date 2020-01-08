@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
-use App\Tests\Shared\AuthenticatedWebTestCase;
+use App\Tests\Shared\AuthenticatedClientTrait;
 use App\Tests\Shared\Fixture\JobFixture;
+use App\Tests\Shared\Functional\Assertion\Assertion404NotFoundTrait;
+use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
-class GetJobControllerTest extends AuthenticatedWebTestCase
+class GetJobControllerTest extends WebTestCase
 {
     use RefreshDatabaseTrait;
+    use AuthenticatedClientTrait;
+    use Assertion404NotFoundTrait;
     private const URI = ['en' => 'job', 'de' => 'arbeit'];
 
     /**
@@ -62,37 +66,29 @@ class GetJobControllerTest extends AuthenticatedWebTestCase
         $this->authenticateClient();
 
         $this->sendRequest($uri, 'd38b1a7a-2126-4b74-aac5-fb6129de38ec');
-        $response = $this->response();
 
-        $this->assertEquals(404, $response->getStatusCode());
-
-        $content = json_decode($response->getContent());
-        $this->assertEquals('', $content);
+        $this->assertForValidButNonExistingEntityUuid(
+            '',
+            $this->response()
+        );
     }
 
     /**
-     * @dataProvider unauthenticatedDataProvider
+     * @dataProvider unauthenticatedTestDataProvider
      */
     public function testHandleRequestWithValidJobUuidForUnauthenticatedUser(
         string $uri,
-        string $expectedError
-
+        string $locale
     ): void {
         $this->sendRequest($uri, JobFixture::UUID);
-        $response = $this->response();
-
-        $this->assertEquals(401, $response->getStatusCode());
-
-        $content = json_decode($response->getContent());
-        $this->assertEquals($expectedError, $content->message);
+        $this->assertForUnauthenticatedUser($locale);
     }
 
-    public function unauthenticatedDataProvider(): array
+    public function unauthenticatedTestDataProvider(): array
     {
-        //TODO: add translation for this error message
         return [
-            'EN: Unauthenticated Error' => [self::URI['en'], 'JWT Token not found'],
-            'DE: Unauthenticated Error' => [self::URI['de'], 'JWT Token not found']
+            'EN: Unauthenticated Error' => [self::URI['en'], 'en'],
+            'DE: Unauthenticated Error' => [self::URI['de'], 'de']
         ];
     }
 }

@@ -11,7 +11,6 @@ use App\Application\Service\Translator;
 use App\Domain\Entity\User;
 use App\Domain\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class DeleteJobController extends BaseController
@@ -41,8 +40,8 @@ class DeleteJobController extends BaseController
         try {
             $this->handler->handle($query);
         } catch (ValidationException $exception) {
-            return $this->createTranslatedResponseFromArray(
-                $exception->getMessagesForEndUser(),
+            return $this->createTranslatedResponse(
+                $exception->getMessagesForEndUser()[0],
                 404
             );
         }

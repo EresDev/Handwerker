@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Tests\Functional\ValidationErrorsAssertionTrait;
-use App\Tests\Shared\AuthenticatedWebTestCase;
+use App\Tests\Shared\AuthenticatedClientTrait;
+use App\Tests\Shared\WebTestCase;
+use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
-abstract class UpsertJobBaseTestCase extends AuthenticatedWebTestCase
+abstract class UpsertJobBaseTestCase extends WebTestCase
 {
+    use RefreshDatabaseTrait;
+    use AuthenticatedClientTrait;
     use ValidationErrorsAssertionTrait;
     private const URI = ['en' => 'job', 'de' => 'arbeit'];
 
@@ -36,7 +40,7 @@ abstract class UpsertJobBaseTestCase extends AuthenticatedWebTestCase
     abstract protected function getRequestMethod(): string;
 
     /**
-     * @dataProvider unauthenticatedDataProvider
+     * @dataProvider unauthenticatedTestDataProvider
      */
     public function testHandleRequestForValidDataUnauthenticated(string $uri, string $expectedError): void
     {
@@ -62,7 +66,7 @@ abstract class UpsertJobBaseTestCase extends AuthenticatedWebTestCase
         );
     }
 
-    public function unauthenticatedDataProvider(): array
+    public function unauthenticatedTestDataProvider(): array
     {
         //TODO: add translation for this error message
         return [
