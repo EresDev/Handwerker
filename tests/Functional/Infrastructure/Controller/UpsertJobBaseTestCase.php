@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
-use App\Tests\Functional\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\AuthenticatedClientTrait;
+use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
@@ -81,7 +81,8 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(
         string $uri,
         string $expectedError
-    ): void {
+    ): void
+    {
         $this->authenticateClient();
 
         $jobParameters = $this->getJobParameters();
@@ -89,7 +90,11 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError('executionDateTime', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['executionDateTime' => $expectedError],
+            'executionDateTime'
+        );
     }
 
     public function invalidExecutionDateTimeDataProvider(): array
@@ -112,7 +117,8 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(
         string $uri,
         string $expectedError
-    ): void {
+    ): void
+    {
         $this->authenticateClient();
         $jobParameters = $this->getJobParameters();
         $timestampNow = (new \DateTime())
@@ -122,7 +128,11 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError('executionDateTime', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['executionDateTime' => $expectedError],
+            'executionDateTime'
+        );
     }
 
     /**
@@ -131,7 +141,8 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestWithValidCategoryUuidThatDoesNotExist(
         string $uri,
         string $expectedError
-    ): void {
+    ): void
+    {
         $this->authenticateClient();
 
         $jobParameters = $this->getJobParameters();
@@ -139,7 +150,11 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError('categoryId', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['categoryId' => $expectedError],
+            'categoryId'
+        );
     }
 
     public function validCategoryUuidThatDoesNotExistDataProvider(): array

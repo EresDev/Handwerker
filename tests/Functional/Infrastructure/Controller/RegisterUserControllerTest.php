@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Entity\User;
-use App\Tests\Functional\ValidationErrorsAssertionTrait;
+use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
 use App\Tests\Shared\WebTestCaseTrait;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
@@ -63,7 +63,11 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => self::EMAIL, 'password' => '']
         );
 
-        $this->assertForValidationError('password', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['password' => $expectedError],
+            'password'
+        );
     }
 
     public function emptyPasswordDataProvider(): array
@@ -84,7 +88,11 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
         );
 
-        $this->assertForValidationError('email', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['email' => $expectedError],
+            'email'
+        );
     }
 
     public function invalidEmailDataProvider(): array
@@ -110,7 +118,11 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => $user->getEmail(), 'password' => self::PASSWORD]
         );
 
-        $this->assertForValidationError('email', $expectedError);
+        $this->assertForValidationError(
+            $this->response(),
+            ['email' => $expectedError],
+            'email'
+        );
     }
 
     public function existingEmailDataProvider(): array
