@@ -18,7 +18,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
     protected function sendRequest(string $uri, array $parameters): void
     {
-        $this->client->request(
+        $this->request(
             $this->getRequestMethod(),
             '/' . $uri,
             $parameters,
@@ -42,36 +42,22 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     /**
      * @dataProvider unauthenticatedTestDataProvider
      */
-    public function testHandleRequestForValidDataUnauthenticated(string $uri, string $expectedError): void
+    public function testHandleRequestForValidDataUnauthenticated(string $uri, string $locale): void
     {
         $this->sendRequest(
             $uri,
             $this->getJobParameters()
         );
-        $response = $this->response();
-        $this->assertEquals(
-            401,
-            $response->getStatusCode(),
-            'Test to get error message for unauthorized access to create a new job failed. ' .
-            'Received wrong HTTP status code.'
-        );
 
-        $responseObj = json_decode($response->getContent());
-        $this->assertEquals(
-            $expectedError,
-            $responseObj->message,
-            'Test to get error message for unauthorized access to create a new job failed. ' .
-            'We did not get back the error message we ' .
-            'were expecting.'
-        );
+        $this->assertForUnauthenticatedUser($locale);
     }
 
     public function unauthenticatedTestDataProvider(): array
     {
         //TODO: add translation for this error message
         return [
-            'EN: Unauthenticated Error' => [self::URI['en'], 'JWT Token not found'],
-            'DE: Unauthenticated Error' => [self::URI['de'], 'JWT Token not found']
+            'EN: Unauthenticated Error' => [self::URI['en'], 'en'],
+            'DE: Unauthenticated Error' => [self::URI['de'], 'de']
         ];
     }
 

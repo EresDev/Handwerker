@@ -32,20 +32,32 @@ trait AuthenticatedClientTrait
     {
         $response = $this->response();
 
-        Assert::assertEquals(401, $response->getStatusCode());
+        Assert::assertEquals(
+            401,
+            $response->getStatusCode(),
+            'Test to get error message for unauthorized access for the operation failed. ' .
+            'Received wrong HTTP status code.'
+        );
 
         $content = json_decode($response->getContent());
 
         switch ($locale) {
             //TODO: add translation for this error message
             case 'en':
-                Assert::assertEquals('JWT Token not found', $content->message);
+                $error = 'JWT Token not found';
                 break;
             case 'de':
-                Assert::assertEquals('JWT Token not found', $content->message);
+                $error = 'JWT Token not found';
                 break;
             default:
-                Assert::assertEquals('JWT Token not found', $content->message);
+                $error = 'JWT Token not found';
         }
+
+        Assert::assertEquals(
+            $error,
+            $content->message,
+            'Test to get error message for unauthorized access for this operation failed. ' .
+            'We did not get back the error message in the content we were expecting.'
+        );
     }
 }
