@@ -168,6 +168,28 @@ paths:
       security:
         - JWT: []
 
+    delete:
+      tags:
+        - Job
+      summary: Delete an existing job
+      operationId: deleteJob
+      parameters:
+        - name: jobId
+          in: path
+          description: Uuid of an existing job to delete
+          required: true
+          type: string
+          default: ccae6db1-165f-43d9-ad91-48c40a4d1ea4
+      responses:
+        204:
+          description: The entity deleted successfully. No content is returned.
+        422:
+          description: Operation failed. There were errors.
+          schema:
+            type: string
+            example: "Requested job was not found. Delete operation failed."
+      security:
+        - JWT: []
 
 securityDefinitions:
   JWT:
