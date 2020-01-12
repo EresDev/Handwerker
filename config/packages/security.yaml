@@ -4,9 +4,6 @@ security:
         App\Infrastructure\Security\Symfony\UserAdapter:
             algorithm: auto
 
-        App\Domain\Entity\User:
-            algorithm: auto
-
     providers:
         custom_provider:
             id: App\Infrastructure\Security\Symfony\UserLoader
