@@ -40,7 +40,7 @@ class DeleteJobHandler
         );
 
         if (!$job) {
-            throw DomainException::fromMessage(
+            throw DomainException::fromViolation(
                 'Requested job was not found. Delete operation failed.'
             );
         }

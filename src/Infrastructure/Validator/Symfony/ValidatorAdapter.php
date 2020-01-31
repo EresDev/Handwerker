@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Validator\Symfony;
 
-use App\Domain\Exception\ValidationException;
 use App\Application\Service\Validator;
+use App\Domain\Exception\ValidationException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -24,7 +24,7 @@ class ValidatorAdapter implements Validator
 
         if (count($constraintViolations) > 0) {
             $errors = $this->extractErrors($constraintViolations);
-            throw ValidationException::fromMultiViolations($errors)
+            throw ValidationException::fromViolations($errors)
                 ->withDebugInfo(
                     sprintf(
                         "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",

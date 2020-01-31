@@ -6,6 +6,7 @@ namespace App\Domain\Exception;
 
 class DomainException extends BaseException
 {
+    use DebugTrait;
     /**
      * @var array<int, string>|array<string, string>
      */
@@ -14,7 +15,7 @@ class DomainException extends BaseException
     /**
      * @param array<int, string>|array<string, string> $violations
      */
-    private function __construct(array $violations)
+    protected function __construct(array $violations)
     {
         $this->violations = $violations;
     }
@@ -22,14 +23,14 @@ class DomainException extends BaseException
     /**
      * @param array<int, string>|array<string, string> $violations
      */
-    public static function fromMessages(array $violations): self
+    public static function fromViolations(array $violations): self
     {
-        return new self($violations);
+        return new static($violations);
     }
 
-    public static function fromMessage(string $violation): self
+    public static function fromViolation(string $violation): self
     {
-        return new self([$violation]);
+        return new static([$violation]);
     }
 
     public function getViolations(): array

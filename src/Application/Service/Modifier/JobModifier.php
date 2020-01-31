@@ -26,7 +26,7 @@ class JobModifier
         $job = $this->jobFinder->find($command->getUuid());
 
         if (!$job) {
-            throw DomainException::fromMessages(
+            throw DomainException::fromViolations(
                 ['uuid' => 'No such job exists to update.']
             );
         }
@@ -34,7 +34,7 @@ class JobModifier
         if ($job->getCategory()->getUuid() !== $command->getCategoryId()) {
             $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
             if (!$category) {
-                throw DomainException::fromMessages(
+                throw DomainException::fromViolations(
                     ['categoryId' => 'Provided category for the job does not exist.']
                 );
             }

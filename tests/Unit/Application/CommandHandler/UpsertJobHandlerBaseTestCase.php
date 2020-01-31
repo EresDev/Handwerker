@@ -27,7 +27,7 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
         try {
             $handler->handle($command);
         } catch (ValidationException $exception) {
-            $errors = $exception->getMessages();
+            $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $errors,

@@ -42,7 +42,7 @@ class RegisterUserController extends BaseController
             $this->handler->handle($command);
         } catch (ValidationException $exception) {
             return $this->createTranslatedResponseFromArray(
-                $exception->getMessages(),
+                $exception->getViolations(),
                 422
             );
         }

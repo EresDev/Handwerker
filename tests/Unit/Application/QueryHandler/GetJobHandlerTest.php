@@ -105,7 +105,7 @@ class GetJobHandlerTest extends KernelTestCase
         try {
             $handler->handle($query);
         } catch (ValidationException $exception) {
-            $errors = $exception->getMessages();
+            $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $errors,

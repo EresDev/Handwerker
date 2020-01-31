@@ -55,7 +55,7 @@ class CreateJobController extends BaseController
             $this->handler->handle($command);
         } catch (ValidationException $exception) {
             return $this->createResponseFromArray(
-                $exception->getMessages(),
+                $exception->getViolations(),
                 422
             );
         } catch (DomainException $exception) {

@@ -30,7 +30,7 @@ class JobFactoryImpl implements JobFactory
     {
         $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
         if (!$category) {
-            throw DomainException::fromMessages(
+            throw DomainException::fromViolations(
                 ['categoryId' => 'Provided category for the job does not exist.']
             );
         }
