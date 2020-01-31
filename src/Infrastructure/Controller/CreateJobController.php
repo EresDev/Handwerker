@@ -10,9 +10,9 @@ use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Application\Service\Uuid;
 use App\Domain\Entity\User;
+use App\Domain\Exception\DomainException;
 use App\Domain\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CreateJobController extends BaseController
@@ -54,8 +54,13 @@ class CreateJobController extends BaseController
         try {
             $this->handler->handle($command);
         } catch (ValidationException $exception) {
-            return $this->createTranslatedResponseFromArray(
+            return $this->createResponseFromArray(
                 $exception->getMessagesForEndUser(),
+                422
+            );
+        } catch (DomainException $exception) {
+            return $this->createTranslatedResponseFromArray(
+                $exception->getMessages(),
                 422
             );
         }

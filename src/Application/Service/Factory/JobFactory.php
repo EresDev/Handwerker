@@ -6,12 +6,12 @@ namespace App\Application\Service\Factory;
 
 use App\Application\Command\CreateJobCommand;
 use App\Domain\Entity\Job;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\DomainException;
 
 interface JobFactory
 {
     /**
-     * @throws ValidationException
+     * @throws DomainException
      */
     public function create(CreateJobCommand $command): Job;
 }

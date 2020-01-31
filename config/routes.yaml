@@ -17,7 +17,6 @@ createJob:
   controller: App\Infrastructure\Controller\CreateJobController:handleRequest
   methods: [post]
 
-
 updateJob:
   path:
     en: /job

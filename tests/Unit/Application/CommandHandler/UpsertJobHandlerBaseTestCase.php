@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\CommandHandler;
 
+use App\Domain\Exception\DomainException;
 use App\Domain\Exception\ValidationException;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
@@ -142,15 +143,6 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
                     'but did not get back categoryId validation error'
                 )
             ],
-            'Valid UUID categoryId that is not existing in DB validation error' => [
-                new TestData(
-                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
-                    'categoryId',
-                    'Validation error: ' .
-                    'Given valid UUID categoryId that is not existing in DB ' .
-                    'but did not get back categoryId validation error'
-                )
-            ],
         ];
     }
 
@@ -169,5 +161,46 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
     private function getExecutionDateTime23HoursFromNow(): DateTime
     {
         return (new DateTime())->modify('+23 hours');
+    }
+
+    /**
+     * @dataProvider invalidValuesDataProviderForDomainException
+     */
+    public function testHandleForInvalidValuesForDomainException(TestData $testData): void
+    {
+        $command = $this->getCommandFrom($testData->getInput());
+
+        $handler = $this->getHandlerInstance();
+
+        $this->expectException(DomainException::class);
+
+        try {
+            $handler->handle($command);
+        } catch (DomainException $exception) {
+            $errors = $exception->getMessages();
+            $this->assertArrayHasKey(
+                $testData->getExpectedValue(),
+                $errors,
+                $testData->getTestFailureReason()
+            );
+
+            $this->assertCount(1, $errors);
+            throw $exception;
+        }
+    }
+
+    public function invalidValuesDataProviderForDomainException(): array
+    {
+        return [
+            'Valid UUID categoryId that is not existing in DB validation error' => [
+                new TestData(
+                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
+                    'categoryId',
+                    'Domain exception error: ' .
+                    'Given valid UUID categoryId that is not existing in DB ' .
+                    'but did not get back categoryId validation error'
+                )
+            ],
+        ];
     }
 }

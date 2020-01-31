@@ -6,7 +6,7 @@ namespace App\Application\Service\Factory;
 
 use App\Application\Command\CreateJobCommand;
 use App\Domain\Entity\Job;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\DomainException;
 use App\Domain\Repository\Category\CategoryFinder;
 use App\Domain\Repository\User\UserFinder;
 
@@ -24,15 +24,14 @@ class JobFactoryImpl implements JobFactory
     }
 
     /**
-     * @throw Exception
+     * @throw DomainException
      */
     public function create(CreateJobCommand $command): Job
     {
         $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
         if (!$category) {
-            throw ValidationException::fromSingleViolation(
-                'categoryId',
-                'Provided category for the job does not exist.'
+            throw DomainException::fromMessages(
+                ['categoryId' => 'Provided category for the job does not exist.']
             );
         }
 
