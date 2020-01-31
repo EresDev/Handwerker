@@ -68,7 +68,7 @@ class GetJobControllerTest extends WebTestCase
         $this->sendRequest($uri, 'd38b1a7a-2126-4b74-aac5-fb6129de38ec');
 
         $this->assertForValidButNonExistingEntityUuid(
-            '',
+            [],
             $this->response()
         );
     }

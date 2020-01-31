@@ -10,7 +10,6 @@ use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class GetJobController extends BaseController
@@ -41,7 +40,6 @@ class GetJobController extends BaseController
 
         if (!$job) {
             return $this->createEmptyResponse(404);
-            new JsonResponse('', 404);
         }
 
         return $this->createResponseFromArray($job->toArray(), 200);

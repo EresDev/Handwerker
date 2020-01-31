@@ -71,7 +71,7 @@ class DeleteJobHandlerTest extends KernelTestCase
         try {
             $handler->handle($command);
         } catch (ValidationException $exception) {
-            $errors = $exception->getMessagesForEndUser();
+            $errors = $exception->getMessages();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $errors,

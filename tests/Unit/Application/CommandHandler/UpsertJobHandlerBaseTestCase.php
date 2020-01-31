@@ -27,7 +27,7 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
         try {
             $handler->handle($command);
         } catch (ValidationException $exception) {
-            $errors = $exception->getMessagesForEndUser();
+            $errors = $exception->getMessages();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $errors,
@@ -177,7 +177,7 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
         try {
             $handler->handle($command);
         } catch (DomainException $exception) {
-            $errors = $exception->getMessages();
+            $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $errors,

@@ -79,14 +79,14 @@ class RegisterUserHandlerTest extends KernelTestCase
         } catch (ValidationException $exception) {
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
-                $exception->getMessagesForEndUser(),
+                $exception->getMessages(),
                 $testData->getTestFailureReason()
             );
             $this->assertCount(
                 1,
-                $exception->getMessagesForEndUser(),
+                $exception->getMessages(),
                 'More than one validation errors found: ' .
-                json_encode($exception->getMessagesForEndUser())
+                json_encode($exception->getMessages())
             );
             throw $exception;
         }

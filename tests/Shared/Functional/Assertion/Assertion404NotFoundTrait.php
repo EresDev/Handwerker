@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait Assertion404NotFoundTrait
 {
     public function assertForValidButNonExistingEntityUuid(
-        string $expectedContent,
+        array $expectedContent,
         Response $response
     ): void {
         $this->assertEquals(

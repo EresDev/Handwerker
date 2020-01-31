@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception;
 
-use Throwable;
-
-class ValidationException extends MultiResponseException
+class ValidationException extends BaseException
 {
     use DebugTrait;
+    /**
+     * @var array<int, string>|array<string, string>
+     */
     private array $validationErrors;
-    private bool $translatable;
 
-    private function __construct(array $validationErrors, bool $translatable = false)
+    /**
+     * @param array<int, string>|array<string, string> $validationErrors
+     */
+    private function __construct(array $validationErrors)
     {
         parent::__construct('');
 
         $this->validationErrors = $validationErrors;
-        $this->translatable = $translatable;
     }
 
-    public function getMessagesForEndUser(): array
+    public function getMessages(): array
     {
         return $this->validationErrors;
     }
@@ -30,18 +32,10 @@ class ValidationException extends MultiResponseException
         return new self([$errorMessage], true);
     }
 
-    public static function fromSingleViolation(string $field, string $errorMessage): ValidationException
-    {
-        return new self([$field => $errorMessage], true);
-    }
 
     public static function fromMultiViolations(array $errorMessages): self
     {
         return new self($errorMessages);
     }
 
-    public function isTranslatable(): bool
-    {
-        return $this->translatable;
-    }
 }

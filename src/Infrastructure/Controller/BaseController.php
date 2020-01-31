@@ -23,15 +23,7 @@ abstract class BaseController
     protected function createEmptyResponse(int $httpStatusCode): JsonResponse
     {
         return new JsonResponse(
-            '',
-            $httpStatusCode
-        );
-    }
-
-    protected function createTranslatedResponse(string $content, int $httpStatusCode): JsonResponse
-    {
-        return new JsonResponse(
-            $this->translator->translate($content),
+            [],
             $httpStatusCode
         );
     }

@@ -9,7 +9,7 @@ use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\DomainException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -39,9 +39,9 @@ class DeleteJobController extends BaseController
 
         try {
             $this->handler->handle($query);
-        } catch (ValidationException $exception) {
-            return $this->createTranslatedResponse(
-                $exception->getMessagesForEndUser()[0],
+        } catch (DomainException $exception) {
+            return $this->createTranslatedResponseFromArray(
+                $exception->getViolations(),
                 404
             );
         }
