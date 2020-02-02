@@ -7,7 +7,7 @@ This is a RESTful API for job posting application. It includes authentication, a
 
 The purpose of the application was to practice Hexagonal Architecture, Chicago Style Test-driven development, and CQRS. 
 
-It is based on Symfony 4, PHP 7.4. 
+It is based on Symfony 4, PHP 7.4. The response format of the API is based on [JSend specification](https://github.com/omniti-labs/jsend). 
 
 ## Prerequisites
 - PHP 7.4+
