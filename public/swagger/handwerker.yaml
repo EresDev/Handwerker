@@ -75,17 +75,29 @@ paths:
           schema:
             type: object
             properties:
-              uuid:
+              status:
                 type: string
-                description: The UUID of newly created entity
-                example: 'ccae6db1-165f-43d9-ad91-48c40a4d1ea4'
+                description: success|fail|error
+                example: success
+              data:
+                type: object
+                description: Validation error messages
+                example: {"user":{"uuid":"241b8fcc-ea11-45d2-81de-82dc4210b464"}}
+            example: {"status":"success","data":{"user":{"uuid":"241b8fcc-ea11-45d2-81de-82dc4210b464"}}}
         422:
           description: Operation failed. There were validation errors.
           schema:
-            type: array
-            items:
-              type: object
-            example: [{"email":"Email cannot be empty."},{"password":"Password cannot be blank."}]
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: fail
+              data:
+                type: object
+                description: Validation error messages
+                example: {"email":"The email provided is already registered."}
+            example: {"status":"fail","data":{"email":"The email provided is already registered."}}
 
   /job:
     post:

@@ -42,4 +42,14 @@ abstract class BaseController
     ): JsonResponse {
         return new JsonResponse($content, $httpStatusCode);
     }
+
+    protected function translateValues(array $messages): array
+    {
+        return $this->translator->translateValues($messages);
+    }
+
+    protected function translate(string $message): string
+    {
+        return $this->translator->translate($message);
+    }
 }

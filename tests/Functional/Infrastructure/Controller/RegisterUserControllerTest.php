@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Entity\User;
+use App\Infrastructure\Service\Http\ResponseContent;
+use App\Infrastructure\Service\Http\Status;
 use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
 use App\Tests\Shared\WebTestCaseTrait;
@@ -31,9 +33,14 @@ class RegisterUserControllerTest extends WebTestCase
         $response = $this->response();
         $this->assertEquals(201, $response->getStatusCode());
 
+        $expectedContent = new ResponseContent(Status::SUCCESS, ['user' => ['uuid']]);
+
+        $this->assertTrue($expectedContent->hasEqualFields($response->getContent()));
+
         $responseObj = json_decode($response->getContent());
-        $this->assertObjectHasAttribute('uuid', $responseObj);
-        $this->assertNotNull($responseObj->uuid);
+
+        $this->assertObjectHasAttribute('uuid', $responseObj->data->user);
+        $this->assertNotNull($responseObj->data->user->uuid);
     }
 
     public function uriProvider(): array

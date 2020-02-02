@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Validator\Symfony;
 
 use App\Application\Service\Validator;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempValidationException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -24,7 +24,7 @@ class ValidatorAdapter implements Validator
 
         if (count($constraintViolations) > 0) {
             $errors = $this->extractErrors($constraintViolations);
-            throw ValidationException::fromViolations($errors)
+            throw TempValidationException::from($errors)
                 ->withDebugInfo(
                     sprintf(
                         "Validation failed for %s \nGiven Object: %s\nValidation errors are: \n%s",

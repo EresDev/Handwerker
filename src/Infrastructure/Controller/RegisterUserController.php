@@ -9,7 +9,9 @@ use App\Application\CommandHandler\RegisterUserHandler;
 use App\Application\Service\Translator;
 use App\Application\Service\Uuid;
 use App\Domain\Exception\DuplicateUuidException;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempValidationException;
+use App\Infrastructure\Service\Http\ResponseContent;
+use App\Infrastructure\Service\Http\Status;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -40,13 +42,16 @@ class RegisterUserController extends BaseController
 
         try {
             $this->handler->handle($command);
-        } catch (ValidationException $exception) {
-            return $this->createTranslatedResponseFromArray(
-                $exception->getViolations(),
+        } catch (TempValidationException $exception) {
+            return JsonResponse::create(
+                new ResponseContent(Status::FAIL, $exception->getViolations()),
                 422
             );
         }
 
-        return $this->createResponseFromArray(['uuid' => $uuid], 201);
+        return JsonResponse::create(
+            new ResponseContent(Status::SUCCESS, ['user' => ['uuid' => $uuid]]),
+            201
+        );
     }
 }
