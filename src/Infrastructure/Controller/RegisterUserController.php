@@ -6,27 +6,26 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
-use App\Application\Service\Translator;
 use App\Application\Service\Uuid;
-use App\Domain\Exception\DuplicateUuidException;
 use App\Domain\Exception\TempValidationException;
-use App\Infrastructure\Service\Http\ResponseContent;
-use App\Infrastructure\Service\Http\Status;
+use App\Infrastructure\Service\Http\FailureResponseContent;
+use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RegisterUserController extends BaseController
+class RegisterUserController
 {
+    private Request $request;
     private Uuid $uuidGenerator;
     private RegisterUserHandler $handler;
 
     public function __construct(
-        Translator $translator,
         RequestStack $requestStack,
         Uuid $uuidGenerator,
         RegisterUserHandler $handler
     ) {
-        parent::__construct($translator, $requestStack);
+        $this->request = $requestStack->getCurrentRequest();
         $this->uuidGenerator = $uuidGenerator;
         $this->handler = $handler;
     }
@@ -44,13 +43,13 @@ class RegisterUserController extends BaseController
             $this->handler->handle($command);
         } catch (TempValidationException $exception) {
             return JsonResponse::create(
-                new ResponseContent(Status::FAIL, $exception->getViolations()),
+                new FailureResponseContent($exception->getViolations()),
                 422
             );
         }
 
         return JsonResponse::create(
-            new ResponseContent(Status::SUCCESS, ['user' => ['uuid' => $uuid]]),
+            new SuccessResponseContent(['user' => ['uuid' => $uuid]]),
             201
         );
     }

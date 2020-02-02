@@ -6,24 +6,22 @@ namespace App\Infrastructure\Service\Http;
 
 use JsonSerializable;
 
-abstract class ResponseContent implements JsonSerializable
+class ErrorResponseContent implements JsonSerializable
 {
     protected string $status;
-    /**
-     * @var array<string, string>
-     */
-    protected array $data;
+    protected string $message;
 
-    public function __construct(array $data)
+    public function __construct(string $message)
     {
-        $this->data = $data;
+        $this->message = $message;
+        $this->status = 'error';
     }
 
     public function jsonSerialize(): array
     {
         return [
             'status' => $this->status,
-            'data' => $this->data,
+            'message' => $this->message,
         ];
     }
 
@@ -33,6 +31,6 @@ abstract class ResponseContent implements JsonSerializable
 
         return isset($contentArray['status']) &&
             $contentArray['status'] == $this->status &&
-            isset($contentArray['data']);
+            isset($contentArray['message']);
     }
 }

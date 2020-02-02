@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Entity\User;
-use App\Infrastructure\Service\Http\ResponseContent;
-use App\Infrastructure\Service\Http\Status;
+use App\Infrastructure\Service\Http\SuccessResponseContent;
 use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
 use App\Tests\Shared\WebTestCaseTrait;
@@ -33,9 +32,9 @@ class RegisterUserControllerTest extends WebTestCase
         $response = $this->response();
         $this->assertEquals(201, $response->getStatusCode());
 
-        $expectedContent = new ResponseContent(Status::SUCCESS, ['user' => ['uuid']]);
+        $expectedContent = new SuccessResponseContent(['user' => ['uuid']]);
 
-        $this->assertTrue($expectedContent->hasEqualFields($response->getContent()));
+        $this->assertTrue($expectedContent->hasValidFormat($response->getContent()));
 
         $responseObj = json_decode($response->getContent());
 
