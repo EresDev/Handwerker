@@ -47,10 +47,10 @@ class TranslatorTest extends WebTestCase
         $content = $this->response()->getContent();
         $contentObjects = json_decode($content);
 
-        $this->assertObjectHasAttribute($invalidField, $contentObjects);
+        $this->assertObjectHasAttribute($invalidField, $contentObjects->data);
         $this->assertEquals(
             $expectedError,
-            $contentObjects->password
+            $contentObjects->data->password
         );
     }
 
