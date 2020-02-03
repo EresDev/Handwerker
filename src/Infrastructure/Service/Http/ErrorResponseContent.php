@@ -9,9 +9,9 @@ use JsonSerializable;
 class ErrorResponseContent implements JsonSerializable
 {
     protected string $status;
-    protected string $message;
+    protected ?string $message;
 
-    public function __construct(string $message)
+    public function __construct(?string $message)
     {
         $this->message = $message;
         $this->status = 'error';
