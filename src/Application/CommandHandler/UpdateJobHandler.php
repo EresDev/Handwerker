@@ -15,8 +15,11 @@ class UpdateJobHandler
     private JobUpdater $jobUpdater;
     private JobModifier $jobUpdaterService;
 
-    public function __construct(Validator $validator, JobUpdater $jobUpdater, JobModifier $jobUpdaterService)
-    {
+    public function __construct(
+        Validator $validator,
+        JobUpdater $jobUpdater,
+        JobModifier $jobUpdaterService
+    ) {
         $this->validator = $validator;
         $this->jobUpdater = $jobUpdater;
         $this->jobUpdaterService = $jobUpdaterService;
