@@ -27,12 +27,12 @@ abstract class ResponseContent implements JsonSerializable
         ];
     }
 
-    public function hasValidFormat(string $content): bool
+    public static function hasValidFormat(string $content): bool
     {
         $contentArray = json_decode($content, true);
 
         return isset($contentArray['status']) &&
-            $contentArray['status'] == $this->status &&
+            in_array($contentArray['status'], ['success', 'fail']) &&
             isset($contentArray['data']);
     }
 }

@@ -32,9 +32,7 @@ class RegisterUserControllerTest extends WebTestCase
         $response = $this->response();
         $this->assertEquals(201, $response->getStatusCode());
 
-        $expectedContent = new SuccessResponseContent(['user' => ['uuid']]);
-
-        $this->assertTrue($expectedContent->hasValidFormat($response->getContent()));
+        $this->assertTrue(SuccessResponseContent::hasValidFormat($response->getContent()));
 
         $responseObj = json_decode($response->getContent());
 

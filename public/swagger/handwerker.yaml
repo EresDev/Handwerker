@@ -212,7 +212,16 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Job'
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: success
+              data:
+                type: object
+                $ref: '#/definitions/Job'
+            example: {"status":"success","data":{"uuid":"ccae6db1-165f-43d9-ad91-48c40a4d1ea4","title":"Kellersanierung","zipCode":"21521","city":"Hamburg","description":"Job descriptions from fixture.","executionDatetime":1580942624,"category":{"uuid":"0d195d63-cdc3-4286-90c9-0d6bb8e913ce","name":"Sonstige Umzugsleistungen"}}}
         404:
           description: Job with given ID not found. No content is returned.
           schema:
@@ -223,10 +232,10 @@ paths:
                 description: success|fail|error
                 example: error
               message:
-                type: string
-                description: The field will be present if there is domain exception
-                example: Provided category for the job does not exist.
-            example: {"status":"fail","message":"Provided category for the job does not exist."}
+                type: null
+                description: The value will be null
+                example: null
+            example: {"status":"fail","message":null}
 
       security:
         - JWT: []

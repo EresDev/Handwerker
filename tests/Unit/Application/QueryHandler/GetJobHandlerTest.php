@@ -9,7 +9,7 @@ use App\Application\QueryHandler\GetJobHandler;
 use App\Application\Service\Validator;
 use App\Domain\Entity\Job;
 use App\Domain\Entity\User;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempValidationException;
 use App\Domain\Repository\Job\JobByUserFinder;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\Fixture\UserFixture;
@@ -100,11 +100,11 @@ class GetJobHandlerTest extends KernelTestCase
             $this->jobByUserFinder
         );
 
-        $this->expectException(ValidationException::class);
+        $this->expectException(TempValidationException::class);
 
         try {
             $handler->handle($query);
-        } catch (ValidationException $exception) {
+        } catch (TempValidationException $exception) {
             $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),

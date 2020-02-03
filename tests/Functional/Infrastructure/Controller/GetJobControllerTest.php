@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Infrastructure\Service\Http\SuccessResponseContent;
 use App\Tests\Shared\AuthenticatedClientTrait;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\Functional\Assertion\Assertion404NotFoundTrait;
@@ -29,8 +30,10 @@ class GetJobControllerTest extends WebTestCase
 
         $this->assertEquals(200, $response->getStatusCode());
 
-        $job = json_decode($response->getContent());
+        $this->assertTrue(SuccessResponseContent::hasValidFormat($response->getContent()));
 
+        $content = json_decode($response->getContent());
+        $job = $content->data;
         $this->assertEquals(JobFixture::UUID, $job->uuid);
         $this->assertEquals(JobFixture::TITLE, $job->title);
         $this->assertEquals(JobFixture::DESCRIPTION, $job->description);
@@ -68,7 +71,7 @@ class GetJobControllerTest extends WebTestCase
         $this->sendRequest($uri, 'd38b1a7a-2126-4b74-aac5-fb6129de38ec');
 
         $this->assertForValidButNonExistingEntityUuid(
-            [],
+            ["status" => "error", "message" => null],
             $this->response()
         );
     }
