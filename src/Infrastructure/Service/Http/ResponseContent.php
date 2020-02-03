@@ -12,9 +12,9 @@ abstract class ResponseContent implements JsonSerializable
     /**
      * @var array<string, string>
      */
-    protected array $data;
+    protected ?array $data;
 
-    public function __construct(array $data)
+    public function __construct(?array $data)
     {
         $this->data = $data;
     }
