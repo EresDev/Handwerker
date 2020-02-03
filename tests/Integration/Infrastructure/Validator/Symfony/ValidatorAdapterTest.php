@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Infrastructure\Validator\Symfony;
 
-use App\Domain\Exception\TempValidationException;
+use App\Domain\Exception\ValidationException;
 use App\Infrastructure\Validator\Symfony\ValidatorAdapter;
 use App\Tests\Integration\Infrastructure\Validator\TestCommand;
 use App\Tests\Shared\KernelTestCase;
@@ -35,7 +35,7 @@ class ValidatorAdapterTest extends KernelTestCase
 
     public function testValidateForUniqueEntityConstraintByTryingToAddUserWithExistingEmail(): void
     {
-        $this->expectException(TempValidationException::class);
+        $this->expectException(ValidationException::class);
         /**
          * @var User $user
          */

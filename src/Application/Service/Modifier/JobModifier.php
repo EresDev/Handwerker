@@ -6,7 +6,7 @@ namespace App\Application\Service\Modifier;
 
 use App\Application\Command\UpdateJobCommand;
 use App\Domain\Entity\Job;
-use App\Domain\Exception\TempDomainException;
+use App\Domain\Exception\DomainException;
 use App\Domain\Repository\Category\CategoryFinder;
 use App\Domain\Repository\Job\JobFinder;
 
@@ -26,13 +26,13 @@ class JobModifier
         $job = $this->jobFinder->find($command->getUuid());
 
         if (!$job) {
-            throw TempDomainException::from('No such job exists to update.');
+            throw DomainException::from('No such job exists to update.');
         }
 
         if ($job->getCategory()->getUuid() !== $command->getCategoryId()) {
             $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
             if (!$category) {
-                throw TempDomainException::from('Provided category for the job does not exist.');
+                throw DomainException::from('Provided category for the job does not exist.');
             }
             $job->setCategory($category);
         }

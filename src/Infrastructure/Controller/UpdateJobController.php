@@ -9,8 +9,8 @@ use App\Application\CommandHandler\UpdateJobHandler;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
-use App\Domain\Exception\TempDomainException;
-use App\Domain\Exception\TempValidationException;
+use App\Domain\Exception\DomainException;
+use App\Domain\Exception\ValidationException;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
@@ -53,12 +53,12 @@ class UpdateJobController
 
         try {
             $this->handler->handle($command);
-        } catch (TempValidationException $exception) {
+        } catch (ValidationException $exception) {
             return JsonResponse::create(
                 new FailureResponseContent($exception->getViolations()),
                 422
             );
-        } catch (TempDomainException $exception) {
+        } catch (DomainException $exception) {
             return JsonResponse::create(
                 new ErrorResponseContent(
                     $this->translator->translate($exception->getViolation())

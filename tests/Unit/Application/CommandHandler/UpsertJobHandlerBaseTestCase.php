@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\CommandHandler;
 
-use App\Domain\Exception\TempDomainException;
-use App\Domain\Exception\TempValidationException;
+use App\Domain\Exception\DomainException;
+use App\Domain\Exception\ValidationException;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
 use App\Tests\Shared\TestData;
@@ -22,11 +22,11 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
 
         $handler = $this->getHandlerInstance();
 
-        $this->expectException(TempValidationException::class);
+        $this->expectException(ValidationException::class);
 
         try {
             $handler->handle($command);
-        } catch (TempValidationException $exception) {
+        } catch (ValidationException $exception) {
             $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
@@ -181,11 +181,11 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
 
         $handler = $this->getHandlerInstance();
 
-        $this->expectException(TempDomainException::class);
+        $this->expectException(DomainException::class);
 
         try {
             $handler->handle($command);
-        } catch (TempDomainException $exception) {
+        } catch (DomainException $exception) {
             $error = $exception->getViolation();
             $this->assertEquals(
                 $testData->getExpectedValue(),

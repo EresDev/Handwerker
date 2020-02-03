@@ -6,7 +6,7 @@ namespace App\Application\Service\Factory;
 
 use App\Application\Command\CreateJobCommand;
 use App\Domain\Entity\Job;
-use App\Domain\Exception\TempDomainException;
+use App\Domain\Exception\DomainException;
 use App\Domain\Repository\Category\CategoryFinder;
 use App\Domain\Repository\User\UserFinder;
 
@@ -30,7 +30,7 @@ class JobFactoryImpl implements JobFactory
     {
         $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
         if (!$category) {
-            throw TempDomainException::from(
+            throw DomainException::from(
                 'Provided category for the job does not exist.'
             );
         }

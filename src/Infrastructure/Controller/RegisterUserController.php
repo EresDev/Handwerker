@@ -7,7 +7,7 @@ namespace App\Infrastructure\Controller;
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
 use App\Application\Service\Uuid;
-use App\Domain\Exception\TempValidationException;
+use App\Domain\Exception\ValidationException;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,7 +41,7 @@ class RegisterUserController
 
         try {
             $this->handler->handle($command);
-        } catch (TempValidationException $exception) {
+        } catch (ValidationException $exception) {
             return JsonResponse::create(
                 new FailureResponseContent($exception->getViolations()),
                 422

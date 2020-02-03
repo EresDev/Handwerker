@@ -9,7 +9,7 @@ use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
-use App\Domain\Exception\TempDomainException;
+use App\Domain\Exception\DomainException;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,7 +44,7 @@ class DeleteJobController
 
         try {
             $this->handler->handle($query);
-        } catch (TempDomainException $exception) {
+        } catch (DomainException $exception) {
             return JsonResponse::create(
                 new ErrorResponseContent(
                     $this->translator->translate($exception->getViolation())

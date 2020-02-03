@@ -7,7 +7,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\DeleteJobCommand;
 use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Validator;
-use App\Domain\Exception\TempValidationException;
+use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Job\JobByUserFinder;
 use App\Domain\Repository\Job\JobDeleter;
 use App\Tests\Shared\Fixture\JobFixture;
@@ -66,11 +66,11 @@ class DeleteJobHandlerTest extends KernelTestCase
             $this->jobDeleter
         );
 
-        $this->expectException(TempValidationException::class);
+        $this->expectException(ValidationException::class);
 
         try {
             $handler->handle($command);
-        } catch (TempValidationException $exception) {
+        } catch (ValidationException $exception) {
             $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
