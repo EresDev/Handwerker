@@ -118,17 +118,34 @@ paths:
           schema:
             type: object
             properties:
-              uuid:
+              status:
                 type: string
-                description: The UUID of newly created Job
-                example: 'ccae6db1-165f-43d9-ad91-48c40a4d1ea4'
+                description: success|fail|error
+                example: success
+              data:
+                type: object
+                description: Validation error messages
+                example: {"job":{"uuid":"ccae6db1-165f-43d9-ad91-48c40a4d1ea4"}}
+            example: {"status":"success","data":{"job":{"uuid":"ccae6db1-165f-43d9-ad91-48c40a4d1ea4"}}}
         422:
-          description: Operation failed. There were validation errors.
+          description: Operation failed. There were validation or domain exception errors.
           schema:
-            type: array
-            items:
-              type: object
-            example: [{"title":"The title cannot be blank."},{"zipCode":"Zip code cannot be blank."},{"city":"The city cannot be blank."},{"executionDateTime":"The execution DateTime must be after 24 hours from now."}]
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: fail
+              data:
+                type: object
+                description: The field will be present if there is validation error only
+                example: {"email":"The email provided is already registered."}
+              message:
+                type: string
+                description: The field will be present if there is domain exception
+                example: Provided category for the job does not exist.
+            example: {"status":"fail","data":{"executionDateTime":"The execution DateTime must be after 24 hours from now."}}
+
       security:
         - JWT: []
     put:
@@ -146,14 +163,35 @@ paths:
         - $ref: '#/parameters/categoryIdJob'
       responses:
         204:
-          description: The entity updated successfully. No content is returned.
-        422:
-          description: Operation failed. There were validation errors.
           schema:
-            type: array
-            items:
-              type: object
-            example: [{"title":"The title cannot be blank."},{"zipCode":"Zip code cannot be blank."},{"city":"The city cannot be blank."},{"executionDateTime":"The execution DateTime must be after 24 hours from now."}]
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: success
+              data:
+                type: object
+            example: {"status":"success","data":null}
+          description: The entity updated successfully.
+        422:
+          description: Operation failed. There were validation or domain exception errors.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: fail
+              data:
+                type: object
+                description: The field will be present if there is any validation error
+                example: {"email":"The email provided is already registered."}
+              message:
+                type: string
+                description: The field will be present if there is domain exception
+                example: Provided category for the job does not exist.
+            example: {"status":"fail","data":{"executionDateTime":"The execution DateTime must be after 24 hours from now."}}
       security:
         - JWT: []
   /job/{jobId}:
@@ -177,6 +215,19 @@ paths:
             $ref: '#/definitions/Job'
         404:
           description: Job with given ID not found. No content is returned.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: error
+              message:
+                type: string
+                description: The field will be present if there is domain exception
+                example: Provided category for the job does not exist.
+            example: {"status":"fail","message":"Provided category for the job does not exist."}
+
       security:
         - JWT: []
 
@@ -194,9 +245,19 @@ paths:
           default: ccae6db1-165f-43d9-ad91-48c40a4d1ea4
       responses:
         204:
-          description: The entity deleted successfully. No content is returned.
+          description: The entity deleted successfully.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: success|fail|error
+                example: success
+              data:
+                type: object
+            example: {"status":"success","data":null}
         422:
-          description: Operation failed. There were errors.
+          description: Operation failed. There was domain exception
           schema:
             type: string
             example: "Requested job was not found. Delete operation failed."

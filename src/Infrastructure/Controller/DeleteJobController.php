@@ -9,23 +9,28 @@ use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
-use App\Domain\Exception\DomainException;
+use App\Domain\Exception\TempDomainException;
+use App\Infrastructure\Service\Http\ErrorResponseContent;
+use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class DeleteJobController extends BaseController
+class DeleteJobController
 {
+    private Request $request;
+    private Translator $translator;
     private User $user;
     private DeleteJobHandler $handler;
 
     public function __construct(
-        Translator $translator,
         RequestStack $requestStack,
+        Translator $translator,
         Security $security,
         DeleteJobHandler $handler
     ) {
-        parent::__construct($translator, $requestStack);
-
+        $this->request = $requestStack->getCurrentRequest();
+        $this->translator = $translator;
         $this->user = $security->getUser();
         $this->handler = $handler;
     }
@@ -39,13 +44,18 @@ class DeleteJobController extends BaseController
 
         try {
             $this->handler->handle($query);
-        } catch (DomainException $exception) {
-            return $this->createTranslatedResponseFromArray(
-                $exception->getViolations(),
+        } catch (TempDomainException $exception) {
+            return JsonResponse::create(
+                new ErrorResponseContent(
+                    $this->translator->translate($exception->getViolation())
+                ),
                 404
             );
         }
 
-        return $this->createEmptyResponse(204);
+        return JsonResponse::create(
+            new SuccessResponseContent(null),
+            204
+        );
     }
 }

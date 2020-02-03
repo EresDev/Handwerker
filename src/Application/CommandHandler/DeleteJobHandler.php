@@ -6,7 +6,7 @@ namespace App\Application\CommandHandler;
 
 use App\Application\Command\DeleteJobCommand;
 use App\Application\Service\Validator;
-use App\Domain\Exception\DomainException;
+use App\Domain\Exception\TempDomainException;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\Job\JobByUserFinder;
 use App\Domain\Repository\Job\JobDeleter;
@@ -40,7 +40,7 @@ class DeleteJobHandler
         );
 
         if (!$job) {
-            throw DomainException::fromViolation(
+            throw TempDomainException::from(
                 'Requested job was not found. Delete operation failed.'
             );
         }

@@ -7,7 +7,7 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\DeleteJobCommand;
 use App\Application\CommandHandler\DeleteJobHandler;
 use App\Application\Service\Validator;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempValidationException;
 use App\Domain\Repository\Job\JobByUserFinder;
 use App\Domain\Repository\Job\JobDeleter;
 use App\Tests\Shared\Fixture\JobFixture;
@@ -56,7 +56,7 @@ class DeleteJobHandlerTest extends KernelTestCase
     /**
      * @dataProvider invalidUuidValuesDataProvider
      */
-    public function testHandleRequestWithQueryForJobWithJobUuidAsAnEmptyString(TestData $testData): void
+    public function testHandleRequestWithJobUuidAsAnEmptyString(TestData $testData): void
     {
         $command = new DeleteJobCommand($testData->getInput(), UserFixture::getInstance());
 
@@ -66,11 +66,11 @@ class DeleteJobHandlerTest extends KernelTestCase
             $this->jobDeleter
         );
 
-        $this->expectException(ValidationException::class);
+        $this->expectException(TempValidationException::class);
 
         try {
             $handler->handle($command);
-        } catch (ValidationException $exception) {
+        } catch (TempValidationException $exception) {
             $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),

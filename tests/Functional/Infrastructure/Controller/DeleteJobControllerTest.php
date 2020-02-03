@@ -57,7 +57,7 @@ class DeleteJobControllerTest extends WebTestCase
      */
     public function testHandleRequestWithValidButNonExistingJobUuid(
         string $uri,
-        array $expectedContent
+        string $expectedError
     ): void {
         $this->authenticateClient();
 
@@ -67,7 +67,7 @@ class DeleteJobControllerTest extends WebTestCase
         );
 
         $this->assertForValidButNonExistingEntityUuid(
-            $expectedContent,
+            ['status' => 'error', 'message' => $expectedError],
             $this->response()
         );
     }
@@ -77,11 +77,11 @@ class DeleteJobControllerTest extends WebTestCase
         return [
             'EN: ValidButNonExistingJobUuidDataProvider' => [
                 self::URI['en'],
-                ['Requested job was not found. Delete operation failed.']
+                'Requested job was not found. Delete operation failed.'
             ],
             'DE: ValidButNonExistingJobUuidDataProvider' => [
                 self::URI['de'],
-                ['Der angeforderte Job wurde nicht gefunden. Löschvorgang fehlgeschlagen.']
+                'Der angeforderte Job wurde nicht gefunden. Löschvorgang fehlgeschlagen.'
             ]
         ];
     }
