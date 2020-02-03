@@ -9,7 +9,7 @@ use App\Application\CommandHandler\RegisterUserHandler;
 use App\Application\Service\Factory\UserFactory;
 use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempValidationException;
 use App\Domain\Repository\User\UserSaver;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\TestData;
@@ -72,11 +72,11 @@ class RegisterUserHandlerTest extends KernelTestCase
             $this->userFactory
         );
 
-        $this->expectException(ValidationException::class);
+        $this->expectException(TempValidationException::class);
 
         try {
             $handler->handle($command);
-        } catch (ValidationException $exception) {
+        } catch (TempValidationException $exception) {
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
                 $exception->getViolations(),

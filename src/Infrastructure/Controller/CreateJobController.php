@@ -10,27 +10,33 @@ use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Application\Service\Uuid;
 use App\Domain\Entity\User;
-use App\Domain\Exception\DomainException;
-use App\Domain\Exception\ValidationException;
+use App\Domain\Exception\TempDomainException;
+use App\Domain\Exception\TempValidationException;
+use App\Infrastructure\Service\Http\ErrorResponseContent;
+use App\Infrastructure\Service\Http\FailureResponseContent;
+use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class CreateJobController extends BaseController
+class CreateJobController
 {
+    private Request $request;
     private Uuid $uuidGenerator;
+    private Translator $translator;
     private CreateJobHandler $handler;
     private User $user;
 
     public function __construct(
-        Translator $translator,
         RequestStack $requestStack,
         Uuid $uuidGenerator,
+        Translator $translator,
         CreateJobHandler $handler,
         Security $security
     ) {
-        parent::__construct($translator, $requestStack);
-
+        $this->request = $requestStack->getCurrentRequest();
         $this->uuidGenerator = $uuidGenerator;
+        $this->translator = $translator;
         $this->handler = $handler;
         $this->user = $security->getUser();
     }
@@ -53,19 +59,24 @@ class CreateJobController extends BaseController
 
         try {
             $this->handler->handle($command);
-        } catch (ValidationException $exception) {
-            return $this->createResponseFromArray(
-                $exception->getViolations(),
+        } catch (TempValidationException $exception) {
+            return JsonResponse::create(
+                new FailureResponseContent($exception->getViolations()),
                 422
             );
-        } catch (DomainException $exception) {
-            return $this->createTranslatedResponseFromArray(
-                $exception->getViolations(),
+        } catch (TempDomainException $exception) {
+            return JsonResponse::create(
+                new ErrorResponseContent(
+                    $this->translator->translate($exception->getViolation())
+                ),
                 422
             );
         }
 
-        return $this->createTranslatedResponseFromArray(['uuid' => $uuid], 201);
+        return JsonResponse::create(
+            new SuccessResponseContent(['job' => ['uuid' => $uuid]]),
+            201
+        );
     }
 
     private function getDateTimeFrom($timestamp): \DateTime

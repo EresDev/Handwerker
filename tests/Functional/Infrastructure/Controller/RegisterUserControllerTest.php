@@ -40,6 +40,13 @@ class RegisterUserControllerTest extends WebTestCase
 
         $this->assertObjectHasAttribute('uuid', $responseObj->data->user);
         $this->assertNotNull($responseObj->data->user->uuid);
+        $this->assertSame(
+            1,
+            preg_match(
+                '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i',
+                $responseObj->data->user->uuid
+            )
+        );
     }
 
     public function uriProvider(): array
@@ -71,7 +78,7 @@ class RegisterUserControllerTest extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['password' => $expectedError],
+            ['status' => 'fail', 'data' => ['password' => $expectedError]],
             'password'
         );
     }
@@ -96,7 +103,7 @@ class RegisterUserControllerTest extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['email' => $expectedError],
+            ['status' => 'fail', 'data' => ['email' => $expectedError]],
             'email'
         );
     }
@@ -126,7 +133,7 @@ class RegisterUserControllerTest extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['email' => $expectedError],
+            ['status' => 'fail', 'data' => ['email' => $expectedError]],
             'email'
         );
     }

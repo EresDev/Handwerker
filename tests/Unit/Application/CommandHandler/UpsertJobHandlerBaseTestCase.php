@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\CommandHandler;
 
-use App\Domain\Exception\DomainException;
+use App\Domain\Exception\TempDomainException;
+use App\Domain\Exception\TempValidationException;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\ObjectMother\JobMother;
 use App\Tests\Shared\TestData;
@@ -21,11 +22,11 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
 
         $handler = $this->getHandlerInstance();
 
-        $this->expectException(DomainException::class);
+        $this->expectException(TempValidationException::class);
 
         try {
             $handler->handle($command);
-        } catch (DomainException $exception) {
+        } catch (TempValidationException $exception) {
             $errors = $exception->getViolations();
             $this->assertArrayHasKey(
                 $testData->getExpectedValue(),
@@ -142,12 +143,12 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
                     'but did not get back categoryId validation error'
                 )
             ],
-            'Valid UUID categoryId that is not existing in DB validation error' => [
+            'Invalid format of UUID categoryId validation error' => [
                 new TestData(
-                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
+                    $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
                     'categoryId',
-                    'Domain exception error: ' .
-                    'Given valid UUID categoryId that is not existing in DB ' .
+                    'Validation error: ' .
+                    'Given invalid format of UUID categoryId ' .
                     'but did not get back categoryId validation error'
                 )
             ],
@@ -169,5 +170,44 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
     private function getExecutionDateTime23HoursFromNow(): DateTime
     {
         return (new DateTime())->modify('+23 hours');
+    }
+
+    /**
+     * @dataProvider invalidCategoryIdDataProvider
+     */
+    public function testHandleForInvalidCategoryId(TestData $testData): void
+    {
+        $command = $this->getCommandFrom($testData->getInput());
+
+        $handler = $this->getHandlerInstance();
+
+        $this->expectException(TempDomainException::class);
+
+        try {
+            $handler->handle($command);
+        } catch (TempDomainException $exception) {
+            $error = $exception->getViolation();
+            $this->assertEquals(
+                $testData->getExpectedValue(),
+                $error,
+                $testData->getTestFailureReason()
+            );
+            throw $exception;
+        }
+    }
+
+    public function invalidCategoryIdDataProvider(): array
+    {
+        return [
+            'Valid UUID categoryId that is not existing in DB validation error' => [
+                new TestData(
+                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
+                    'Provided category for the job does not exist.',
+                    'Domain exception error: ' .
+                    'Given valid UUID categoryId that is not existing in DB ' .
+                    'but did not get back categoryId validation error'
+                )
+            ],
+        ];
     }
 }

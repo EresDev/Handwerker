@@ -11,14 +11,14 @@ trait ValidationErrorsAssertionTrait
 {
     protected function assertForValidationError(
         Response $response,
-        array $expectedErrors,
+        array $expectedContent,
         string $invalidField
     ): void {
         $response = $this->response();
         Assert::assertEquals(422, $response->getStatusCode());
 
         Assert::assertEquals(
-            json_encode(['status' => 'fail', 'data' => $expectedErrors]),
+            json_encode($expectedContent),
             $response->getContent(),
             sprintf("Validation error received for invalid %s is not as expected.", $invalidField)
         );

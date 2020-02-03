@@ -78,7 +78,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['executionDateTime' => $expectedError],
+            ['status' => 'fail', 'data' => ['executionDateTime' => $expectedError]],
             'executionDateTime'
         );
     }
@@ -116,7 +116,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['executionDateTime' => $expectedError],
+            ['status' => 'fail', 'data' => ['executionDateTime' => $expectedError]],
             'executionDateTime'
         );
     }
@@ -138,7 +138,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->assertForValidationError(
             $this->response(),
-            ['categoryId' => $expectedError],
+            ['status' => 'error', 'message' => $expectedError],
             'categoryId'
         );
     }
