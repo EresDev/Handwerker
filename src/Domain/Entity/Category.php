@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\ValueObject\Uuid;
+
 class Category extends Entity
 {
     private string $name;
     private string $imageUri;
 
-    public function __construct(string $uuid, string $name, string $imageUri)
+    public function __construct(Uuid $uuid, string $name, string $imageUri)
     {
         parent::__construct($uuid);
 

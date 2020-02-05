@@ -1,5 +1,7 @@
 doctrine:
     dbal:
+        types:
+            uuid4: App\Infrastructure\Persistence\Doctrine\Type\UuidType
         # configure these for your database server
         #MySQL Settings
         driver: 'pdo_mysql'

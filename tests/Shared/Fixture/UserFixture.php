@@ -6,6 +6,7 @@ namespace App\Tests\Shared\Fixture;
 
 use App\Application\Service\Security\Role;
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 
 abstract class UserFixture
 {
@@ -18,7 +19,7 @@ abstract class UserFixture
     public static function getInstance(): User
     {
         return new User(
-            self::UUID,
+            Uuid::createFrom(self::UUID),
             self::EMAIL,
             self::PASSWORD,
             [self::ROLE]

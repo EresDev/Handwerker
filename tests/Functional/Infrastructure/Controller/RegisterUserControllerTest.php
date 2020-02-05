@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
@@ -38,13 +39,7 @@ class RegisterUserControllerTest extends WebTestCase
 
         $this->assertObjectHasAttribute('uuid', $responseObj->data->user);
         $this->assertNotNull($responseObj->data->user->uuid);
-        $this->assertSame(
-            1,
-            preg_match(
-                '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i',
-                $responseObj->data->user->uuid
-            )
-        );
+        $this->assertTrue(Uuid::isValid($responseObj->data->user->uuid));
     }
 
     public function uriProvider(): array

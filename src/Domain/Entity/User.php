@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\ValueObject\Uuid;
 use DateTime;
 
 class User extends Entity
@@ -15,7 +16,7 @@ class User extends Entity
     protected DateTime $memberSince;
     protected array $roles;
 
-    public function __construct(string $uuid, string $email, string $password, array $roles)
+    public function __construct(Uuid $uuid, string $email, string $password, array $roles)
     {
         parent::__construct($uuid);
 

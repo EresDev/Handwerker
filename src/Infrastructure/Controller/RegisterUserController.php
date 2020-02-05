@@ -6,8 +6,8 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
-use App\Application\Service\Uuid;
 use App\Domain\Exception\ValidationException;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,22 +17,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class RegisterUserController
 {
     private Request $request;
-    private Uuid $uuidGenerator;
     private RegisterUserHandler $handler;
 
     public function __construct(
         RequestStack $requestStack,
-        Uuid $uuidGenerator,
         RegisterUserHandler $handler
     ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->uuidGenerator = $uuidGenerator;
         $this->handler = $handler;
     }
 
     public function handleRequest(): JsonResponse
     {
-        $uuid = $this->uuidGenerator->generate();
+        $uuid = Uuid::create();
         $command = new RegisterUserCommand(
             $uuid,
             $this->request->get('email', ''),
@@ -49,7 +46,7 @@ class RegisterUserController
         }
 
         return JsonResponse::create(
-            new SuccessResponseContent(['user' => ['uuid' => $uuid]]),
+            new SuccessResponseContent(['user' => ['uuid' => $uuid->getValue()]]),
             201
         );
     }

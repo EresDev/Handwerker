@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\ValueObject\Uuid;
+
 abstract class Entity
 {
     protected $id;
-    protected string $uuid;
+    protected Uuid $uuid;
 
-    public function __construct(string $uuid)
+    public function __construct(Uuid $uuid)
     {
         $this->uuid = $uuid;
     }
@@ -24,7 +26,7 @@ abstract class Entity
         $this->id = $id;
     }
 
-    public function getUuid(): string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }

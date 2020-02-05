@@ -7,6 +7,7 @@ namespace App\Tests\Shared\Fixture;
 use App\Domain\Entity\Category;
 use App\Domain\Entity\Job;
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 use DateTime;
 
 abstract class JobFixture
@@ -35,7 +36,7 @@ abstract class JobFixture
     public static function getInstance(): Job
     {
         return new Job(
-            self::UUID,
+            Uuid::createFrom(self::UUID),
             self::TITLE,
             self::ZIP_CODE,
             self::CITY,

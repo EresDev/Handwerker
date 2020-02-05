@@ -7,10 +7,10 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\RegisterUserCommand;
 use App\Application\CommandHandler\RegisterUserHandler;
 use App\Application\Service\Factory\UserFactory;
-use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Repository\User\UserSaver;
+use App\Domain\ValueObject\Uuid;
 use App\Tests\Shared\KernelTestCase;
 use App\Tests\Shared\TestData;
 
@@ -20,7 +20,6 @@ class RegisterUserHandlerTest extends KernelTestCase
     public const PASSWORD = 'SomeRandomPassword2348';
     private Validator $validator;
     private UserSaver $userSaver;
-    private Uuid $uuidGenerator;
     private UserFactory $userFactory;
 
     protected function setUp(): void
@@ -30,7 +29,6 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->validator = $this->getService(Validator::class);
         $this->userSaver =
             $this->createMock(UserSaver::class);
-        $this->uuidGenerator = $this->getService(Uuid::class);
         $this->userFactory = $this->getService(UserFactory::class);
     }
 
@@ -41,7 +39,7 @@ class RegisterUserHandlerTest extends KernelTestCase
             ->method('save');
 
         $command = new RegisterUserCommand(
-            $this->uuidGenerator->generate(),
+            Uuid::create(),
             self::EMAIL,
             self::PASSWORD
         );
@@ -61,7 +59,7 @@ class RegisterUserHandlerTest extends KernelTestCase
     public function testHandleWithInValidEmail(TestData $testData): void
     {
         $command = new RegisterUserCommand(
-            $this->uuidGenerator->generate(),
+            Uuid::create(),
             $testData->getInput()['email'],
             $testData->getInput()['password']
         );

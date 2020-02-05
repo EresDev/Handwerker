@@ -144,6 +144,9 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "php": {
+        "version": "7.4"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -299,6 +302,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
+    },
+    "symfony/polyfill-uuid": {
+        "version": "v1.13.1"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"

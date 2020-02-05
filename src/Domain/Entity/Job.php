@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\ValueObject\Uuid;
 use DateTime;
 
 class Job extends Entity
@@ -17,7 +18,7 @@ class Job extends Entity
     private User $user;
 
     public function __construct(
-        string $uuid,
+        Uuid $uuid,
         string $title,
         string $zipCode,
         string $city,

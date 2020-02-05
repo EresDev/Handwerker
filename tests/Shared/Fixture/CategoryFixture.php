@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Shared\Fixture;
 
 use App\Domain\Entity\Category;
+use App\Domain\ValueObject\Uuid;
 
 abstract class CategoryFixture
 {
@@ -15,7 +16,7 @@ abstract class CategoryFixture
     public static function getInstance(): Category
     {
         return new Category(
-            self::UUID,
+            Uuid::createFrom(self::UUID),
             self::TITLE,
             self::IMAGE_URI
         );

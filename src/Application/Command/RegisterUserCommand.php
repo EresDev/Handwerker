@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
+use App\Domain\ValueObject\Uuid;
+
 class RegisterUserCommand
 {
-    private string $uuid;
+    private Uuid $uuid;
     private string $email;
     private string $password;
 
-    public function __construct(string $uuid, string $email, string $password)
+    public function __construct(Uuid $uuid, string $email, string $password)
     {
         $this->uuid = $uuid;
         $this->email = $email;
         $this->password = $password;
     }
 
-    public function getUuid(): string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
