@@ -36,7 +36,7 @@ class JobRepository extends Repository implements
         return $this->repository->findOneBy($conditions);
     }
 
-    public function findOneByUser(string $jobUuid, User $user): ?Job
+    public function findOneByUser(Uuid $jobUuid, User $user): ?Job
     {
         return $this->repository->findOneBy(
             [

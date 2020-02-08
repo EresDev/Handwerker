@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Application\Command;
 
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 
 class DeleteJobCommand
 {
-    private string $uuid;
+    private Uuid $uuid;
     private User $user;
 
-    public function __construct(string $uuid, User $user)
+    public function __construct(Uuid $uuid, User $user)
     {
         $this->uuid = $uuid;
         $this->user = $user;
     }
 
-    public function getUuid(): string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
@@ -31,8 +32,8 @@ class DeleteJobCommand
     {
         return print_r(
             [
-                'uuid' => $this->uuid,
-                'userId' => $this->user->getUuid()
+                'uuid' => $this->uuid->getValue(),
+                'userId' => $this->user->getUuid()->getValue()
             ],
             true
         );

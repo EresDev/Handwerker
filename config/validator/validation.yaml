@@ -100,19 +100,3 @@ App\Application\Command\UpdateJobCommand:
           value: +1 day
           message: 'job.invalid.executionDateTime.mustBeInFuture'
 
-
-App\Application\Query\GetJobQuery:
-  properties:
-    uuid:
-      - NotBlank:
-          message: 'job.invalid.uuid.invalid.notBlank'
-      - Uuid:
-          message: 'job.invalid.uuid.invalid'
-
-App\Application\Command\DeleteJobCommand:
-  properties:
-    uuid:
-      - NotBlank:
-          message: 'job.invalid.uuid.invalid.notBlank'
-      - Uuid:
-          message: 'job.invalid.uuid.invalid'

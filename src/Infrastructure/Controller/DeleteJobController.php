@@ -10,6 +10,7 @@ use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
 use App\Domain\Exception\DomainException;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,12 +38,11 @@ class DeleteJobController
 
     public function handleRequest(): JsonResponse
     {
-        $query = new DeleteJobCommand(
-            $this->request->get('uuid', ''),
-            $this->user
-        );
-
         try {
+            $query = new DeleteJobCommand(
+                Uuid::createFrom($this->request->get('uuid', '')),
+                $this->user
+            );
             $this->handler->handle($query);
         } catch (DomainException $exception) {
             return JsonResponse::create(
