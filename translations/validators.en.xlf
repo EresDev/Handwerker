@@ -29,10 +29,6 @@
             </trans-unit>
 
             <!-- Create Job validation messages -->
-            <trans-unit id="createJob1">
-                <source>job.uuid.already.exists</source>
-                <target>The UUID is already in use.</target>
-            </trans-unit>
             <trans-unit id="createJob2">
                 <source>job.invalid.title.notBlank</source>
                 <target>The title cannot be blank.</target>
@@ -73,17 +69,9 @@
                 <source>job.invalid.description.maxLength</source>
                 <target>The description cannot be more than {{ limit }} characters.</target>
             </trans-unit>
-            <trans-unit id="createJob14">
-                <source>job.invalid.category.uuid</source>
-                <target>The category is invalid.</target>
-            </trans-unit>
             <trans-unit id="createJob15">
                 <source>job.invalid.executionDateTime.mustBeInFuture</source>
                 <target>The execution DateTime must be after 24 hours from now.</target>
-            </trans-unit>
-            <trans-unit id="createJob16">
-                <source>job.invalid.uuid.invalid.notBlank</source>
-                <target>Job ID cannot be blank.</target>
             </trans-unit>
         </body>
     </file>

@@ -29,10 +29,6 @@
 
 
             <!-- Create Job validation messages -->
-            <trans-unit id="createJob1">
-                <source>job.uuid.already.exists</source>
-                <target>Die UUID wird bereits verwendet.</target>
-            </trans-unit>
             <trans-unit id="createJob2">
                 <source>job.invalid.title.notBlank</source>
                 <target>Der Titel darf nicht leer sein.</target>
@@ -73,19 +69,11 @@
                 <source>job.invalid.description.maxLength</source>
                 <target>Die Beschreibung darf nicht länger als {{ limit }} Zeichen sein.</target>
             </trans-unit>
-            <trans-unit id="createJob14">
-                <source>job.invalid.category.uuid</source>
-                <target>Die Kategorie ist ungültig.</target>
-            </trans-unit>
             <trans-unit id="createJob15">
                 <source>job.invalid.executionDateTime.mustBeInFuture</source>
                 <target>Die Ausführung von DateTime muss nach 24 Stunden erfolgen.</target>
             </trans-unit>
 
-            <trans-unit id="createJob16">
-                <source>job.invalid.uuid.invalid.notBlank</source>
-                <target>Job ID darf nicht leer sein.</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
