@@ -11,6 +11,7 @@ use App\Domain\Repository\Job\JobDeleter;
 use App\Domain\Repository\Job\JobFinder;
 use App\Domain\Repository\Job\JobSaver;
 use App\Domain\Repository\Job\JobUpdater;
+use App\Domain\ValueObject\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
 
 class JobRepository extends Repository implements
@@ -25,7 +26,7 @@ class JobRepository extends Repository implements
         parent::__construct($entityManager, Job::class);
     }
 
-    public function find(string $uuid): ?Job
+    public function find(Uuid $uuid): ?Job
     {
         return $this->findOneBy(['uuid' => $uuid]);
     }

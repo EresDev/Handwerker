@@ -28,7 +28,7 @@ class Uuid
     public static function createFrom(string $uuidValue): self
     {
         if (!self::isValid($uuidValue)) {
-            throw DomainException::from('uuid.invalid');
+            throw DomainException::from('uuid.invalid.format');
         }
         return new self($uuidValue);
     }

@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
+use App\Domain\ValueObject\Uuid;
 use DateTime;
 
 abstract class JobCommand
 {
-    protected string $uuid;
+    protected Uuid $uuid;
     protected string $title;
     protected string $zipCode;
     protected string $city;
     protected string $description;
     protected DateTime $executionDateTime;
-    protected string $categoryId;
+    protected Uuid $categoryId;
 
     public function __construct(
-        string $uuid,
+        Uuid $uuid,
         string $title,
         string $zipCode,
         string $city,
         string $description,
         DateTime $executionDateTime,
-        string $categoryId
+        Uuid $categoryId
     ) {
         $this->uuid = $uuid;
         $this->title = $title;
@@ -34,7 +35,7 @@ abstract class JobCommand
         $this->categoryId = $categoryId;
     }
 
-    public function getUuid(): string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
@@ -64,21 +65,16 @@ abstract class JobCommand
         return $this->executionDateTime;
     }
 
-    public function getCategoryId(): string
+    public function getCategoryId(): Uuid
     {
         return $this->categoryId;
-    }
-
-    public function setCategoryId(string $categoryId): void
-    {
-        $this->categoryId = $categoryId;
     }
 
     public function __toString(): string
     {
         return print_r(
             [
-                'uuid' => $this->uuid,
+                'uuid' => $this->uuid->getValue(),
                 'title' => $this->title,
                 'zipCode' => $this->zipCode,
                 'city' => $this->city,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Infrastructure\Controller;
 
 use App\Domain\Repository\Job\JobFinder;
+use App\Domain\ValueObject\Uuid;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\ObjectMother\JobMother;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
@@ -32,7 +33,7 @@ class UpdateJobControllerTest extends UpsertJobBaseTestCase
          * @var JobFinder $jobFinder
          */
         $jobFinder = $this->getService(JobFinder::class);
-        $job = $jobFinder->find($jobParameters['uuid']);
+        $job = $jobFinder->find(Uuid::createFrom($jobParameters['uuid']));
         $this->assertNotNull($job);
         $this->assertEquals($jobParameters['title'], $job->getTitle());
     }

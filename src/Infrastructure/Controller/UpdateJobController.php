@@ -11,6 +11,7 @@ use App\Application\Service\Translator;
 use App\Domain\Entity\User;
 use App\Domain\Exception\DomainException;
 use App\Domain\Exception\ValidationException;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
@@ -41,17 +42,18 @@ class UpdateJobController
     public function handleRequest(): JsonResponse
     {
         $executionTimestamp = (int)$this->request->get('executionDateTime', 0);
-        $command = new UpdateJobCommand(
-            $this->request->get('uuid', ''),
-            $this->request->get('title', ''),
-            $this->request->get('zipCode', ''),
-            $this->request->get('city', ''),
-            $this->request->get('description', ''),
-            $this->getDateTimeFrom($executionTimestamp),
-            $this->request->get('categoryId', '')
-        );
 
         try {
+            $command = new UpdateJobCommand(
+                Uuid::createFrom($this->request->get('uuid', '')),
+                $this->request->get('title', ''),
+                $this->request->get('zipCode', ''),
+                $this->request->get('city', ''),
+                $this->request->get('description', ''),
+                $this->getDateTimeFrom($executionTimestamp),
+                Uuid::createFrom($this->request->get('categoryId', ''))
+            );
+
             $this->handler->handle($command);
         } catch (ValidationException $exception) {
             return JsonResponse::create(

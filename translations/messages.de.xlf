@@ -10,6 +10,11 @@
                 <source>Requested job was not found. Delete operation failed.</source>
                 <target>Der angeforderte Job wurde nicht gefunden. Löschvorgang fehlgeschlagen.</target>
             </trans-unit>
+
+            <trans-unit id="messages3">
+                <source>uuid.invalid.format</source>
+                <target>Die angegebene UUID ist ungültig.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

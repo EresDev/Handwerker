@@ -6,6 +6,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Entity\Category;
 use App\Domain\Repository\Category\CategoryFinder;
+use App\Domain\ValueObject\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryRepository extends Repository implements CategoryFinder
@@ -15,9 +16,9 @@ class CategoryRepository extends Repository implements CategoryFinder
         parent::__construct($entityManager, Category::class);
     }
 
-    public function find(int $id): ?Category
+    public function find(Uuid $uuid): ?Category
     {
-        return $this->repository->find($id);
+        return $this->repository->findOneBy(['uuid' => $uuid]);
     }
 
     public function findOneBy(string $key, string $value): ?Category

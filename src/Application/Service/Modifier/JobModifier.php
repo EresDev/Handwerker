@@ -30,7 +30,7 @@ class JobModifier
         }
 
         if ($job->getCategory()->getUuid() !== $command->getCategoryId()) {
-            $category = $this->categoryFinder->findOneBy('uuid', $command->getCategoryId());
+            $category = $this->categoryFinder->find($command->getCategoryId());
             if (!$category) {
                 throw DomainException::from('Provided category for the job does not exist.');
             }

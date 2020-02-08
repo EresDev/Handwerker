@@ -7,10 +7,10 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
 use App\Application\Service\Factory\JobFactoryImpl;
-use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Entity\User;
 use App\Domain\Repository\Job\JobSaver;
+use App\Domain\ValueObject\Uuid;
 use App\Tests\Shared\ObjectMother\JobMother;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -18,7 +18,6 @@ class CreateJobHandlerTest extends UpsertJobHandlerBaseTestCase
 {
     private Validator $validator;
     private MockObject $jobSaver;
-    private Uuid $uuidGenerator;
     private JobFactoryImpl $jobFactory;
 
     protected function setUp(): void
@@ -28,7 +27,6 @@ class CreateJobHandlerTest extends UpsertJobHandlerBaseTestCase
         $this->validator = $this->getService(Validator::class);
         $this->jobSaver =
             $this->createMock(JobSaver::class);
-        $this->uuidGenerator = $this->getService(Uuid::class);
         $this->jobFactory = $this->getService(JobFactoryImpl::class);
     }
 
@@ -54,13 +52,13 @@ class CreateJobHandlerTest extends UpsertJobHandlerBaseTestCase
     protected function getCommandFrom(array $commandAttrs): CreateJobCommand
     {
         return new CreateJobCommand(
-            $this->uuidGenerator->generate(),
+            Uuid::create(),
             $commandAttrs['title'],
             $commandAttrs['zipCode'],
             $commandAttrs['city'],
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
-            $commandAttrs['categoryId'],
+            Uuid::createFrom($commandAttrs['categoryId']),
             $this->createMock(User::class)
         );
     }

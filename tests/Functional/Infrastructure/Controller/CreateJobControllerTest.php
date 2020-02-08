@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use App\Tests\Shared\ObjectMother\JobMother;
 
@@ -31,13 +32,7 @@ class CreateJobControllerTest extends UpsertJobBaseTestCase
 
         $this->assertObjectHasAttribute('uuid', $responseObj->data->job);
         $this->assertNotNull($responseObj->data->job->uuid);
-        $this->assertSame(
-            1,
-            preg_match(
-                '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i',
-                $responseObj->data->job->uuid
-            )
-        );
+        $this->assertTrue(Uuid::isValid($responseObj->data->job->uuid));
     }
 
     protected function getJobParameters(): array

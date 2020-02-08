@@ -134,24 +134,6 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
                     'but did not get back description validation error'
                 )
             ],
-            'Invalid format of UUID categoryId validation error' => [
-                new TestData(
-                    $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
-                    'categoryId',
-                    'Validation error: ' .
-                    'Given invalid format of UUID categoryId ' .
-                    'but did not get back categoryId validation error'
-                )
-            ],
-            'Invalid format of UUID categoryId validation error' => [
-                new TestData(
-                    $this->prepareTestDataForInvalidJob('categoryId', 'fooBar'),
-                    'categoryId',
-                    'Validation error: ' .
-                    'Given invalid format of UUID categoryId ' .
-                    'but did not get back categoryId validation error'
-                )
-            ],
         ];
     }
 
@@ -201,11 +183,14 @@ abstract class UpsertJobHandlerBaseTestCase extends KernelTestCase
         return [
             'Valid UUID categoryId that is not existing in DB validation error' => [
                 new TestData(
-                    $this->prepareTestDataForInvalidJob('categoryId', '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'),
+                    $this->prepareTestDataForInvalidJob(
+                        'categoryId',
+                        '7c17e4eb-51d9-429b-b82b-a73f23c19a4c'
+                    ),
                     'Provided category for the job does not exist.',
-                    'Domain exception error: ' .
+                    'Domain exception not present: ' .
                     'Given valid UUID categoryId that is not existing in DB ' .
-                    'but did not get back categoryId validation error'
+                    'but did not get back categoryId Domain Exception'
                 )
             ],
         ];

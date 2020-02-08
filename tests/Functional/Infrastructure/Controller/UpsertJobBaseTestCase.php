@@ -76,7 +76,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'fail', 'data' => ['executionDateTime' => $expectedError]],
             'executionDateTime'
@@ -114,7 +114,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'fail', 'data' => ['executionDateTime' => $expectedError]],
             'executionDateTime'
@@ -136,7 +136,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
 
         $this->sendRequest($uri, $jobParameters);
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'error', 'message' => $expectedError],
             'categoryId'
@@ -153,6 +153,41 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
             'DE: Valid Category UUID that does not exist in DB' => [
                 self::URI['de'],
                 'Die angegebene Kategorie für den Job existiert nicht.'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidCategoryUuidDataProvider
+     */
+    public function testHandleRequestWithInvalidCategoryUuid(
+        string $uri,
+        string $expectedError
+    ): void {
+        $this->authenticateClient();
+
+        $jobParameters = $this->getJobParameters();
+        $jobParameters['categoryId'] = 'fooBar';
+
+        $this->sendRequest($uri, $jobParameters);
+
+        $this->assertForError(
+            $this->response(),
+            ['status' => 'error', 'message' => $expectedError],
+            'categoryId'
+        );
+    }
+
+    public function invalidCategoryUuidDataProvider(): array
+    {
+        return [
+            'EN: Valid Category UUID that does not exist in DB' => [
+                self::URI['en'],
+                'The provided UUID is not valid.'
+            ],
+            'DE: Valid Category UUID that does not exist in DB' => [
+                self::URI['de'],
+                'Die angegebene UUID ist ungültig.'
             ]
         ];
     }

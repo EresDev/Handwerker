@@ -8,10 +8,10 @@ use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
-use App\Application\Service\Uuid;
 use App\Domain\Entity\User;
 use App\Domain\Exception\DomainException;
 use App\Domain\Exception\ValidationException;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
@@ -22,20 +22,17 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class CreateJobController
 {
     private Request $request;
-    private Uuid $uuidGenerator;
     private Translator $translator;
     private CreateJobHandler $handler;
     private User $user;
 
     public function __construct(
         RequestStack $requestStack,
-        Uuid $uuidGenerator,
         Translator $translator,
         CreateJobHandler $handler,
         Security $security
     ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->uuidGenerator = $uuidGenerator;
         $this->translator = $translator;
         $this->handler = $handler;
         $this->user = $security->getUser();
@@ -43,21 +40,20 @@ class CreateJobController
 
     public function handleRequest(): JsonResponse
     {
-        $uuid = $this->uuidGenerator->generate();
+        $uuid = Uuid::create();
 
         $executionTimestamp = (int)$this->request->get('executionDateTime', 0);
-        $command = new CreateJobCommand(
-            $uuid,
-            $this->request->get('title', ''),
-            $this->request->get('zipCode', ''),
-            $this->request->get('city', ''),
-            $this->request->get('description', ''),
-            $this->getDateTimeFrom($executionTimestamp),
-            $this->request->get('categoryId', ''),
-            $this->user
-        );
-
         try {
+            $command = new CreateJobCommand(
+                $uuid,
+                $this->request->get('title', ''),
+                $this->request->get('zipCode', ''),
+                $this->request->get('city', ''),
+                $this->request->get('description', ''),
+                $this->getDateTimeFrom($executionTimestamp),
+                Uuid::createFrom($this->request->get('categoryId', '')),
+                $this->user
+            );
             $this->handler->handle($command);
         } catch (ValidationException $exception) {
             return JsonResponse::create(
@@ -74,7 +70,7 @@ class CreateJobController
         }
 
         return JsonResponse::create(
-            new SuccessResponseContent(['job' => ['uuid' => $uuid]]),
+            new SuccessResponseContent(['job' => ['uuid' => $uuid->getValue()]]),
             201
         );
     }

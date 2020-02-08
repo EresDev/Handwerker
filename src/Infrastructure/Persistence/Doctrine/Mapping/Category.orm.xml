@@ -4,7 +4,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="uuid" column="uuid" type="string" length="36" nullable="false" unique="true"/>
+        <field name="uuid" column="uuid" type="uuid4" length="36" nullable="false" unique="true"/>
         <field name="name" type="string" column="name" length="100" nullable="false"></field>
         <field name="imageUri" type="string" length="50" column="imageUri" nullable="false"/>
     </entity>

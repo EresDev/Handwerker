@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Command;
 
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 use DateTime;
 
 class CreateJobCommand extends JobCommand
@@ -12,13 +13,13 @@ class CreateJobCommand extends JobCommand
     private User $user;
 
     public function __construct(
-        string $uuid,
+        Uuid $uuid,
         string $title,
         string $zipCode,
         string $city,
         string $description,
         DateTime $executionDateTime,
-        string $categoryId,
+        Uuid $categoryId,
         User $user
     ) {
         parent::__construct($uuid, $title, $zipCode, $city, $description, $executionDateTime, $categoryId);

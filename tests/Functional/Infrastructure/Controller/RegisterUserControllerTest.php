@@ -69,7 +69,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => self::EMAIL, 'password' => '']
         );
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'fail', 'data' => ['password' => $expectedError]],
             'password'
@@ -94,7 +94,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => 'someInvalidEmail', 'password' => self::PASSWORD]
         );
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'fail', 'data' => ['email' => $expectedError]],
             'email'
@@ -124,7 +124,7 @@ class RegisterUserControllerTest extends WebTestCase
             ['email' => $user->getEmail(), 'password' => self::PASSWORD]
         );
 
-        $this->assertForValidationError(
+        $this->assertForError(
             $this->response(),
             ['status' => 'fail', 'data' => ['email' => $expectedError]],
             'email'

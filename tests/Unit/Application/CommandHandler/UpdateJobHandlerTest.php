@@ -7,9 +7,9 @@ namespace App\Tests\Unit\Application\CommandHandler;
 use App\Application\Command\UpdateJobCommand;
 use App\Application\CommandHandler\UpdateJobHandler;
 use App\Application\Service\Modifier\JobModifier;
-use App\Application\Service\Uuid;
 use App\Application\Service\Validator;
 use App\Domain\Repository\Job\JobUpdater;
+use App\Domain\ValueObject\Uuid;
 use App\Tests\Shared\Fixture\JobFixture;
 use App\Tests\Shared\ObjectMother\JobMother;
 
@@ -17,7 +17,6 @@ class UpdateJobHandlerTest extends UpsertJobHandlerBaseTestCase
 {
     private Validator $validator;
     private JobUpdater $jobUpdater;
-    private Uuid $uuidGenerator;
     private JobModifier $jobUpdaterService;
 
     protected function setUp(): void
@@ -27,7 +26,6 @@ class UpdateJobHandlerTest extends UpsertJobHandlerBaseTestCase
         $this->validator = $this->getService(Validator::class);
         $this->jobUpdater =
             $this->createMock(JobUpdater::class);
-        $this->uuidGenerator = $this->getService(Uuid::class);
         $this->jobUpdaterService = $this->getService(JobModifier::class);
     }
 
@@ -53,13 +51,13 @@ class UpdateJobHandlerTest extends UpsertJobHandlerBaseTestCase
     protected function getCommandFrom(array $commandAttrs): UpdateJobCommand
     {
         return new UpdateJobCommand(
-            JobFixture::UUID,
+            Uuid::createFrom(JobFixture::UUID),
             $commandAttrs['title'],
             $commandAttrs['zipCode'],
             $commandAttrs['city'],
             $commandAttrs['description'],
             $commandAttrs['executionDateTime'],
-            $commandAttrs['categoryId']
+            Uuid::createFrom($commandAttrs['categoryId'])
         );
     }
 

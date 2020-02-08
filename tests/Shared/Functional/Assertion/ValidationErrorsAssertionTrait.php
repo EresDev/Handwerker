@@ -9,18 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ValidationErrorsAssertionTrait
 {
-    protected function assertForValidationError(
+    protected function assertForError(
         Response $response,
         array $expectedContent,
         string $invalidField
     ): void {
-        $response = $this->response();
         Assert::assertEquals(422, $response->getStatusCode());
 
         Assert::assertEquals(
             json_encode($expectedContent),
             $response->getContent(),
-            sprintf("Validation error received for invalid %s is not as expected.", $invalidField)
+            sprintf("Error received for invalid %s is not as expected.", $invalidField)
         );
     }
 }

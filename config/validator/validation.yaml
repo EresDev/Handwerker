@@ -26,9 +26,6 @@ App\Application\Command\CreateJobCommand:
         fields: [uuid]
         message: 'job.uuid.already.exists'
   properties:
-    uuid:
-      - Uuid:
-          message: 'job.invalid.uuid.invalid'
     title:
       - NotBlank:
           message: 'job.invalid.title.notBlank'
@@ -64,16 +61,9 @@ App\Application\Command\CreateJobCommand:
       - GreaterThan:
           value: +1 day
           message: 'job.invalid.executionDateTime.mustBeInFuture'
-    categoryId:
-      - Uuid:
-          message: 'job.invalid.category.uuid'
-
 
 App\Application\Command\UpdateJobCommand:
   properties:
-    uuid:
-      - Uuid:
-          message: 'job.invalid.uuid.invalid'
     title:
       - NotBlank:
           message: 'job.invalid.title.notBlank'
@@ -109,9 +99,6 @@ App\Application\Command\UpdateJobCommand:
       - GreaterThan:
           value: +1 day
           message: 'job.invalid.executionDateTime.mustBeInFuture'
-    categoryId:
-      - Uuid:
-          message: 'job.invalid.category.uuid'
 
 
 App\Application\Query\GetJobQuery:
