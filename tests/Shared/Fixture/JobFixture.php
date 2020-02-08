@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared\Fixture;
 
+use App\Application\Service\Extension\DateTimeExtension;
 use App\Domain\Entity\Category;
 use App\Domain\Entity\Job;
 use App\Domain\Entity\User;
@@ -22,7 +23,7 @@ abstract class JobFixture
 
     public static function getExecutionDateTime(): DateTime
     {
-        $executionDateTime = new \DateTime();
+        $executionDateTime = new DateTimeExtension();
         $executionDateTime->modify('+2 days');
 
         return $executionDateTime;

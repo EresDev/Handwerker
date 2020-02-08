@@ -6,6 +6,7 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Command\CreateJobCommand;
 use App\Application\CommandHandler\CreateJobHandler;
+use App\Application\Service\Extension\DateTimeExtension;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
@@ -50,7 +51,7 @@ class CreateJobController
                 $this->request->get('zipCode', ''),
                 $this->request->get('city', ''),
                 $this->request->get('description', ''),
-                $this->getDateTimeFrom($executionTimestamp),
+                DateTimeExtension::from($executionTimestamp),
                 Uuid::createFrom($this->request->get('categoryId', '')),
                 $this->user
             );

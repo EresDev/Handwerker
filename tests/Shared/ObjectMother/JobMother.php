@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared\ObjectMother;
 
+use App\Application\Service\Extension\DateTimeExtension;
+
 class JobMother
 {
     public static function toValidParameterArray(bool $withTimestamp = true): array
     {
-        $executionDateTime = new \DateTime();
+        $executionDateTime = new DateTimeExtension();
         $executionDateTime->modify('+2 days');
 
         if ($withTimestamp) {

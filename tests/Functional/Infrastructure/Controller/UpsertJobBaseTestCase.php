@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Infrastructure\Controller;
 
+use App\Application\Service\Extension\DateTimeExtension;
 use App\Tests\Shared\AuthenticatedClientTrait;
 use App\Tests\Shared\Functional\Assertion\ValidationErrorsAssertionTrait;
 use App\Tests\Shared\WebTestCase;
@@ -67,8 +68,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestForInvalidExecutionDateTimeAsEmptyString(
         string $uri,
         string $expectedError
-    ): void
-    {
+    ): void {
         $this->authenticateClient();
 
         $jobParameters = $this->getJobParameters();
@@ -103,11 +103,10 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestForInvalidExecutionDateTimeAsNegativeInteger(
         string $uri,
         string $expectedError
-    ): void
-    {
+    ): void {
         $this->authenticateClient();
         $jobParameters = $this->getJobParameters();
-        $timestampNow = (new \DateTime())
+        $timestampNow = (new DateTimeExtension())
             ->modify('+2 days')
             ->getTimestamp();
         $jobParameters['executionDateTime'] = -$timestampNow;
@@ -127,8 +126,7 @@ abstract class UpsertJobBaseTestCase extends WebTestCase
     public function testHandleRequestWithValidCategoryUuidThatDoesNotExist(
         string $uri,
         string $expectedError
-    ): void
-    {
+    ): void {
         $this->authenticateClient();
 
         $jobParameters = $this->getJobParameters();

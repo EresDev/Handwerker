@@ -6,6 +6,7 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Command\UpdateJobCommand;
 use App\Application\CommandHandler\UpdateJobHandler;
+use App\Application\Service\Extension\DateTimeExtension;
 use App\Application\Service\Security\Security;
 use App\Application\Service\Translator;
 use App\Domain\Entity\User;
@@ -15,7 +16,6 @@ use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\FailureResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
-use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -50,7 +50,7 @@ class UpdateJobController
                 $this->request->get('zipCode', ''),
                 $this->request->get('city', ''),
                 $this->request->get('description', ''),
-                $this->getDateTimeFrom($executionTimestamp),
+                DateTimeExtension::from($executionTimestamp),
                 Uuid::createFrom($this->request->get('categoryId', ''))
             );
 
@@ -73,13 +73,5 @@ class UpdateJobController
             new SuccessResponseContent(null),
             204
         );
-    }
-
-    private function getDateTimeFrom($timestamp): DateTime
-    {
-        return (new DateTime())
-            ->setTimestamp(
-                $timestamp
-            );
     }
 }
