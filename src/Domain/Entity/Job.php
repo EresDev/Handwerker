@@ -122,7 +122,7 @@ class Job extends Entity
     public function toArray(): array
     {
         return [
-            'uuid' => $this->uuid,
+            'uuid' => $this->uuid->getValue(),
             'title' => $this->title,
             'zipCode' => $this->zipCode,
             'city' => $this->city,

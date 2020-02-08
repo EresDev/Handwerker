@@ -39,7 +39,7 @@ class ManualUserFixtureLoadTest extends KernelTestCase
         /**
          * @var User $user
          */
-        $userFromDb = $userFinder->findOneBy('uuid', $user->getUuid());
+        $userFromDb = $userFinder->find($user->getUuid());
 
         $this->assertNotNull($userFromDb);
         $this->assertEquals($user->getUuid(), $userFromDb->getUuid());

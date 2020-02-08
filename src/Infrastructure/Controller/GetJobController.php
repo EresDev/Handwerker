@@ -8,6 +8,7 @@ use App\Application\Query\GetJobQuery;
 use App\Application\QueryHandler\GetJobHandler;
 use App\Application\Service\Security\Security;
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Service\Http\ErrorResponseContent;
 use App\Infrastructure\Service\Http\SuccessResponseContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,7 +34,7 @@ class GetJobController
     public function handleRequest(): JsonResponse
     {
         $query = new GetJobQuery(
-            $this->request->get('uuid', ''),
+            Uuid::createFrom($this->request->get('uuid', '')),
             $this->user
         );
 

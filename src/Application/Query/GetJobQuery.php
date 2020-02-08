@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Application\Query;
 
 use App\Domain\Entity\User;
+use App\Domain\ValueObject\Uuid;
 
 class GetJobQuery
 {
-    private string $uuid;
+    private Uuid $uuid;
     private User $user;
 
-    public function __construct(string $uuid, User $user)
+    public function __construct(Uuid $uuid, User $user)
     {
         $this->uuid = $uuid;
         $this->user = $user;
     }
 
-    public function getUuid(): string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
@@ -31,7 +32,7 @@ class GetJobQuery
     {
         return print_r(
             [
-                'uuid' => $this->uuid,
+                'uuid' => $this->uuid->getValue(),
                 'userId' => $this->user->getUuid()
             ],
             true

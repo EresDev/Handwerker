@@ -49,7 +49,7 @@ class Category extends Entity
     public function toArray(): array
     {
         return [
-            'uuid' => $this->uuid,
+            'uuid' => $this->uuid->getValue(),
             'name' => $this->name
         ];
     }

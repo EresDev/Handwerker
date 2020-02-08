@@ -8,6 +8,7 @@ use App\Domain\Entity\User;
 use App\Domain\Repository\User\UserDeleter;
 use App\Domain\Repository\User\UserFinder;
 use App\Domain\Repository\User\UserSaver;
+use App\Domain\ValueObject\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserRepository extends Repository implements UserFinder, UserSaver, UserDeleter
@@ -17,9 +18,9 @@ class UserRepository extends Repository implements UserFinder, UserSaver, UserDe
         parent::__construct($entityManager, User::class);
     }
 
-    public function find(int $id): ?User
+    public function find(Uuid $uuid): ?User
     {
-        return $this->repository->find($id);
+        return $this->repository->findOneBy(['uuid' => $uuid]);
     }
 
     public function findOneBy(string $key, string $value): ?User
