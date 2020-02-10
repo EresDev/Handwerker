@@ -19,7 +19,7 @@ class UuidType extends Type
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        return 'UUID';
+        return 'varchar(36)';
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): Uuid
