@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Shared;
 
 use App\Tests\Shared\Fixture\UserFixture;
-use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use PHPUnit\Framework\Assert;
+use Symfony\Component\BrowserKit\Cookie;
 
 trait AuthenticatedClientTrait
 {
@@ -20,10 +20,12 @@ trait AuthenticatedClientTrait
             ['email' => UserFixture::EMAIL, 'password' => UserFixture::PLAIN_PASSWORD]
         );
 
-        $data = json_decode($this->response()->getContent(), true);
+        $jwt = $this->client->getCookieJar()->get('Authorization')->getValue();
 
         $client = static::createClient();
-        $client->setServerParameter('HTTP_Authorization', $data['token']);
+        $client->getCookieJar()->set(
+            new Cookie('Authorization', $jwt)
+        );
 
         $this->client = $client;
     }

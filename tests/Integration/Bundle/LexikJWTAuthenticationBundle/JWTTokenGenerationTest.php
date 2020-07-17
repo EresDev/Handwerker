@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Bundle\LexikJWTAuthenticationBundle;
 
-use App\Kernel;
 use App\Infrastructure\Security\Symfony\PasswordEncoder;
+use App\Kernel;
 use App\Tests\Shared\Fixture\UserFixture;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class JWTTokenGenerationTest extends KernelTestCase
 {
@@ -35,15 +36,20 @@ class JWTTokenGenerationTest extends KernelTestCase
         $response = $kernel->handle($this->request);
 
         $this->assertEquals(
-            200,
+            204,
             $response->getStatusCode(),
             'JWT login check, to receive token failed. Got invalid status code.'
         );
-        $this->assertArrayHasKey(
-            'token',
-            json_decode($response->getContent(), true),
-            "No token received. The content received: \n" .
-            $response->getContent()
+
+        $this->assertEquals(
+            'Authorization',
+            $response->headers->getCookies(ResponseHeaderBag::COOKIES_FLAT)[0]->getName(),
+            "No token received in the cookie. \n"
+        );
+
+        $this->assertNotNull(
+            $response->headers->getCookies(ResponseHeaderBag::COOKIES_FLAT)[0]->getValue(),
+            "No token received in the cookie."
         );
     }
 
