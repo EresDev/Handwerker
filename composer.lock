@@ -25,16 +25,16 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-simplexml": "*",
-                "php": "^7"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "*",
-                "phpstan/phpstan-shim": "*",
-                "phpunit/phpunit": ">=6.0.0 <8"
-            },
-            "suggest": {
-                "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
-            },
+        "php": "^7"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "*",
+        "phpstan/phpstan-shim": "*",
+        "phpunit/phpunit": ">=6.0.0 <8"
+      },
+      "suggest": {
+        "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
+      },
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1400,27 +1400,27 @@
             ],
             "time": "2019-05-24T18:30:49+00:00"
         },
-        {
-            "name": "lexik/jwt-authentication-bundle",
-            "version": "v2.6.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
-                "reference": "448551fc08c6cff37aad9d8f27f6b9615cd28966"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/448551fc08c6cff37aad9d8f27f6b9615cd28966",
-                "reference": "448551fc08c6cff37aad9d8f27f6b9615cd28966",
-                "shasum": ""
-            },
+    {
+      "name": "lexik/jwt-authentication-bundle",
+      "version": "v2.8.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
+        "reference": "0b136a3b8b2125a85dc0ae64527e8c86cbe574f1"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/0b136a3b8b2125a85dc0ae64527e8c86cbe574f1",
+        "reference": "0b136a3b8b2125a85dc0ae64527e8c86cbe574f1",
+        "shasum": ""
+      },
             "require": {
-                "ext-openssl": "*",
-                "lcobucci/jwt": "^3.2",
-                "namshi/jose": "^7.2",
-                "php": "^5.5|^7.0",
-                "symfony/framework-bundle": "^3.4|^4.0|^5.0",
-                "symfony/security-bundle": "^3.4|^4.0|^5.0"
+              "ext-openssl": "*",
+              "lcobucci/jwt": "^3.2",
+              "namshi/jose": "^7.2",
+              "php": "^5.6|^7.0",
+              "symfony/framework-bundle": "^3.4|^4.0|^5.0",
+              "symfony/security-bundle": "^3.4|^4.0|^5.0"
             },
             "require-dev": {
                 "symfony/browser-kit": "^3.4|^4.0|^5.0",
@@ -1494,7 +1494,7 @@
                 "rest",
                 "symfony"
             ],
-            "time": "2019-11-22T14:22:26+00:00"
+      "time": "2020-06-14T13:20:35+00:00"
         },
         {
             "name": "namshi/jose",
@@ -1549,14 +1549,14 @@
                 }
             ],
             "description": "JSON Object Signing and Encryption library for PHP.",
-            "keywords": [
-              "JSON Web Signature",
-              "JSON Web Token",
-              "JWS",
-              "json",
-              "jwt",
-              "token"
-            ],
+          "keywords": [
+            "JSON Web Signature",
+            "JSON Web Token",
+            "JWS",
+            "json",
+            "jwt",
+            "token"
+          ],
           "time": "2016-12-05T07:27:31+00:00"
         },
     {
@@ -1627,16 +1627,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0.0",
-                "php": "^7.3.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.8.6",
-                "doctrine/coding-standard": "^6.0.0",
+        "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
+        "shasum": ""
+      },
+      "require": {
+        "composer-plugin-api": "^1.0.0",
+        "php": "^7.3.0"
+      },
+      "require-dev": {
+        "composer/composer": "^1.8.6",
+        "doctrine/coding-standard": "^6.0.0",
                 "ext-zip": "*",
                 "infection/infection": "^0.13.4",
                 "phpunit/phpunit": "^8.2.5",
@@ -3551,16 +3551,16 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-              {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-              },
-              {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-              }
-            ],
+          "authors": [
+            {
+              "name": "Nicolas Grekas",
+              "email": "p@tchwork.com"
+            },
+            {
+              "name": "Symfony Community",
+              "homepage": "https://symfony.com/contributors"
+            }
+          ],
           "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
           "homepage": "https://symfony.com",
           "keywords": [
@@ -3651,16 +3651,16 @@
       "require-dev": {
         "symfony/cache": "~3.4|~4.0"
       },
-            "suggest": {
-                "psr/cache-implementation": "To cache access methods."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
+      "suggest": {
+        "psr/cache-implementation": "To cache access methods."
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "4.3-dev"
+        }
+      },
+      "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\PropertyAccess\\": ""
                 },
@@ -4590,16 +4590,16 @@
             },
             "suggest": {
                 "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
-                "zendframework/zend-stdlib": "Zend\\Stdlib component"
+              "zendframework/zend-stdlib": "Zend\\Stdlib component"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                  "dev-master": "3.4.x-dev",
-                  "dev-develop": "3.5.x-dev",
-                  "dev-dev-4.0": "4.0.x-dev"
-                }
-            },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "3.4.x-dev",
+              "dev-develop": "3.5.x-dev",
+              "dev-dev-4.0": "4.0.x-dev"
+            }
+          },
           "autoload": {
             "psr-4": {
               "Zend\\Code\\": "src/"
@@ -4643,16 +4643,16 @@
                 "zendframework/zend-stdlib": "^2.7.3 || ^3.0"
             },
             "suggest": {
-                "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
-                "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
+              "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
+              "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev",
-                    "dev-develop": "3.3-dev"
-                }
-            },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "3.2-dev",
+              "dev-develop": "3.3-dev"
+            }
+          },
           "autoload": {
             "psr-4": {
               "Zend\\EventManager\\": "src/"
